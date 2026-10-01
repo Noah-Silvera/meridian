@@ -1,4 +1,4 @@
-import { CANONICAL_HAIKU_MODEL, hasExtendedContext, type ClaudeModel } from "./models"
+import { CANONICAL_HAIKU_MODEL, hasExtendedContext, hasNativeExtendedContext, type ClaudeModel } from "./models"
 
 /** Approximate replay estimate: overestimates Cyrillic-like scripts, but can
  * underestimate CJK, base64, and multi-page documents. Reactive overflow
@@ -29,7 +29,8 @@ export function contextWindowFor(
   resolvedModel = model === "haiku" ? CANONICAL_HAIKU_MODEL : model,
 ): number {
   if (resolvedModel === "claude-haiku-5-5") return 1_000_000
-  return hasExtendedContext(model as ClaudeModel) ? 1_000_000 : 200_000
+  if (hasExtendedContext(model as ClaudeModel)) return 1_000_000
+  return model === "sonnet" && hasNativeExtendedContext(resolvedModel) ? 1_000_000 : 200_000
 }
 
 // Leave space for system instructions, tool schemas, and the generated answer.
