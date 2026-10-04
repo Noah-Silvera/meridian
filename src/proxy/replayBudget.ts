@@ -27,7 +27,9 @@ export function estimateTokens(content: unknown): number {
 export function contextWindowFor(
   model: string,
   resolvedModel = model === "haiku" ? CANONICAL_HAIKU_MODEL : model,
+  disable1mContext = false,
 ): number {
+  if (disable1mContext) return 200_000
   if (resolvedModel === "claude-haiku-5-5") return 1_000_000
   if (hasExtendedContext(model as ClaudeModel)) return 1_000_000
   return model === "sonnet" && sonnetHasNative1mContext(resolvedModel) ? 1_000_000 : 200_000
@@ -43,14 +45,14 @@ export const REPLAY_RESERVE_TOKENS = 64_000
  *  English tokens, roughly half the window, for conversations that used to fit.
  *  Capping keeps the 1M budget byte-for-byte unchanged and lifts 200k models to
  *  the same ~80% share. Underestimates are still covered by the overflow retry. */
-export function replayReserveFor(model: string, resolvedSonnetModel?: string): number {
-  return Math.min(REPLAY_RESERVE_TOKENS, Math.floor(contextWindowFor(model, resolvedSonnetModel) * 0.1))
+export function replayReserveFor(model: string, resolvedSonnetModel?: string, disable1mContext = false): number {
+  return Math.min(REPLAY_RESERVE_TOKENS, Math.floor(contextWindowFor(model, resolvedSonnetModel, disable1mContext) * 0.1))
 }
 
-export function replayBudgetFor(model: string, resolvedSonnetModel?: string): number {
+export function replayBudgetFor(model: string, resolvedSonnetModel?: string, disable1mContext = false): number {
   const configured = replayBudgetOverride()
   if (configured !== undefined) return configured
-  return Math.floor(contextWindowFor(model, resolvedSonnetModel) * 0.9) - replayReserveFor(model, resolvedSonnetModel)
+  return Math.floor(contextWindowFor(model, resolvedSonnetModel, disable1mContext) * 0.9) - replayReserveFor(model, resolvedSonnetModel, disable1mContext)
 }
 
 /** Test-only override. Proving the trim against a real model otherwise needs a

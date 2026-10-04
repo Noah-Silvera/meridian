@@ -2439,9 +2439,10 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
           ? envOverrides?.ANTHROPIC_DEFAULT_HAIKU_MODEL ?? profileEnv.ANTHROPIC_DEFAULT_HAIKU_MODEL
           : undefined
         // The Sonnet the SDK will actually serve (query.ts spreads the explicit
-        // pin last). Plain `sonnet` on Sonnet 5+ has a native 1M window, so the
-        // replay budget must not assume 200k from the alias alone (#1212).
+        // pin last). Plain `sonnet` on supported Sonnet 5/5.5 has a native 1M window;
+        // budget from the effective pin and the inherited CLI opt-out (#1212).
         const resolvedSonnetModel = envOverrides?.ANTHROPIC_DEFAULT_SONNET_MODEL ?? profileEnv.ANTHROPIC_DEFAULT_SONNET_MODEL
+        const disable1mContext = profileEnv.CLAUDE_CODE_DISABLE_1M_CONTEXT === "1"
         const profileCredentialStore = credentialStoreForProfile(profile)
 
         // Drops transport metadata some clients pass through `system`.
@@ -3347,7 +3348,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
       const freshReplay = !isResume && !resumeSessionId
       // Client usage describes its resumed context, not the fresh transcript;
       // derive replay capacity from the actual SDK model's window instead.
-      const modelReplayBudget = () => replayBudgetFor(model, model === "sonnet" ? resolvedSonnetModel : resolvedHaikuModel())
+      const modelReplayBudget = () => replayBudgetFor(model, model === "sonnet" ? resolvedSonnetModel : resolvedHaikuModel(), disable1mContext)
       let currentReplayBudget = modelReplayBudget()
       let replayTrimRetries = 0
       let replayOmittedMessages = 0
@@ -9762,7 +9763,8 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
   // --- Model Discovery ---
   // Returns available Claude models in OpenAI-compatible format.
   // Context window reflects the subscription tier: Max/Team/Enterprise get 1M
-  // on the Opus/Fable tiers, everything else 200k. The tier check is shared
+  // on the Opus/Fable tiers; supported Sonnet 5/5.5 has a native 1M window.
+  // The tier check is shared
   // with models.ts (subscriptionIncludesExtendedContext) — an "=== max"
   // comparison here used to advertise 200k to Team accounts that Meridian was
   // already routing to opus[1m] (#826).
@@ -9774,7 +9776,8 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
       profileEnvOverrides,
     )
     const extendedContext = subscriptionIncludesExtendedContext(authStatus?.subscriptionType)
-    return c.json({ object: "list", data: buildModelList(extendedContext) })
+    const disable1mContext = (profile.env.CLAUDE_CODE_DISABLE_1M_CONTEXT ?? process.env.CLAUDE_CODE_DISABLE_1M_CONTEXT) === "1"
+    return c.json({ object: "list", data: buildModelList(extendedContext, undefined, disable1mContext) })
   })
 
   // --- Subscription Quota ---

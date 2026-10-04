@@ -7940,3 +7940,25 @@ feedback without exploring private SDK attachment files. The model's prose is no
 an assertion. Retain before/after reports and join original processes/pipes before
 deleting temporary grants. This gate supplements E41 and E65; it does not claim
 the reporter's unspecified Pi/model/OS environment or a release is verified.
+
+## Native Sonnet context and released OpenCode V2
+
+For #1213/#1212, use `bun scripts/e2e-sonnet-context-local.mjs` against both
+the exact unchanged source and the fixed tree. The same synthetic history
+exceeds the former 200k window; unchanged main must discard the ancient
+marker and fail the no-trim assertion, while the fixed native Sonnet budget
+retains all history. Keep Sonnet 4.6, unknown future ids and
+`CLAUDE_CODE_DISABLE_1M_CONTEXT=1` as 200k negative controls.
+
+On Linux with real OpenCode 2.0.16, SDK 0.2.141 and a Sonnet-5.5-capable
+native CLI, run `scripts/e2e-sonnet-context-v2-live.mjs` with explicit
+`E2E_OPENCODE_BIN`, `E2E_MERIDIAN_ROOT`, `E2E_PROFILE_CLAUDE_DIR` and
+`E2E_PROOF_DIR`. Its installed V2 plugin must discover the proxy catalog;
+the client config does not supply a context window. Supported transcript
+import seeds synthetic history without preparatory generations. Require
+the same before/after ancient-marker/no-trim assertion, correct actual
+served model/account, native input >200k, current coding receipt and one
+minimal resumed turn. `E2E_IMPORT_ONLY=1` is a credentialless import/catalog
+rehearsal only. Stop before generation when native readiness fails and
+retain the missing live gate. See
+[proof and blocker](docs/maintenance/evidence/1213-native-sonnet-context.md).
