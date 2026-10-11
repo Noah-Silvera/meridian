@@ -6,13 +6,21 @@ holds remain in force; no releases or community comments are authorized. The
 older reporter-input/native/contract gates remain open. The latest 30 main CI
 runs succeeded, which supplies no new causal fix for #917/#933.
 
-Build source #1330 is incorporated in [delivery #1333](https://github.com/rynfar/meridian/pull/1333).
-Independent Pi/Fable 5.1 high-effort review approved `87286e62`, including its
-own full local suite and real source-HTTP baseline/candidate runs. Parent review
-then explicitly qualifies POSIX-shebang controls with a Windows skip. Production
-bytes are unchanged; fresh final-head CI remains a merge gate. The local Git
-signature-verification configuration is incomplete, so verify GitHub signatures
-and Nowaker credit on the actual landed commit rather than inferring them.
+Build source #1330 is **landed** via [delivery #1333](https://github.com/rynfar/meridian/pull/1333),
+squash `109cf9e45ca26f63e8d247e5356f64c9feca4558`. Independent Pi/Fable 5.1
+high-effort review approved production/escrow at `87286e62`, independently
+reproducing both HTTP arms and the entire suite. Parent explicitly skipped the
+POSIX-shebang fixture on Windows, reran all local gates, and waited for every
+relevant final-head check at `e2e96661`, including `test`, Windows smoke, smoke,
+build-push, both desktop builds and the current home-module run. The earlier
+cancelled duplicate was not used as evidence. `gh --required` reported no
+configured required contexts, so each mandated exact-head named check was
+verified explicitly; no check or branch rule was bypassed. Guarded squash used
+`--match-head-commit`, and the landed tree exactly equals the validated tree.
+GitHub verifies both final delivery and squash signatures; GraphQL authors
+register Nowaker's `spam@nowaker.net` co-author credit. Source `c040c19b` was
+rechecked unchanged, then #1330 closed without a community comment. No loaded-
+Linux reproduction or release is claimed; see its durable bounded evidence.
 
 OpenCode scrub #21/#22 is accepted with a scope correction but **not landed**.
 Mohamed Khalil source `50e9526a` → authored `fb7a6231`, with separate controls and
@@ -31,9 +39,14 @@ cleanup-failure fencing; no guessed timeout or early fence release is accepted.
 It independently exposed adjacent SDK process-gate join defects. Actual owned
 Node subprocesses reproduce exit-before-pipe-close false success and exhausted
 SIGKILL-observation false failure on Darwin and Linux arm64. A separate minimal
-correction and same-assertion headless escrow are prepared outside this branch;
-no original #1326 resolution is claimed. Continue that qualified work after this
-delivery, preserving the original affected-client acceptance gap.
+correction and same-assertion headless escrow are now on `codex/sdk-close-join`
+in `/Users/rynfar/.t3/worktrees/meridian/codex-backlog-oldest-first`, rebased on
+landed main `109cf9e45`. [Durable native before/after receipts, runnable escrow,
+source hashes and qualification](evidence/sdk-process-close-join.md) distinguish
+actual original close/SIGKILL from signal attempts. Both new native tests fail
+baseline; ten new/adjacent controls and Darwin Bun/Node plus Linux arm64 Node
+harness pass candidate. Full final local gates, independent review, PR and
+exact-head CI remain owed; no original #1326 resolution is claimed.
 
 Original dirty checkout remains untouched. Existing #1324 and #1332 deliveries
 are already merged in live main; their older pending entries below are historical.
