@@ -315,8 +315,10 @@ export function mapModelToClaudeModel(model: string, subscriptionType?: string |
   // Anthropic docs — unlike Opus, it is NOT included with Max. Default to
   // sonnet (200k) to avoid unexpected charges. Users opt in via
   // MERIDIAN_SONNET_MODEL=sonnet[1m]. Sonnet 5+ (the canonical pin) serves
-  // its native 1M window on plain `sonnet` with no Extra Usage, so the [1m]
-  // tier is a no-op there; see sonnetHasNative1mContext (#1212).
+  // its native 1M window on plain `sonnet` with no Extra Usage, so [1m] is
+  // not needed there; see sonnetHasNative1mContext (#1212). An explicit
+  // sonnet[1m] override is still forwarded when eligible; its upstream
+  // behavior on Sonnet 5/5.5 has not been verified.
   const sonnetOverride = process.env.MERIDIAN_SONNET_MODEL ?? process.env.CLAUDE_PROXY_SONNET_MODEL
   if (sonnetOverride === "sonnet[1m]") {
     if (!use1m || isSubagent || isExtendedContextKnownUnavailable(profileId, sessionKey)) return "sonnet"
