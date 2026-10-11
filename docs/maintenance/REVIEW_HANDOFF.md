@@ -1,3 +1,43 @@
+## Current oldest-first continuation — 2026-10-11
+
+Fresh discovery still finds six managed repositories, no additional accessible
+organization scrub candidates. Combined creation-date order and explicit owner
+holds remain in force; no releases or community comments are authorized. The
+older reporter-input/native/contract gates remain open. The latest 30 main CI
+runs succeeded, which supplies no new causal fix for #917/#933.
+
+Build source #1330 is incorporated in [delivery #1333](https://github.com/rynfar/meridian/pull/1333).
+Independent Pi/Fable 5.1 high-effort review approved `87286e62`, including its
+own full local suite and real source-HTTP baseline/candidate runs. Parent review
+then explicitly qualifies POSIX-shebang controls with a Windows skip. Production
+bytes are unchanged; fresh final-head CI remains a merge gate. The local Git
+signature-verification configuration is incomplete, so verify GitHub signatures
+and Nowaker credit on the actual landed commit rather than inferring them.
+
+OpenCode scrub #21/#22 is accepted with a scope correction but **not landed**.
+Mohamed Khalil source `50e9526a` → authored `fb7a6231`, with separate controls and
+escrow `6dcd6051` on remote `codex/primary-cwd-22` in that repository. Fifty tests,
+standalone typecheck/build and independent-package preparation pass. The actual
+OpenCode 1.18.34/Meridian-plugin/SDK path was witnessed, but the provider refused
+Opus and Haiku. A read-only usage check confirmed exhausted weekly quota; no
+login refresh, paid Extra Usage change or alternate account was attempted. The
+private access-only grant was removed. Source/issue stay open until successful
+identical client assertions pass; no draft delivery was created merely to clear
+it. [Durable scope, failed probes and runnable escrow](https://github.com/rynfar/meridian-plugin-opencode-scrub/blob/codex/primary-cwd-22/docs/primary-cwd-22-review.md).
+
+Read-only #1326 investigation does not reproduce the reported Linux/OpenCode/
+Claude refresh-error hang. It distinguished pending completion from intentional
+cleanup-failure fencing; no guessed timeout or early fence release is accepted.
+It independently exposed adjacent SDK process-gate join defects. Actual owned
+Node subprocesses reproduce exit-before-pipe-close false success and exhausted
+SIGKILL-observation false failure on Darwin and Linux arm64. A separate minimal
+correction and same-assertion headless escrow are prepared outside this branch;
+no original #1326 resolution is claimed. Continue that qualified work after this
+delivery, preserving the original affected-client acceptance gap.
+
+Original dirty checkout remains untouched. Existing #1324 and #1332 deliveries
+are already merged in live main; their older pending entries below are historical.
+
 ## Build identity #1330 implementation handoff — 2026-10-11
 
 Selected bounded implementation only, base `6e510dbcb`. Source #1330 remains

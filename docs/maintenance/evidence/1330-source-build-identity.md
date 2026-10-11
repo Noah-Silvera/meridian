@@ -3,9 +3,14 @@
 ## Disposition and provenance
 
 **Accept with maintainer corrections; local implementation and credentialless
-source-HTTP verification complete.** Independent review, final-head CI and the
-parent's PR/merge decision remain open. No push, PR, merge, source closure,
-external comment or release was performed by this implementation task.
+source-HTTP verification complete.** Independent Pi/Claude Fable 5.1 high-effort
+review approved production and escrow at `87286e62`, independently reproducing
+both HTTP arms, the six correction failures, Node 22.11/24.20 controls, typecheck
+and the complete 5,574-pass suite. Delivery [#1333](https://github.com/rynfar/meridian/pull/1333)
+is open. Parent review additionally makes the POSIX-shebang recovery controls
+explicitly skip on Windows; it does not change production or weaken POSIX
+assertions. Fresh final-head CI and merge/credit/source-head checks remain owed.
+No source closure, external comment or release is claimed.
 
 - Worktree: `/Users/rynfar/.t3/worktrees/meridian/codex-backlog-oldest-first`.
 - Branch: `codex/backlog-oldest-first`.
@@ -115,6 +120,10 @@ cleanup. No credentials were present before or after; model requests: **0**.
 deterministic fingerprint **file-cap failure**, not reproduction of the original
 heavily loaded Linux host's time-budget symptom. Windows/Linux live scheduling,
 filesystem behavior and that exact loaded-host symptom are not established.
+The new fake-Git recovery file explicitly skips Windows because its controlled
+executables use POSIX shebangs; existing platform-neutral certification controls
+are unchanged. Being omitted from Windows CI alone would not make those fixtures
+portable for a contributor's full Windows `npm test`.
 No model/client generation gate is applicable to these build-only reads. This
 must not be presented as an actual Linux or successful-model result.
 

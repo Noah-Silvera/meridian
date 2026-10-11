@@ -69,7 +69,10 @@ function joined(log: string) {
 }
 const stale = { MERIDIAN_BUILD_SHA: "stale-sha", MERIDIAN_BUILD_BRANCH: "stale-branch", MERIDIAN_BUILD_DIRTY: "0" }
 
-describe("bounded source identity recovery", () => {
+// The controlled Git programs use POSIX shebang executables. Keep this
+// platform qualification explicit for contributors running npm test on Windows.
+// Existing certification tests retain the platform-neutral source controls.
+describe.skipIf(process.platform === "win32")("bounded source identity recovery", () => {
   test("detached recovery replaces the entire conflicting launcher identity and stays immutable", () => {
     const { root, sha, git } = fixture()
     git("checkout", "--detach"); oversized(root)
