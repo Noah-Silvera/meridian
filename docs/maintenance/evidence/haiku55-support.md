@@ -108,7 +108,21 @@ isolated invocations, standalone typecheck and build. The final pass follows the
 corrected global-mock alias assertion and non-Max catalog assertion (Haiku 5.5's
 native 1M is the exception). Earlier failures/timeouts are not green gates. R2
 independent review passed 119 focused checks and found no further product defect;
-its harness finding above was fixed, with targeted R3 pending.
+its harness finding above was fixed. Targeted R3 verified dummy-token resolution,
+shared-memory directory preservation, SDK manifest path, syntax and all nine
+unchanged core hashes. Reviewed live-harness SHA-256 is
+`f4a6519ef350bfafeb22d0c099c22f7b16b552f0ebff279891c9f869cf71413a`.
+R3 found no further blocking implementation issue, but explicitly did not approve
+landing/release or runtime-qualify the corrected Node flow.
+
+An independently installed tarball built from `d3e28b489251908cda3add02c3a1fe251510545d`
+passes HTTP catalog/legacy metadata and all four JSON/SSE unsupported-intent 400s.
+Its separately installed CLI 2.1.296 version probe closes the original process and
+both pipes; SDK is 0.2.141. No SDK/model generation was requested by this smoke.
+[Exact script](../../../scripts/e2e-haiku55-package-smoke.mjs) and
+[artifact integrity/hash/receipt](haiku55-package-smoke.json) are durable. This
+is an unpublished candidate `1.80.0` tarball, **not a registry release**; actual
+installed-package model acceptance remains open.
 
 Complete final-head CI, targeted follow-up review, independently installed
 npm-pack HTTP/native checks, and actual Haiku 5.5 through Pi and the installed
