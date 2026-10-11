@@ -1,3 +1,29 @@
+## Build identity #1330 implementation handoff — 2026-10-11
+
+Selected bounded implementation only, base `6e510dbcb`. Source #1330 remains
+OPEN at `c040c19be` on read-only refresh; remote main still equals the specified
+base. Signed authored `-x` incorporation `c040c19be` → `d2c2a6463` preserves
+Nowaker's Author/AuthorDate. Separate correction/test commit `9b7fbda51` adds
+one aggregate recovery budget, hard-kill/error-aware direct Git custody, and
+coherent replacement of stale launcher identity. Source/artifact separation and
+unknown comparison without a fingerprint remain unchanged.
+
+Worktree `/Users/rynfar/.t3/worktrees/meridian/codex-backlog-oldest-first`, branch
+`codex/backlog-oldest-first`. Six same-assertion controls fail the uncorrected
+contribution; ten recovery controls pass corrected source. Actual credentialless
+SOURCE HTTP on Darwin fails unchanged main's SHA assertion and passes corrected
+source with an isolated empty named profile, no model calls and joined cleanup.
+This deterministic 65 MiB fingerprint file-cap trigger is **not** actual loaded
+Linux symptom evidence. [Runnable escrow, mappings, review findings, versions
+and durable sanitized proof](evidence/1330-source-build-identity.md).
+
+Final code-head local gates: 5,574 pass / zero fail / 35 skip in 21 isolated
+`npm test` invocations; standalone typecheck/build pass. Owner root checkout was
+not written. Implementation task did not push, open a PR, merge, close the
+source, post comments or release. Parent owns the final independent review,
+final-head CI and any authorized PR/merge/unchanged-source closure. This is not
+a cleared backlog or an authorization to resume other items concurrently.
+
 ## Telemetry #1328 bounded correction — 2026-10-10
 
 The authored source `f1418967` is incorporated as `a996d282`; maintainer source/escrow checkpoint `52ebd351` preserves contributor credit and fixes fixture joins plus the per-write blocking description. The identical short-lock control fails current main; 26 focused tests pass. Full local gates pass 5,562 tests / zero failures / 35 skips, standalone typecheck and build with Bun 1.3.11 / Node 22.22.3. Real Linux x64 denial-path HTTP controls retain 1/6 contended rows before versus 6/6 after, with 2/2 ordinary rows on both sides. The same final escrow/source hashes were executed, all direct children/pipes joined, and final counts follow shutdown. Stronger stress and startup failures are preserved explicitly. [Evidence and root adversarial review](evidence/1328-telemetry-busy.md) qualify the remaining long-lock/drop/latency limits; no actual OpenCode-client or successful-model claim is made.

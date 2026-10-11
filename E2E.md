@@ -290,6 +290,33 @@ retry tests reproduced four idle/busy/extra-usage timing failures. This is not
 a green full-suite claim. Deployment and browser verification on meridian-dev
 remain gated on its owner's source-versus-bundled runtime decision.
 
+### Source identity when fingerprinting fails (#1330)
+
+```sh
+node scripts/e2e-source-build-identity.mjs
+# Same final assertions fail on unchanged main:
+E2E_BUILD_SOURCE_REF=6e510dbcb7713997e0299a7f954ee73bb45ceae7 \
+  node scripts/e2e-source-build-identity.mjs
+```
+
+This credentialless gate archives the selected committed source into an owned
+fixture repository, adds a 65 MiB sparse untracked file, dynamically imports the
+actual TypeScript server with Bun, and reads real loopback `/health` and
+`/build-status`. It uses an isolated HOME/config/session tree and empty named
+Claude profile; no owner credentials or model requests. Assert actual fixture
+startup SHA, branch and dirty facts, no hash/counter certification, unknown disk
+comparison, and immutability after an input edit and HEAD move. It never edits
+or rebuilds the input checkout. Requires installed dependencies, Bun, Node, Git,
+tar and the installed native Claude executable.
+
+**Verified 2026-10-11:** Darwin arm64, Bun 1.3.14, Node driver 24.20.0, Agent SDK
+0.2.141 and native Claude Code 2.1.284. Same SHA assertion fails unchanged main
+and passes corrected source; both listener/backend cleanup and direct worker
+joins are recorded. This is a deterministic fingerprint file-cap failure, **not
+an actual loaded-Linux-host timeout reproduction**. Stock Node controls also
+cover the aggregate Git budget, TERM resistance, detached/stale launcher facts
+and failed status. [Source mappings, sanitized proof and limits](docs/maintenance/evidence/1330-source-build-identity.md).
+
 ## Antigravity subscription CLI backend
 
 ```sh
