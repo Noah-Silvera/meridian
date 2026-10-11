@@ -51,6 +51,7 @@ export type {
 export { runTransformHook, runObserveHook, buildPipeline, createRequestContext } from "./transform"
 import { claudeLog } from "../logger"
 import { replayBudgetFor, trimReplayHistory } from "./replayBudget"
+import { haikuThinkingCompatibilityError } from "./haikuCompatibility"
 import { PASSTHROUGH_DENY_REASON } from "./passthroughDenial"
 import { exec as execCallback } from "child_process"
 import { promisify } from "util"
@@ -2267,6 +2268,9 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
 
         // Overlay profile-specific env vars (e.g. CLAUDE_CONFIG_DIR for multi-account)
         const profileEnv = { ...sdkModelDefaults, ...cleanEnv, ...profile.env }
+        const resolvedHaikuModel = () => model === "haiku"
+          ? envOverrides?.ANTHROPIC_DEFAULT_HAIKU_MODEL ?? profileEnv.ANTHROPIC_DEFAULT_HAIKU_MODEL
+          : undefined
         const profileCredentialStore = credentialStoreForProfile(profile)
 
         // Drops transport metadata some clients pass through `system`.
@@ -2462,6 +2466,10 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
           if (betaFilter.stripped.length > 0) {
             plog(`[PROXY] ${requestMeta.requestId} thinking disabled (thinking beta stripped by ${getBetaPolicyFromEnv()} policy)`)
           }
+        }
+        const thinkingCompatibilityError = haikuThinkingCompatibilityError(resolvedHaikuModel(), thinking)
+        if (thinkingCompatibilityError) {
+          return c.json({ type: "error", error: { type: "invalid_request_error", message: thinkingCompatibilityError } }, 400)
         }
         const requestedDisplay = thinking && thinking.type !== "disabled" ? thinking.display : undefined
         if (requestedDisplay !== undefined && !isCliThinkingDisplay(requestedDisplay)) {
@@ -3164,7 +3172,8 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
       const freshReplay = !isResume && !resumeSessionId
       // Client usage describes its resumed context, not the fresh transcript;
       // derive replay capacity from the actual SDK model's window instead.
-      let currentReplayBudget = replayBudgetFor(model)
+      const modelReplayBudget = () => replayBudgetFor(model, resolvedHaikuModel())
+      let currentReplayBudget = modelReplayBudget()
       let replayTrimRetries = 0
       let replayOmittedMessages = 0
       const trimReplay = (attempt: number, reason?: string): boolean => {
@@ -3452,7 +3461,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
         if (!freshReplay) return
         // Stripping [1m] changes capacity, not only billing: the previously
         // valid replay must fit the smaller window before another SDK call.
-        currentReplayBudget = replayBudgetFor(model)
+        currentReplayBudget = modelReplayBudget()
         trimReplay(replayTrimRetries, reason)
         rebuildReplayPrompt()
       }
@@ -3467,7 +3476,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
         const shrunkBudget = counts
           ? Math.floor(currentReplayBudget * (Number(counts[2]) / Number(counts[1])) * 0.9)
           : Math.floor(currentReplayBudget * 0.5)
-        currentReplayBudget = Math.min(shrunkBudget, replayBudgetFor(model))
+        currentReplayBudget = Math.min(shrunkBudget, modelReplayBudget())
         // A live tail is indivisible. Reissuing the same kept history only
         // spends another upstream attempt to obtain the identical overflow.
         if (!trimReplay(replayTrimRetries + 1)) return false
@@ -4100,7 +4109,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
                     sdkUuidMap.length = 0
                     for (let i = 0; i < allMessages.length; i++) sdkUuidMap.push(null)
                     yield* runSdkQueryAttempt(buildQueryOptions({
-                      prompt: buildFreshPrompt(executionMessages, sanitizeOpts, renderReplayToolName, replayBudgetFor(model), "non_stream_resume_replay"),
+                      prompt: buildFreshPrompt(executionMessages, sanitizeOpts, renderReplayToolName, modelReplayBudget(), "non_stream_resume_replay"),
                       model, workingDirectory, clientWorkingDirectory: promptClientWorkingDirectory, clientEnvironmentMayDifferFromProxy, systemContext, claudeExecutable,
                       passthrough, stream: false, sdkAgents, passthroughMcp, cleanEnv: profileEnv, envOverrides, hasDeferredTools, earlyStop: earlyStopEnabled,
                       resumeSessionId: undefined, isUndo: false, resumeSessionAtUuid: undefined, forkSessionId: managedForkTarget?.sessionId, sdkHooks, blockedTools: pipelineCtx.blockedTools, incompatibleTools: pipelineCtx.incompatibleTools, mcpServerName: adapter.getMcpServerName(), allowedMcpTools: pipelineCtx.allowedMcpTools, onStderr,
@@ -4161,7 +4170,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
                     sdkUuidMap.length = 0
                     for (let i = 0; i < allMessages.length; i++) sdkUuidMap.push(null)
                     yield* runSdkQueryAttempt(buildQueryOptions({
-                      prompt: buildFreshPrompt(executionMessages, sanitizeOpts, renderReplayToolName, replayBudgetFor(model), "non_stream_model_fallback"),
+                      prompt: buildFreshPrompt(executionMessages, sanitizeOpts, renderReplayToolName, modelReplayBudget(), "non_stream_model_fallback"),
                       model, workingDirectory, clientWorkingDirectory: promptClientWorkingDirectory, clientEnvironmentMayDifferFromProxy, systemContext, claudeExecutable,
                       passthrough, stream: false, sdkAgents, passthroughMcp, cleanEnv: profileEnv, envOverrides, hasDeferredTools, earlyStop: earlyStopEnabled,
                       resumeSessionId: undefined, isUndo: false, resumeSessionAtUuid: undefined, forkSessionId: managedForkTarget?.sessionId, sdkHooks, blockedTools: pipelineCtx.blockedTools, incompatibleTools: pipelineCtx.incompatibleTools, mcpServerName: adapter.getMcpServerName(), allowedMcpTools: pipelineCtx.allowedMcpTools, onStderr,
@@ -4750,6 +4759,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
             requestSource,
             model,
             requestModel: body.model || undefined,
+            resolvedModel: resolvedHaikuModel(),
             mode: "non-stream",
             isResume,
             isPassthrough: passthrough,
@@ -5276,7 +5286,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
               observeStreamFailure(() => telemetryStore.record({
                 requestId: requestMeta.requestId, timestamp: Date.now(), adapter: adapter.name,
                 profileId: profile.id, routeKind, routeGroupId, routeAttempt, requestSource, model,
-                requestModel: body.model || undefined, mode: "stream", isResume,
+                requestModel: body.model || undefined, resolvedModel: resolvedHaikuModel(), mode: "stream", isResume,
                 isPassthrough: passthrough, hasDeferredTools, toolCount, lineageType,
                 messageCount: allMessages.length, sdkSessionId: currentSessionId || resumeSessionId,
                 status: classified.status, queueWaitMs, sessionQueueWaitMs: requestMeta.sessionQueueWaitMs,
@@ -5439,7 +5449,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
                       sdkUuidMap.length = 0
                       for (let i = 0; i < allMessages.length; i++) sdkUuidMap.push(null)
                       yield* runSdkQueryAttempt(buildQueryOptions({
-                        prompt: buildFreshPrompt(executionMessages, sanitizeOpts, renderReplayToolName, replayBudgetFor(model), "stream_resume_replay"),
+                        prompt: buildFreshPrompt(executionMessages, sanitizeOpts, renderReplayToolName, modelReplayBudget(), "stream_resume_replay"),
                         model, workingDirectory, clientWorkingDirectory: promptClientWorkingDirectory, clientEnvironmentMayDifferFromProxy, systemContext, claudeExecutable,
                         passthrough, stream: true, sdkAgents, passthroughMcp, cleanEnv: profileEnv, envOverrides, hasDeferredTools, earlyStop: earlyStopEnabled,
                         resumeSessionId: undefined, isUndo: false, resumeSessionAtUuid: undefined, forkSessionId: managedForkTarget?.sessionId, sdkHooks, blockedTools: pipelineCtx.blockedTools, incompatibleTools: pipelineCtx.incompatibleTools, mcpServerName: adapter.getMcpServerName(), allowedMcpTools: pipelineCtx.allowedMcpTools, onStderr,
@@ -5496,7 +5506,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
                       sdkUuidMap.length = 0
                       for (let i = 0; i < allMessages.length; i++) sdkUuidMap.push(null)
                       yield* runSdkQueryAttempt(buildQueryOptions({
-                        prompt: buildFreshPrompt(executionMessages, sanitizeOpts, renderReplayToolName, replayBudgetFor(model), "stream_model_fallback"),
+                        prompt: buildFreshPrompt(executionMessages, sanitizeOpts, renderReplayToolName, modelReplayBudget(), "stream_model_fallback"),
                         model, workingDirectory, clientWorkingDirectory: promptClientWorkingDirectory, clientEnvironmentMayDifferFromProxy, systemContext, claudeExecutable,
                         passthrough, stream: true, sdkAgents, passthroughMcp, cleanEnv: profileEnv, envOverrides, hasDeferredTools, earlyStop: earlyStopEnabled,
                         resumeSessionId: undefined, isUndo: false, resumeSessionAtUuid: undefined, forkSessionId: managedForkTarget?.sessionId, sdkHooks, blockedTools: pipelineCtx.blockedTools, incompatibleTools: pipelineCtx.incompatibleTools, mcpServerName: adapter.getMcpServerName(), allowedMcpTools: pipelineCtx.allowedMcpTools, onStderr,
@@ -6837,6 +6847,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
                   routeAttempt,
                   model,
                   requestModel: body.model || undefined,
+                  resolvedModel: resolvedHaikuModel(),
                   mode: "stream",
                   isResume,
                   isPassthrough: passthrough,
@@ -7378,6 +7389,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
                   requestSource,
                   model,
                   requestModel: body.model || undefined,
+                  resolvedModel: resolvedHaikuModel(),
                   mode: "stream",
                   isResume,
                   isPassthrough: passthrough,
@@ -7524,6 +7536,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
                   requestSource,
                   model,
                   requestModel: body.model || undefined,
+                  resolvedModel: resolvedHaikuModel(),
                   mode: "stream",
                   isResume,
                   isPassthrough: passthrough,
@@ -7598,6 +7611,7 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
                 requestSource,
                 model,
                 requestModel: body.model || undefined,
+                resolvedModel: resolvedHaikuModel(),
                 mode: "stream",
                 isResume,
                 isPassthrough: passthrough,

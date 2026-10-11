@@ -1,4 +1,31 @@
-## Current oldest-first continuation — 2026-10-11
+## Owner-priority Haiku 5.5 release — 2026-10-11
+
+The owner subsequently requested Haiku 5.5 support ASAP and a release. That
+supersedes the earlier **no-release authorization** snapshot below for this
+bounded release only; it does not waive backlog holds, actual-model/client,
+physical custody, package or CI gates. Work is isolated on `codex/haiku-55-release`
+from main `e68b9bcadd`, without any unfinished preparations folded in.
+
+[Implementation, discriminating controls and remaining gates](evidence/haiku55-support.md)
+cover the new pin/discovery/native 1M replay capacity, tier-aware estimates,
+legacy-pin persistence and native CLI minimum. Independent review's disabled/
+omitted control and legacy-price findings were corrected. Credentialless native
+helper/SDK wire controls pass; actual Pi received a weekly rate-limit refusal.
+The first Bun spawn observer was unqualified and its private fixtures/grant stay
+retained; the corrected native-Node live script remains unexecuted. Weekly usage
+was 100%, Extra Usage disabled, reset 2026-10-11 16:59:59 UTC. **Do not land or
+publish based on mocks/loopback/quota refusal; obtain the missing real flow.**
+
+Preserved separately, never part of this release: #1310 at remote `b0884cd3`
+(no delivery PR yet), held #1334, scrub/#1214/Antigravity preparations, and SQLite
+custody WIP at `/Users/rynfar/repos/meridian-claude-sidecalls-stack-1292-20261008`
+(HEAD unchanged `964e2d18`). The custody child finished 34 native worker controls
+and 23 focused journal/custody tests, but its full suite had **52 failures**.
+Its `docs/maintenance/evidence/sqlite1219-native-custody-20261011/` records the
+original seven-file WIP escrow, new native changes and remaining gates; do not
+blindly commit, treat those failures as the former three, or approve the feature.
+
+## Current oldest-first continuation — 2026-10-11 (earlier snapshot)
 
 Remaining newer-slice read-only triage refreshed 24 named items beyond #1261:
 20 open non-draft/non-release items and four excluded drafts. No item was

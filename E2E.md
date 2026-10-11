@@ -7720,7 +7720,38 @@ retain the native failed-before missing-service assertion and the corrected buil
 No model/credential flow is implicated by this generated-unit-only change.
 
 
-### Credentialless telemetry contention (#1328)
+## Haiku 5.5 release gate
+
+The [bounded preparation/evidence](docs/maintenance/evidence/haiku55-support.md)
+separates native wire compatibility from actual model/client acceptance.
+
+`bun scripts/e2e-haiku55-native-compat.mjs` runs actual CLI/SDK under a localhost-only
+macOS sandbox, using production option/pin helpers and scripted Anthropic replies.
+Set `E2E_MERIDIAN_ROOT` for the exact before tree and `E2E_NATIVE_BIN` for the same
+qualified CLI. It proves default/legacy pins, native adaptive conversion, pre-spawn
+refusal of unsupported explicit controls, public materialization and physical joins.
+**Not a real model, production HTTP or coding-client acceptance gate.**
+
+The actual gate requires native Node (not Bun) and an authorized private, supported
+access-only profile. Never include the profile in artifacts:
+
+```sh
+E2E_ALLOW_LIVE_MODEL=1 E2E_LIVE_PROFILE_FILE=/private/owned-profile.json \
+E2E_PI_PACKAGE=/absolute/actual/pi-package E2E_NATIVE_BIN=/absolute/qualified/claude \
+E2E_MERIDIAN_ROOT=/absolute/built-or-fresh-installed-package \
+node scripts/e2e-haiku55-pi-live.mjs
+```
+
+Require actual Pi read execution and model receipt read-back, HTTP catalog/pin data,
+public SDK history naming Haiku 5.5 (not a client-model echo), and original production
+SDK gate plus both pipe closures. Preserve fixtures/grants when custody is unknown.
+The corrected Node harness is unqualified until executed; the earlier Bun refusal
+and vacuous cleanup flag are explicitly negative evidence. Do not retry a blocked
+account, change accounts, refresh owner credentials or enable paid usage without
+authorization. Repeat the successful flow from an independent npm-pack installation
+and the published registry artifact before claiming a completed release.
+
+## Credentialless telemetry contention (#1328)
 
 `scripts/e2e-telemetry-busy.mjs` runs the actual CLI/SDK denial path with isolated state in a Linux namespace containing only loopback. Supply a valid task-owned machine-id, locked dependencies, Node 22.22.3 and Bun 1.3.11. It refuses non-loopback networking. Run `bun scripts/e2e-telemetry-busy.mjs "$PWD" /evidence`; retain its JSON and child logs. Both ordinary requests must yield 401 and produce two rows. During six further 401 requests a real second process holds SQLite writes for 400 ms with 100 ms gaps. Require six new rows after holder release and joined server shutdown. The unchanged main baseline loses rows; the correction preserves six. Source and escrow hashes, failed controls and scope are in [the durable review](docs/maintenance/evidence/1328-telemetry-busy.md).
 

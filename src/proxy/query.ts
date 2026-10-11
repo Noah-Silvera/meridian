@@ -12,6 +12,7 @@ import { createOpencodeMcpServer } from "../mcpTools"
 import { createPassthroughMcpServer, PASSTHROUGH_MCP_NAME } from "./passthroughTools"
 import { env, envInt } from "../env"
 import type { Effort } from "./effort"
+import { haikuThinkingCompatibilityError } from "./haikuCompatibility"
 
 /**
  * Env defaults that quiet the subprocess's own outbound traffic.
@@ -542,6 +543,11 @@ export function buildQueryOptions(ctx: QueryContext, abortController?: AbortCont
     effort, thinking, taskBudget, outputFormat, betas, settingSources, codeSystemPrompt, clientSystemPrompt,
     memory, dreaming, sharedMemory, maxBudgetUsd, maxOutputTokens, fallbackModel, sdkDebug, additionalDirectories,
   } = ctx
+  const resolvedModel = model === "haiku"
+    ? ctx.envOverrides?.ANTHROPIC_DEFAULT_HAIKU_MODEL ?? cleanEnv.ANTHROPIC_DEFAULT_HAIKU_MODEL ?? "claude-haiku-5-5"
+    : model
+  const thinkingError = haikuThinkingCompatibilityError(resolvedModel, thinking)
+  if (thinkingError) throw new Error(thinkingError)
   const cwdNote = buildCwdNote(workingDirectory, clientWorkingDirectory, {
     clientEnvironmentMayDifferFromProxy,
     passthrough,

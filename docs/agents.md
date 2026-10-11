@@ -105,7 +105,7 @@ Configure V2's Anthropic provider to use Meridian. Keep the existing settings in
 ```json
 {
   "model": "anthropic/claude-opus-4-6",
-  "small_model": "anthropic/claude-haiku-4-5",
+  "small_model": "anthropic/claude-haiku-5-5",
   "providers": {
     "anthropic": {
       "settings": {
@@ -114,7 +114,7 @@ Configure V2's Anthropic provider to use Meridian. Keep the existing settings in
       },
       "models": {
         "claude-opus-4-6": { "name": "Claude Opus 4.6" },
-        "claude-haiku-4-5": { "name": "Claude Haiku 4.5" }
+        "claude-haiku-5-5": { "name": "Claude Haiku 5.5" }
       }
     }
   }
@@ -154,7 +154,7 @@ first request against a freshly started server used to see only the built-in
 entries and reject a Meridian-only variant with `provider.no-route`. The plugin
 now caches each successful discovery in
 `~/.config/meridian/opencode-v2-catalog.json` and seeds the catalog from it
-before the first request, so a cold `anthropic/claude-haiku-4-5#xhigh` works.
+before the first request, so a cold `anthropic/claude-haiku-5-5#xhigh` works.
 The cache is refreshed by every successful discovery and is ignored after seven
 days.
 
@@ -209,7 +209,7 @@ Add a provider to `~/.config/crush/crush.json`:
         { "id": "claude-opus-4-7",   "name": "Claude Opus 4.7 (1M)",    "context_window": 1000000, "default_max_tokens": 32768, "can_reason": true, "supports_attachments": true },
         { "id": "claude-sonnet-4-6", "name": "Claude Sonnet 4.6",       "context_window": 200000, "default_max_tokens": 64000, "can_reason": true, "supports_attachments": true },
         { "id": "claude-opus-4-6",   "name": "Claude Opus 4.6 (1M)",    "context_window": 1000000, "default_max_tokens": 32768, "can_reason": true, "supports_attachments": true },
-        { "id": "claude-haiku-4-5-20251001", "name": "Claude Haiku 4.5", "context_window": 200000,  "default_max_tokens": 16384, "can_reason": true, "supports_attachments": true }
+        { "id": "claude-haiku-5-5", "name": "Claude Haiku 5.5", "context_window": 1000000, "default_max_tokens": 16384, "can_reason": true, "supports_attachments": true }
       ]
     }
   }
@@ -237,7 +237,7 @@ Add Meridian as a custom model provider in `~/.factory/settings.json`:
     { "model": "claude-opus-4-7",         "name": "Opus 4.7 (Meridian)",   "provider": "anthropic", "baseUrl": "http://127.0.0.1:3456", "apiKey": "x" },
     { "model": "claude-sonnet-4-6",       "name": "Sonnet 4.6 (Meridian)", "provider": "anthropic", "baseUrl": "http://127.0.0.1:3456", "apiKey": "x" },
     { "model": "claude-opus-4-6",         "name": "Opus 4.6 (Meridian)",   "provider": "anthropic", "baseUrl": "http://127.0.0.1:3456", "apiKey": "x" },
-    { "model": "claude-haiku-4-5-20251001", "name": "Haiku 4.5 (Meridian)", "provider": "anthropic", "baseUrl": "http://127.0.0.1:3456", "apiKey": "x" }
+    { "model": "claude-haiku-5-5", "name": "Haiku 5.5 (Meridian)", "provider": "anthropic", "baseUrl": "http://127.0.0.1:3456", "apiKey": "x" }
   ]
 }
 ```
