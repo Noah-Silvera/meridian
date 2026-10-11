@@ -72,7 +72,7 @@ refused before spawning. The earlier report had three failures, including an
 inappropriate legacy-effort assertion; its original hash/report remain in JSON.
 The corrected final script has a new hash and a separate qualified run.
 
-## Actual Pi attempt — refused, NOT accepted
+## Initial Pi attempt — refused, NOT accepted
 
 [`e2e-haiku55-pi-live.mjs`](../../../scripts/e2e-haiku55-pi-live.mjs) escrows
 actual Pi controller/read, production HTTP, supported access-only profile,
@@ -91,18 +91,46 @@ parent's history directory, and intended HOME isolation did not take effect.
 The corrected script sets HOME before module loading, scopes history lookup to
 that actual OAuth-profile directory, and restores the lookup environment. It
 requires **native Node**, a witnessed production SDK gate whenever a turn was
-attempted, and original close plus both pipes. It has only syntax/pure-resolution
-validation so far and must be requalified before acceptance. Do not
-rerun the provider while the account remains blocked.
+attempted, and original close plus both pipes. At that initial checkpoint it had
+only syntax/pure-resolution validation. The later actual-flow record below
+supersedes that missing runtime check, not the negative receipt. Never rerun the
+provider while the account remains blocked.
 
 Read-only usage at `2026-10-11T10:24:46.914Z` showed **100% general weekly usage**,
 Extra Usage disabled, reset `2026-10-11T16:59:59.901Z`. No account switch, paid
 usage change or parent-initiated model retry occurred. Original credentials were
 read to create one private access-only grant, not refreshed or rewritten.
 
+## Updated actual and Nix-installed flows
+
+After the reset, read-only availability from the same default credential store
+was weekly 0%, five-hour 3%, Extra Usage disabled. The parent did not refresh or
+write the credential store, change accounts, or enable paid usage. The expired
+old grant remains retained; a new access-only grant used an already-valid current
+token. One native-Node fixture run exposed a missing documented Pi adapter header
+and remains negative. Its reviewed correction did not change product code.
+
+[Actual Pi and independent installed-package read-back](haiku55-live-20261011/README.md)
+now both **PASS** with Pi 1.1.0, native Node 24.20.0, CLI 2.1.296, SDK 0.2.141,
+Darwin ARM64: exact owned read and receipt, both HTTP 200s with Pi/effective-pin
+metadata, public native assistant-model history, original SDK gates/both pipes
+joined. Current qualified harness hash is
+`38b43a6b17b35442dff065b18239a24390c1fb1d7dcaa490856a75d8f11c476d`.
+The earlier negative and vacuous Bun cleanup remain unqualified.
+
+[Installed Nix Linux ARM64](haiku55-nix-installed-20261011/README.md) independently
+built exact archive `34bcb028`, executed the actual default-selected CLI 2.1.295
+and installed SDK 0.2.141, and passed 10 credentialless cases with nine physical
+process/both-pipe joins. Independent R5 cleared only that bounded evidence.
+It does not prove real Nix macOS execution, full SSE protocol conformance,
+universal subprocess faults, or legacy snake-case manual budgets.
+[Latest exact-head CI](haiku55-final-head-ci-20261011.json) includes successful
+test/Nix/Linux/macOS/Home Manager checks; its cancelled push duplicate was
+superseded normally. Final evidence head must be rechecked before landing.
+
 ## Release gates
 
-**Held — neither feature landing nor release acceptance is established.** Final
+**Not landed or released; final review/CI/merge/publication gates remain.** Final
 local product-source gates now pass: **5,615 tests / 35 skip / 0 fail** over 21
 isolated invocations, standalone typecheck and build. The final pass follows the
 corrected global-mock alias assertion and non-Max catalog assertion (Haiku 5.5's
@@ -121,12 +149,14 @@ Its separately installed CLI 2.1.296 version probe closes the original process a
 both pipes; SDK is 0.2.141. No SDK/model generation was requested by this smoke.
 [Exact script](../../../scripts/e2e-haiku55-package-smoke.mjs) and
 [artifact integrity/hash/receipt](haiku55-package-smoke.json) are durable. This
-is an unpublished candidate `1.80.0` tarball, **not a registry release**; actual
-installed-package model acceptance remains open.
+is an unpublished candidate `1.80.0` tarball, **not a registry release**. Its
+later actual installed-package model flow is separately qualified above; the
+smoke itself still proves no generation.
 
-Complete final-head CI, targeted follow-up review, independently installed
-npm-pack HTTP/native checks, and actual Haiku 5.5 through Pi and the installed
-package with native Node and physical cleanup. Preserve missing evidence even
+Complete final-head CI and targeted final review of the integrated evidence and
+harness. Preserve the qualified native-Node actual Pi/source and independent
+installed-package flows and their physical cleanup receipts; do not replace them
+with the smoke. Preserve missing evidence even
 when structural checks pass. Follow Release Please; normal code PRs squash with
 `--match-head-commit`, release PRs use `--merge`. Never run manual version/tag/npm
 publication. Publication requires release/tag/registry/provenance/installed-flow

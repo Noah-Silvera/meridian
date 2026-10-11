@@ -7745,11 +7745,17 @@ node scripts/e2e-haiku55-pi-live.mjs
 Require actual Pi read execution and model receipt read-back, HTTP catalog/pin data,
 public SDK history naming Haiku 5.5 (not a client-model echo), and original production
 SDK gate plus both pipe closures. Preserve fixtures/grants when custody is unknown.
-The corrected Node harness is unqualified until executed; the earlier Bun refusal
-and vacuous cleanup flag are explicitly negative evidence. Do not retry a blocked
+The corrected Node harness now qualifies the recorded Darwin ARM64 / Node 24.20.0 /
+Pi 1.1.0 / CLI 2.1.296 / SDK 0.2.141 tuple through both source-built and independently
+npm-pack-installed Meridian. Its documented Pi/profile headers, one real owned
+read, exact receipt, two HTTP 200s, per-session native Haiku 5.5 history and all
+original process/both-pipe joins are in [the actual-flow record](docs/maintenance/evidence/haiku55-live-20261011/README.md).
+The earlier Bun refusal/vacuous cleanup and missing-header Node run remain negative;
+new success does not clear their historical custody. Do not retry a blocked
 account, change accounts, refresh owner credentials or enable paid usage without
-authorization. Repeat the successful flow from an independent npm-pack installation
-and the published registry artifact before claiming a completed release.
+authorization. Repeat the successful flow from the published registry artifact
+before claiming a completed release. Nix Linux installed-native credentialless
+qualification is separate; Nix macOS installed-native execution remains missing.
 
 ## Credentialless telemetry contention (#1328)
 

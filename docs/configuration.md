@@ -88,7 +88,8 @@ or newer** (including when selecting a system/custom executable). Haiku 5.5 has
 a native **1M context window**, up to **128K output tokens**, and adaptive
 thinking controlled by effort; it does not need a `haiku[1m]` SDK alias.
 Explicit `claude-haiku-4-5` and dated 4.5 requests retain their requested model
-and 200k replay budget. Shell/profile pins and `MERIDIAN_DEFAULT_HAIKU_MODEL`
+and 200k context window (default replay allowance 160k, with a 20k reserve).
+Shell/profile pins and `MERIDIAN_DEFAULT_HAIKU_MODEL`
 still work; replay capacity follows the effective Haiku pin.
 
 The tested Claude Code 2.1.296 / Agent SDK 0.2.141 path cannot reliably honor
@@ -98,8 +99,13 @@ an authoritative adapter-off setting or a beta policy that disables thinking.
 Use adaptive thinking with effort, omit display/use `summarized`, or explicitly
 select Haiku 4.5. The native CLI converts legacy enabled/manual-budget inputs
 to adaptive thinking on Haiku 5.5; a numeric thinking budget is not an adaptive
-hard cap. Use effort for depth, or keep an explicit 4.5 pin for manual budgets. This is a native SDK limitation, not a claim that Haiku 5.5's
-API lacks those controls.
+hard cap. Use effort for depth, or keep an explicit 4.5 pin for manual thinking.
+The tested native SDK path preserves a 4.5 budget supplied as SDK-style
+`budgetTokens`; conventional Anthropic `budget_tokens` is not translated by the
+existing HTTP builder and was not preserved in the retained control. This change
+does not fix that pre-existing limitation or guarantee snake-case manual budgets.
+The disabled/omitted refusal is a native SDK limitation, not a claim that Haiku
+5.5's API lacks those controls.
 
 Built-in cost estimates use Haiku 5.5's short-prompt rates ($0.10 input / $0.50
 output per million tokens). Above **100,000 prompt tokens**, including cache

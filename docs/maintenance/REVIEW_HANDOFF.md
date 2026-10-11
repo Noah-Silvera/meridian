@@ -10,21 +10,36 @@ from main `e68b9bcadd`, without any unfinished preparations folded in.
 cover the new pin/discovery/native 1M replay capacity, tier-aware estimates,
 legacy-pin persistence and native CLI minimum. Independent review's disabled/
 omitted control and legacy-price findings were corrected. Credentialless native
-helper/SDK wire controls pass; actual Pi received a weekly rate-limit refusal.
-The first Bun spawn observer was unqualified and its private fixtures/grant stay
-retained; the corrected native-Node live script remains unexecuted. Weekly usage
-was 100%, Extra Usage disabled, reset 2026-10-11 16:59:59 UTC. **Do not land or
-publish based on mocks/loopback/quota refusal; obtain the missing real flow.**
+helper/SDK wire controls pass. The initial Pi attempt received a weekly
+rate-limit refusal; its Bun observer/private fixtures/grant remain unqualified
+and retained. After the reset, read-only default-store availability was weekly
+0%, five-hour 3%, Extra Usage disabled. No parent refresh/account/paid change
+occurred. A native-Node attempt exposed a missing documented Pi header; its
+negative receipt was preserved, the fixture corrected and independently reviewed.
+**Actual Pi and independently npm-pack-installed read-back now both pass**:
+Pi 1.1.0, Node 24.20.0, CLI 2.1.296, SDK 0.2.141, Darwin ARM64, exact owned read,
+200 Pi/pin metadata, public native Haiku 5.5 history, original gates/both pipes
+joined. [New actual-flow evidence and remaining gates](evidence/haiku55-live-20261011/README.md)
+qualify only these flows, not the original negative or registry/publication.
 
 Draft delivery #1337 remains held. At exact head `cb42827e`, `test` passed but
 Nix evaluation/package checks failed because the pinned nixpkgs/native fallback
 outpaced the raised CLI floor. The generated nixpkgs-only lock correction has
 actual before-fail/after-pass evaluation on three package targets and the Home
 Manager check; independent round 4 found no material lock defect. This is not
-build or model acceptance. [Nix evidence and remaining verification](evidence/haiku55-nix-floor.md)
-require exact-new-head Linux/macOS builds, rendered Home Manager check, selected
-Nix-native executable/version/SDK compatibility, and the missing real flows.
-No floor reduction, broken-package bypass, paid usage, auth refresh or release.
+build or model acceptance. Subsequently, exact head `34bcb028` passed latest
+`test`, Linux/macOS Nix builds, rendered Home Manager and other relevant checks.
+The cancelled same-head push Home Manager run was superseded by the successful
+PR run under declared concurrency; raw GitHub draft/UNSTABLE state is preserved.
+[Exact-head CI receipt](evidence/haiku55-final-head-ci-20261011.json) still needs
+rechecking after final evidence integration. [Actual installed Nix Linux ARM64](evidence/haiku55-nix-installed-20261011/README.md)
+built the exact archive and passed 10 credentialless cases with selected CLI
+2.1.295, Node 22.23.3, SDK 0.2.141, nine original close/both-pipe witnesses.
+Independent R5 found no material bounded evidence issue; full SSE conformance,
+universal subprocess faults, legacy snake-case budget preservation and Nix
+macOS installed-native execution remain explicitly unqualified.
+No floor reduction, broken-package bypass, paid usage, parent auth refresh or
+release has occurred. Final review/CI/guarded merge and release/registry gates remain.
 
 Preserved separately, never part of this release: #1310 at remote `b0884cd3`
 (no delivery PR yet), held #1334, scrub/#1214/Antigravity preparations, and SQLite

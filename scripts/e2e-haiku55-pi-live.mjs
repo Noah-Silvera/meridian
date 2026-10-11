@@ -94,7 +94,8 @@ try {
   const modelsPath = join(agentDir, 'models.json'), authPath = join(agentDir, 'auth.json')
   writeFileSync(authPath, '{}', { mode: 0o600 })
   writeFileSync(modelsPath, JSON.stringify({ providers: { 'owned-meridian-live': { api: 'anthropic-messages', baseUrl,
-    apiKey: 'owned-loopback-placeholder', headers: { 'user-agent': `pi-coding-agent/${metadata.version}`, 'x-session-affinity': `haiku55-${randomUUID()}` },
+    apiKey: 'owned-loopback-placeholder', headers: { 'x-meridian-agent': 'pi', 'x-meridian-profile': profiles[0].id,
+      'user-agent': `pi-coding-agent/${metadata.version}`, 'x-session-affinity': `haiku55-${randomUUID()}` },
     models: [{ id: clientModel, name: 'Haiku 5.5 owned live gate', reasoning: true, input: ['text'], contextWindow: 1000000,
       maxTokens: 2048, cost: { input: 0.1, output: 0.5, cacheRead: 0.01, cacheWrite: 0.125 } }] } } }), { mode: 0o600 })
   modelRuntime = await pi.ModelRuntime.create({ authPath, modelsPath, allowModelNetwork: false })
@@ -125,9 +126,11 @@ try {
   assert(last && !['error', 'aborted'].includes(last.stopReason), report.clientTerminal.error ?? 'Actual Pi did not complete')
   assert(reads.length > 0, 'Actual Pi did not execute the real owned read')
   assert(JSON.stringify(last.content).includes(receipt), 'The model did not read back the tool receipt')
+  report.actualReadBack = true
+  report.ownedReadCount = reads.length
   const rows = await (await fetch(`${baseUrl}/telemetry/requests?limit=20&hops=1`)).json()
-  assert(rows.length && rows.every(row => row.adapter === 'pi' && row.resolvedModel === report.model), 'Actual Pi routing/pin metadata missing')
   report.requests = rows.map(({ adapter, model, requestModel, resolvedModel, sdkSessionId, status, error }) => ({ adapter, model, requestModel, resolvedModel, sdkSessionId, status, error }))
+  assert(rows.length && rows.every(row => row.adapter === 'pi' && row.resolvedModel === report.model), 'Actual Pi routing/pin metadata missing')
   const require = createRequire(join(repo, 'package.json'))
   const sdkEntry = require.resolve('@anthropic-ai/claude-agent-sdk')
   report.sdk = JSON.parse(readFileSync(join(dirname(sdkEntry), 'package.json'), 'utf8')).version
