@@ -1,5 +1,35 @@
 ## Current oldest-first continuation — 2026-10-11
 
+The queue is **not exhausted**. Following #1336, fresh six-repository pagination
+finds 53 open items. The stricter actionable-work reassessment identifies actual
+unfinished implementation, not only landing readiness: #1219 native custody and
+three offline recovery failures, new #1301 incorporation/actual-client harness,
+#1297's unprepared six-commit cache-replay partition, and #1294 native queue/idle
+proof. Parent independently refreshes approvals: **#1277, #1281 and #1282 are
+already approved**, so an older residual label claiming those contracts remain
+unapproved is stale; implementation still requires their real acceptance gates.
+
+Older #1219 native process-wide custody correction is active in its preserved
+isolated worktree/branch `codex/sqlite-inspection-current-1219-20261010`, based at
+`964e2d18`. Seven uncommitted native v4/close-witness/WAL-diagnostic files were
+backed up before continuation and must be retained. Extend actual WIP, not just
+the older committed review; do not repeat proven physical xWrite preparation,
+weaken uncertain-close fences, or quietly make inspection writable. Parent owns
+integration/publication; this is not whole-SQL acceptance.
+
+In parallel, #1310's new historical-image correction is implemented at
+`2469e947`, based on main `e68b9bcadd` after #1336. Direct/HTTP baseline controls
+fail and candidate passes; full local suite is 5,583 pass / 0 fail / 35 skip,
+plus typecheck/build. Actual earendil Pi 1.1.0 controller/read/persistence and
+loopback capture reproduce client image counts 1,2,4; production pure framing
+emits 1,1,1, keeping result/context/current media intact. This is **scripted
+materialization**, not SDK/model acceptance. [Runnable actual-Pi escrow,
+source hashes and three exact before/after receipts](evidence/1310-historical-image-feedback.md)
+preserve missing real-model materialization/read-back/checkpoint/resume and
+package gates. #1310 stays open and the preparation stays held until complete.
+No exhausted-quota model retry, account switch, paid usage or release occurred.
+Continue useful implementation while those particular gates wait.
+
 Remaining newer-slice read-only triage refreshed 24 named items beyond #1261:
 20 open non-draft/non-release items and four excluded drafts. No item was
 already landing-ready; no repository changes, tests or auth/model calls were

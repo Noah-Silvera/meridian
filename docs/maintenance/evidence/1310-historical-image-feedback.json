@@ -1,0 +1,1329 @@
+{
+  "baselineCommit": "e68b9bcadd7597d16724a3655b7322cd02a965ad",
+  "coreCommit": "2469e9477331e000e20b7bf7a7201f0ce2a742b4",
+  "harnessSha256": "2bef48781a31f6bbabdbfabe3b45259235ea5ca65eb950f3861097302244591d",
+  "baselineReplaySha256": "eece315252262db7219dab5cbd32a85486c5699f6387aecc908c83e83ffd09dc",
+  "candidateReplaySha256": "4c9ca471fb9e152b2cdcdebd1123b9aab2b0bf4d181c4b52ca2c99ad90511919",
+  "actualNativeSdkModelAcceptance": false,
+  "arms": {
+    "candidate": {
+      "exitCode": 0,
+      "report": {
+        "issue": 1310,
+        "mode": "capture-only-actual-Pi-scripted-Anthropic",
+        "expect": "candidate",
+        "runtime": {
+          "bun": "1.3.14",
+          "nodeCompatibility": "v24.3.0",
+          "platform": "darwin/arm64"
+        },
+        "isolation": {
+          "ownedHome": true,
+          "explicitEmptyPiAuth": true,
+          "resourceDiscovery": false,
+          "retries": false,
+          "compaction": false,
+          "cacheWarming": false
+        },
+        "artifacts": "/private/tmp/meridian-backlog-202607/resume-20261011/1310-pi-candidate-r2",
+        "capture": [
+          {
+            "round": 0,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 1,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 1
+          },
+          {
+            "round": 1,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 2,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [
+              "toolu_owned_0_0"
+            ],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 2
+          },
+          {
+            "round": 2,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 4,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 0
+          }
+        ],
+        "framing": [
+          {
+            "arm": "feedback-0",
+            "historicalA": 1,
+            "historicalB": 1,
+            "currentImages": 0,
+            "closeIndex": 9,
+            "currentIndex": 10
+          },
+          {
+            "arm": "feedback-1",
+            "historicalA": 1,
+            "historicalB": 1,
+            "currentImages": 0,
+            "closeIndex": 15,
+            "currentIndex": 16
+          },
+          {
+            "arm": "feedback-2",
+            "historicalA": 1,
+            "historicalB": 1,
+            "currentImages": 0,
+            "closeIndex": 24,
+            "currentIndex": 25
+          },
+          {
+            "arm": "same-byte-current",
+            "historicalA": 1,
+            "historicalB": 1,
+            "currentImages": 1,
+            "closeIndex": 26,
+            "currentIndex": 27
+          },
+          {
+            "arm": "different-current",
+            "historicalA": 1,
+            "historicalB": 1,
+            "currentImages": 1,
+            "closeIndex": 26,
+            "currentIndex": 27
+          },
+          {
+            "arm": "two-same-current",
+            "historicalA": 1,
+            "historicalB": 1,
+            "currentImages": 2,
+            "closeIndex": 26,
+            "currentIndex": 27
+          }
+        ],
+        "framingAttempts": [
+          {
+            "sourceHistoricalACopies": 1,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 1,
+            "expectedCurrentImages": 0,
+            "observedCurrentImages": 0,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 2,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 1,
+            "expectedCurrentImages": 0,
+            "observedCurrentImages": 0,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 4,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 1,
+            "expectedCurrentImages": 0,
+            "observedCurrentImages": 0,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 4,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 1,
+            "expectedCurrentImages": 1,
+            "observedCurrentImages": 1,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 4,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 1,
+            "expectedCurrentImages": 1,
+            "observedCurrentImages": 1,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 4,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 1,
+            "expectedCurrentImages": 2,
+            "observedCurrentImages": 2,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          }
+        ],
+        "live": [],
+        "liveStructuralAcceptance": false,
+        "issueAcceptance": false,
+        "missingEvidence": [
+          "native-SDK-provider-model-acceptance",
+          "real-SDK-materialized-attachment-read-back",
+          "native-tool-checkpoint",
+          "live-ordinary-resume"
+        ],
+        "pi": {
+          "name": "@earendil-works/pi-coding-agent",
+          "version": "1.1.0",
+          "packageDir": "/Users/rynfar/.volta/tools/image/packages/@earendil-works/pi-coding-agent/lib/node_modules/@earendil-works/pi-coding-agent",
+          "entry": "/Users/rynfar/.volta/tools/image/packages/@earendil-works/pi-coding-agent/lib/node_modules/@earendil-works/pi-coding-agent/dist/index.js",
+          "integration": "exported createAgentSession / SessionManager / ModelRuntime"
+        },
+        "readWitness": {
+          "tool": "exported Pi createReadToolDefinition with owned-path operations",
+          "calls": [
+            {
+              "id": "toolu_owned_0_0",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            },
+            {
+              "id": "toolu_owned_1_0",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            },
+            {
+              "id": "toolu_owned_1_1",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            }
+          ],
+          "persistence": "SessionManager.create -> actual controller message entries -> SessionManager.open -> buildSessionContext",
+          "feedbackACounts": [
+            1,
+            2,
+            4
+          ],
+          "materialization": "scripted endpoint owned copies, NOT SDK attachment files"
+        },
+        "fixtures": {
+          "mime": "image/png",
+          "hashEncoding": "sha256-of-canonical-base64",
+          "A": "d0e0a512bd5665e6d0c4e9eb67031c9e6622299bc5c8100be7579f545cc47626",
+          "distinctB": "02f03194540df5cdef4be7016035daef266d3ec43cf4238ec257fecd057ec8b1",
+          "differentCurrentC": "e5f47fe17060a3df7987a7f04c28c0f50f756e35be420b4a994ed0288748a202",
+          "dimensions": [
+            48,
+            48
+          ]
+        },
+        "captureControls": [
+          {
+            "arm": "same-byte-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            "currentImageCount": 1,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          },
+          {
+            "arm": "different-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            "currentImageCount": 1,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          },
+          {
+            "arm": "two-same-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              2
+            ],
+            "currentImageCount": 2,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          }
+        ],
+        "productionImport": {
+          "root": "/Users/rynfar/.t3/worktrees/meridian/codex-backlog-oldest-first",
+          "module": "/Users/rynfar/.t3/worktrees/meridian/codex-backlog-oldest-first/src/proxy/replay.ts",
+          "moduleSha256": "4c9ca471fb9e152b2cdcdebd1123b9aab2b0bf4d181c4b52ca2c99ad90511919",
+          "functions": [
+            "normalizeStructuredUserContent",
+            "flattenAssistantContent",
+            "frameStructuredReplay"
+          ],
+          "scope": "production pure import fed real Pi wire; NOT full HTTP/SDK acceptance"
+        },
+        "cleanup": {
+          "ownedPiSessionsSettledAndDisposed": true,
+          "ownedServersClosed": true,
+          "sdkQueries": 0,
+          "nativeChildJoins": [],
+          "nativeProcessCustody": "no native CLI/SDK query started"
+        },
+        "result": "PASS"
+      }
+    },
+    "baseline-red": {
+      "exitCode": 1,
+      "report": {
+        "issue": 1310,
+        "mode": "capture-only-actual-Pi-scripted-Anthropic",
+        "expect": "candidate",
+        "runtime": {
+          "bun": "1.3.14",
+          "nodeCompatibility": "v24.3.0",
+          "platform": "darwin/arm64"
+        },
+        "isolation": {
+          "ownedHome": true,
+          "explicitEmptyPiAuth": true,
+          "resourceDiscovery": false,
+          "retries": false,
+          "compaction": false,
+          "cacheWarming": false
+        },
+        "artifacts": "/private/tmp/meridian-backlog-202607/resume-20261011/1310-pi-baseline-red-r2",
+        "capture": [
+          {
+            "round": 0,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 1,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 1
+          },
+          {
+            "round": 1,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 2,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [
+              "toolu_owned_0_0"
+            ],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 2
+          },
+          {
+            "round": 2,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 4,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 0
+          }
+        ],
+        "framing": [
+          {
+            "arm": "feedback-0",
+            "historicalA": 1,
+            "historicalB": 1,
+            "currentImages": 0,
+            "closeIndex": 9,
+            "currentIndex": 10
+          }
+        ],
+        "framingAttempts": [
+          {
+            "sourceHistoricalACopies": 1,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 1,
+            "expectedCurrentImages": 0,
+            "observedCurrentImages": 0,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 2,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 2,
+            "expectedCurrentImages": 0,
+            "observedCurrentImages": 0,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          }
+        ],
+        "live": [],
+        "liveStructuralAcceptance": false,
+        "issueAcceptance": false,
+        "missingEvidence": [
+          "native-SDK-provider-model-acceptance",
+          "real-SDK-materialized-attachment-read-back",
+          "native-tool-checkpoint",
+          "live-ordinary-resume"
+        ],
+        "pi": {
+          "name": "@earendil-works/pi-coding-agent",
+          "version": "1.1.0",
+          "packageDir": "/Users/rynfar/.volta/tools/image/packages/@earendil-works/pi-coding-agent/lib/node_modules/@earendil-works/pi-coding-agent",
+          "entry": "/Users/rynfar/.volta/tools/image/packages/@earendil-works/pi-coding-agent/lib/node_modules/@earendil-works/pi-coding-agent/dist/index.js",
+          "integration": "exported createAgentSession / SessionManager / ModelRuntime"
+        },
+        "readWitness": {
+          "tool": "exported Pi createReadToolDefinition with owned-path operations",
+          "calls": [
+            {
+              "id": "toolu_owned_0_0",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            },
+            {
+              "id": "toolu_owned_1_0",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            },
+            {
+              "id": "toolu_owned_1_1",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            }
+          ],
+          "persistence": "SessionManager.create -> actual controller message entries -> SessionManager.open -> buildSessionContext",
+          "feedbackACounts": [
+            1,
+            2,
+            4
+          ],
+          "materialization": "scripted endpoint owned copies, NOT SDK attachment files"
+        },
+        "fixtures": {
+          "mime": "image/png",
+          "hashEncoding": "sha256-of-canonical-base64",
+          "A": "d0e0a512bd5665e6d0c4e9eb67031c9e6622299bc5c8100be7579f545cc47626",
+          "distinctB": "02f03194540df5cdef4be7016035daef266d3ec43cf4238ec257fecd057ec8b1",
+          "differentCurrentC": "e5f47fe17060a3df7987a7f04c28c0f50f756e35be420b4a994ed0288748a202",
+          "dimensions": [
+            48,
+            48
+          ]
+        },
+        "captureControls": [
+          {
+            "arm": "same-byte-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            "currentImageCount": 1,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          },
+          {
+            "arm": "different-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            "currentImageCount": 1,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          },
+          {
+            "arm": "two-same-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              2
+            ],
+            "currentImageCount": 2,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          }
+        ],
+        "productionImport": {
+          "root": "/private/tmp/meridian-backlog-202607/resume-20261011/1310-baseline",
+          "module": "/private/tmp/meridian-backlog-202607/resume-20261011/1310-baseline/src/proxy/replay.ts",
+          "moduleSha256": "eece315252262db7219dab5cbd32a85486c5699f6387aecc908c83e83ffd09dc",
+          "functions": [
+            "normalizeStructuredUserContent",
+            "flattenAssistantContent",
+            "frameStructuredReplay"
+          ],
+          "scope": "production pure import fed real Pi wire; NOT full HTTP/SDK acceptance"
+        },
+        "failure": {
+          "stage": "production-framing",
+          "name": "AssertionError",
+          "operator": "strictEqual",
+          "message": "Gate failed; raw exception/transcript diagnostics deliberately withheld"
+        },
+        "cleanup": {
+          "ownedPiSessionsSettledAndDisposed": true,
+          "ownedServersClosed": true,
+          "sdkQueries": 0,
+          "nativeChildJoins": [],
+          "nativeProcessCustody": "no native CLI/SDK query started"
+        },
+        "result": "FAIL"
+      }
+    },
+    "baseline-characterization": {
+      "exitCode": 0,
+      "report": {
+        "issue": 1310,
+        "mode": "capture-only-actual-Pi-scripted-Anthropic",
+        "expect": "baseline",
+        "runtime": {
+          "bun": "1.3.14",
+          "nodeCompatibility": "v24.3.0",
+          "platform": "darwin/arm64"
+        },
+        "isolation": {
+          "ownedHome": true,
+          "explicitEmptyPiAuth": true,
+          "resourceDiscovery": false,
+          "retries": false,
+          "compaction": false,
+          "cacheWarming": false
+        },
+        "artifacts": "/private/tmp/meridian-backlog-202607/resume-20261011/1310-pi-baseline-characterization-r2",
+        "capture": [
+          {
+            "round": 0,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 1,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 1
+          },
+          {
+            "round": 1,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 2,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [
+              "toolu_owned_0_0"
+            ],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 2
+          },
+          {
+            "round": 2,
+            "route": "POST /v1/messages -> scripted loopback SSE",
+            "historicalACopies": 4,
+            "distinctBCopies": 1,
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0
+            ],
+            "currentImageCount": 0,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [
+              "read"
+            ],
+            "stream": true,
+            "model": "owned-scripted-image-fixture",
+            "persistedReadResults": 0
+          }
+        ],
+        "framing": [
+          {
+            "arm": "feedback-0",
+            "historicalA": 1,
+            "historicalB": 1,
+            "currentImages": 0,
+            "closeIndex": 9,
+            "currentIndex": 10
+          },
+          {
+            "arm": "feedback-1",
+            "historicalA": 2,
+            "historicalB": 1,
+            "currentImages": 0,
+            "closeIndex": 16,
+            "currentIndex": 17
+          },
+          {
+            "arm": "feedback-2",
+            "historicalA": 4,
+            "historicalB": 1,
+            "currentImages": 0,
+            "closeIndex": 27,
+            "currentIndex": 28
+          },
+          {
+            "arm": "same-byte-current",
+            "historicalA": 4,
+            "historicalB": 1,
+            "currentImages": 1,
+            "closeIndex": 29,
+            "currentIndex": 30
+          },
+          {
+            "arm": "different-current",
+            "historicalA": 4,
+            "historicalB": 1,
+            "currentImages": 1,
+            "closeIndex": 29,
+            "currentIndex": 30
+          },
+          {
+            "arm": "two-same-current",
+            "historicalA": 4,
+            "historicalB": 1,
+            "currentImages": 2,
+            "closeIndex": 29,
+            "currentIndex": 30
+          }
+        ],
+        "framingAttempts": [
+          {
+            "sourceHistoricalACopies": 1,
+            "expectedHistoricalACopies": 1,
+            "observedHistoricalACopies": 1,
+            "expectedCurrentImages": 0,
+            "observedCurrentImages": 0,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 2,
+            "expectedHistoricalACopies": 2,
+            "observedHistoricalACopies": 2,
+            "expectedCurrentImages": 0,
+            "observedCurrentImages": 0,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 4,
+            "expectedHistoricalACopies": 4,
+            "observedHistoricalACopies": 4,
+            "expectedCurrentImages": 0,
+            "observedCurrentImages": 0,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 4,
+            "expectedHistoricalACopies": 4,
+            "observedHistoricalACopies": 4,
+            "expectedCurrentImages": 1,
+            "observedCurrentImages": 1,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 4,
+            "expectedHistoricalACopies": 4,
+            "observedHistoricalACopies": 4,
+            "expectedCurrentImages": 1,
+            "observedCurrentImages": 1,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          },
+          {
+            "sourceHistoricalACopies": 4,
+            "expectedHistoricalACopies": 4,
+            "observedHistoricalACopies": 4,
+            "expectedCurrentImages": 2,
+            "observedCurrentImages": 2,
+            "sourceImmutable": true,
+            "toolResultIdentityPreserved": true
+          }
+        ],
+        "live": [],
+        "liveStructuralAcceptance": false,
+        "issueAcceptance": false,
+        "missingEvidence": [
+          "native-SDK-provider-model-acceptance",
+          "real-SDK-materialized-attachment-read-back",
+          "native-tool-checkpoint",
+          "live-ordinary-resume"
+        ],
+        "pi": {
+          "name": "@earendil-works/pi-coding-agent",
+          "version": "1.1.0",
+          "packageDir": "/Users/rynfar/.volta/tools/image/packages/@earendil-works/pi-coding-agent/lib/node_modules/@earendil-works/pi-coding-agent",
+          "entry": "/Users/rynfar/.volta/tools/image/packages/@earendil-works/pi-coding-agent/lib/node_modules/@earendil-works/pi-coding-agent/dist/index.js",
+          "integration": "exported createAgentSession / SessionManager / ModelRuntime"
+        },
+        "readWitness": {
+          "tool": "exported Pi createReadToolDefinition with owned-path operations",
+          "calls": [
+            {
+              "id": "toolu_owned_0_0",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            },
+            {
+              "id": "toolu_owned_1_0",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            },
+            {
+              "id": "toolu_owned_1_1",
+              "name": "read",
+              "isError": false,
+              "exactA": true
+            }
+          ],
+          "persistence": "SessionManager.create -> actual controller message entries -> SessionManager.open -> buildSessionContext",
+          "feedbackACounts": [
+            1,
+            2,
+            4
+          ],
+          "materialization": "scripted endpoint owned copies, NOT SDK attachment files"
+        },
+        "fixtures": {
+          "mime": "image/png",
+          "hashEncoding": "sha256-of-canonical-base64",
+          "A": "d0e0a512bd5665e6d0c4e9eb67031c9e6622299bc5c8100be7579f545cc47626",
+          "distinctB": "02f03194540df5cdef4be7016035daef266d3ec43cf4238ec257fecd057ec8b1",
+          "differentCurrentC": "e5f47fe17060a3df7987a7f04c28c0f50f756e35be420b4a994ed0288748a202",
+          "dimensions": [
+            48,
+            48
+          ]
+        },
+        "captureControls": [
+          {
+            "arm": "same-byte-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            "currentImageCount": 1,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          },
+          {
+            "arm": "different-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            "currentImageCount": 1,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          },
+          {
+            "arm": "two-same-current",
+            "route": "actual Pi prompt(images) -> POST /v1/messages -> scripted loopback SSE",
+            "roles": [
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user",
+              "assistant",
+              "user"
+            ],
+            "imageCounts": [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              2
+            ],
+            "currentImageCount": 2,
+            "toolResultIds": [
+              "toolu_owned_0_0",
+              "toolu_owned_1_0",
+              "toolu_owned_1_1"
+            ],
+            "declaredTools": [],
+            "stream": true,
+            "model": "owned-scripted-image-fixture"
+          }
+        ],
+        "productionImport": {
+          "root": "/private/tmp/meridian-backlog-202607/resume-20261011/1310-baseline",
+          "module": "/private/tmp/meridian-backlog-202607/resume-20261011/1310-baseline/src/proxy/replay.ts",
+          "moduleSha256": "eece315252262db7219dab5cbd32a85486c5699f6387aecc908c83e83ffd09dc",
+          "functions": [
+            "normalizeStructuredUserContent",
+            "flattenAssistantContent",
+            "frameStructuredReplay"
+          ],
+          "scope": "production pure import fed real Pi wire; NOT full HTTP/SDK acceptance"
+        },
+        "cleanup": {
+          "ownedPiSessionsSettledAndDisposed": true,
+          "ownedServersClosed": true,
+          "sdkQueries": 0,
+          "nativeChildJoins": [],
+          "nativeProcessCustody": "no native CLI/SDK query started"
+        },
+        "result": "PASS"
+      }
+    }
+  }
+}

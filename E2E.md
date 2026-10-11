@@ -6082,6 +6082,28 @@ For the affected client, install Oh My Pi in a disposable directory and run `E2E
 
 On 2026-09-25, macOS arm64, Oh My Pi 13.18.0, Agent SDK 0.2.141 and Haiku 4.5, the same client fixture on unchanged 1.76.6 answered that the user attached an image; after the provenance change it answered that the blue image was historical. A separate Sonnet 5 HTTP probe also answered incorrectly before and distinguished both no-new-image and real-new-red-image cases afterward. These observed model answers support the fix but are not deterministic assertions; the structural checks are the regression gate.
 
+### Historical image feedback (#1310), separately held
+
+`scripts/e2e-pi-image-feedback.mjs` uses actual earendil Pi public SDK/controller/
+read APIs with explicit `E2E_PI_PACKAGE` and `E2E_PI_VERSION`. Safe default mode
+is credentialless: a scripted loopback SSE producer asks actual Pi to read owned
+PNG files, persists/restores its image-bearing results, and captures the **1,2,4**
+client-history feedback. Production pure framing must emit **1,1,1**, retaining
+result identity, distinct history and genuine current images. Apply the identical
+candidate assertion to an exact unchanged-main archive; `E2E_EXPECT=baseline`
+only characterizes the defective counts, not acceptance. This is scripted
+materialization plus actual client capture, **not** native SDK/model proof.
+
+The explicit `--live` mode requires `E2E_ALLOW_LIVE_MODEL=1`, an owned private
+supported profile file and native Claude path as documented in the header.
+It forwards actual Pi through production Meridian and original SDK, observes
+supported session history, and requires original native close plus both captured
+pipe closures before joined cleanup. Its structural arms disable tools; actual
+model attachment read-back and native checkpoint gates therefore remain even
+after a future structural pass. [Exact receipts, scope and unfinished gates](docs/maintenance/evidence/1310-historical-image-feedback.md)
+keep #1310 held. Do not substitute Oh My Pi, hand-written agent headers, mocked
+SDK tests or a different implicated model for the remaining accepted flow.
+
 ## E66: Interrupted turn after a settled checkpoint
 
 Run `bun scripts/e2e-checkpoint-interrupted-turn.mjs` with Claude Max authentication (`PROBE_MODEL` overrides the default `claude-opus-5-5`). The gate starts an isolated in-process proxy with its own workdir and session store. An OpenCode-keyed first turn must produce one client `read` call. The follow-up then carries that call's complete result, a partial assistant text turn, and a new user turn — the history OpenCode keeps after a stream dies with `upstream_idle`. Require status 200 and `isResume=true` in `/telemetry/requests`. The negative control repeats the shape with a `tool_result` for an unknown call id and requires `isResume=false`, so only a settled checkpoint resumes.
