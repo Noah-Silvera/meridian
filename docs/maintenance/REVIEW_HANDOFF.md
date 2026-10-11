@@ -16,6 +16,16 @@ retained; the corrected native-Node live script remains unexecuted. Weekly usage
 was 100%, Extra Usage disabled, reset 2026-10-11 16:59:59 UTC. **Do not land or
 publish based on mocks/loopback/quota refusal; obtain the missing real flow.**
 
+Draft delivery #1337 remains held. At exact head `cb42827e`, `test` passed but
+Nix evaluation/package checks failed because the pinned nixpkgs/native fallback
+outpaced the raised CLI floor. The generated nixpkgs-only lock correction has
+actual before-fail/after-pass evaluation on three package targets and the Home
+Manager check; independent round 4 found no material lock defect. This is not
+build or model acceptance. [Nix evidence and remaining verification](evidence/haiku55-nix-floor.md)
+require exact-new-head Linux/macOS builds, rendered Home Manager check, selected
+Nix-native executable/version/SDK compatibility, and the missing real flows.
+No floor reduction, broken-package bypass, paid usage, auth refresh or release.
+
 Preserved separately, never part of this release: #1310 at remote `b0884cd3`
 (no delivery PR yet), held #1334, scrub/#1214/Antigravity preparations, and SQLite
 custody WIP at `/Users/rynfar/repos/meridian-claude-sidecalls-stack-1292-20261008`
@@ -24,6 +34,15 @@ and 23 focused journal/custody tests, but its full suite had **52 failures**.
 Its `docs/maintenance/evidence/sqlite1219-native-custody-20261011/` records the
 original seven-file WIP escrow, new native changes and remaining gates; do not
 blindly commit, treat those failures as the former three, or approve the feature.
+Fresh independent custody review found two material admission gaps (ordinary
+preflight before atomic reservation, and memory ATTACH/backup disk lifetimes).
+A bounded immutable snapshot correction passes native getter controls, with
+further structural own-property correction and pure before/after coverage under
+review. Recovery diagnostics/corruption classification pass 72 focused controls;
+all three genuine recovery flows still fail. Nonmutating committed-WAL authority
+is a concrete native prerequisite, not permission for a writable fallback.
+Admission corrections are in progress in that separate preserved worktree;
+fixture setup corrections remain unexecuted pending its serialized native build.
 
 ## Current oldest-first continuation — 2026-10-11 (earlier snapshot)
 
