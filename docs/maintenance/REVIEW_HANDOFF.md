@@ -108,6 +108,12 @@ are already merged in live main; their older pending entries below are historica
 
 ## Build identity #1330 implementation handoff — 2026-10-11
 
+**Historical implementation snapshot, superseded by the current continuation
+above.** Its OPEN source state, `6e510dbcb` remote base and former worktree branch
+are facts at implementation handoff, not present delivery status. #1333 later
+landed and #1330 closed as verified above. Preserve the evidence and authored
+mappings below; do not resume its old pending delivery instructions.
+
 Selected bounded implementation only, base `6e510dbcb`. Source #1330 remains
 OPEN at `c040c19be` on read-only refresh; remote main still equals the specified
 base. Signed authored `-x` incorporation `c040c19be` → `d2c2a6463` preserves

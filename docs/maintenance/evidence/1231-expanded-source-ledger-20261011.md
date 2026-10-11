@@ -110,11 +110,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 01 — P0
 
-**SHA:** `b06c0aab235ee01e9b2c17715deeabbd08c22a81`  
-**Parent:** `f299fe06e72411b786380b5212edea79cd13966a`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-09-30T19:13:30-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:30:43-05:00`  
+**SHA:** `b06c0aab235ee01e9b2c17715deeabbd08c22a81`
+
+**Parent:** `f299fe06e72411b786380b5212edea79cd13966a`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-09-30T19:13:30-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:30:43-05:00`
+
 **Subject (label only):** fix(session): add an auxiliary-request independence cause
 
 **Behavior:** Add auxiliary-request independence cause and server placeholder; does not yet detect auxiliaries.
@@ -131,11 +136,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 02 — P0
 
-**SHA:** `b8d2bbeeeb37fa1d797981c0da17efc1d871014d`  
-**Parent:** `b06c0aab235ee01e9b2c17715deeabbd08c22a81`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-09-30T19:16:40-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:30:43-05:00`  
+**SHA:** `b8d2bbeeeb37fa1d797981c0da17efc1d871014d`
+
+**Parent:** `b06c0aab235ee01e9b2c17715deeabbd08c22a81`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-09-30T19:16:40-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:30:43-05:00`
+
 **Subject (label only):** fix(claude-code): detect auto-mode classifier side requests
 
 **Behavior:** Add internal isAuxiliaryRequest hook; explicit request-class auxiliary or tool-less nonstream classifier closing-stop heuristic.
@@ -153,11 +163,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 03 — P0
 
-**SHA:** `cdb7dce8299c137f0adc677d012f99e8db412f95`  
-**Parent:** `b8d2bbeeeb37fa1d797981c0da17efc1d871014d`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-09-30T19:20:53-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:30:43-05:00`  
+**SHA:** `cdb7dce8299c137f0adc677d012f99e8db412f95`
+
+**Parent:** `b8d2bbeeeb37fa1d797981c0da17efc1d871014d`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-09-30T19:20:53-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:30:43-05:00`
+
 **Subject (label only):** fix(session): keep Claude Code classifier requests off the session mapping and lease
 
 **Behavior:** Classify auxiliary once; skip turn lease/lineage publication and recovery grant; preserve tree registration and skip lost-race check.
@@ -174,11 +189,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 04 — P0
 
-**SHA:** `76d72bac5a0482dbd4e797a7ff670fb30cde6c56`  
-**Parent:** `cdb7dce8299c137f0adc677d012f99e8db412f95`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-09-30T19:37:55-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:31:15-05:00`  
+**SHA:** `76d72bac5a0482dbd4e797a7ff670fb30cde6c56`
+
+**Parent:** `cdb7dce8299c137f0adc677d012f99e8db412f95`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-09-30T19:37:55-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:31:15-05:00`
+
 **Subject (label only):** test: live gate for Claude Code auto-mode session isolation
 
 **Behavior:** Add native E71 auto-mode script and instructions; historical source evidence, not a run in this review.
@@ -194,11 +214,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 05 — P0
 
-**SHA:** `22566e8ac0b9e079bb0d28c0eb4aa05207c56070`  
-**Parent:** `76d72bac5a0482dbd4e797a7ff670fb30cde6c56`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-09-30T21:11:01-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:31:16-05:00`  
+**SHA:** `22566e8ac0b9e079bb0d28c0eb4aa05207c56070`
+
+**Parent:** `76d72bac5a0482dbd4e797a7ff670fb30cde6c56`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-09-30T21:11:01-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:31:16-05:00`
+
 **Subject (label only):** docs: record live acceptance and correct the auxiliary hook contract
 
 **Behavior:** Correct internal auxiliary-hook documentation and append historical E71 acceptance claims.
@@ -214,11 +239,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 06 — P1
 
-**SHA:** `28974dca1d7d2aa1f3bf0067fd97b4120938fbeb`  
-**Parent:** `22566e8ac0b9e079bb0d28c0eb4aa05207c56070`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-10-01T15:18:19-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:31:58-05:00`  
+**SHA:** `28974dca1d7d2aa1f3bf0067fd97b4120938fbeb`
+
+**Parent:** `22566e8ac0b9e079bb0d28c0eb4aa05207c56070`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-10-01T15:18:19-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:31:58-05:00`
+
 **Subject (label only):** refactor(routing): route accounts by the conversation's root session key
 
 **Behavior:** Add internal getRootSessionId/rootSessionIdOf; priority process-local assignment and sticky routing use root while mapping/durable route/limit bench stay own-key.
@@ -237,11 +267,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 07 — P1
 
-**SHA:** `91f70e64aca345da4e7e3c51efa382a11d57749a`  
-**Parent:** `28974dca1d7d2aa1f3bf0067fd97b4120938fbeb`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-10-01T15:31:47-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:31:59-05:00`  
+**SHA:** `91f70e64aca345da4e7e3c51efa382a11d57749a`
+
+**Parent:** `28974dca1d7d2aa1f3bf0067fd97b4120938fbeb`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-10-01T15:31:47-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:31:59-05:00`
+
 **Subject (label only):** fix(claude-code): key each Agent-tool subagent apart from its parent session
 
 **Behavior:** Validate x-claude-code-agent-id with 1–128 alnum/underscore/hyphen; derive sid:agent:id only with metadata sid; keep raw parent identity and test separate resumes/routing.
@@ -260,11 +295,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 08 — P1
 
-**SHA:** `78b40833d20b86204cfa0fdd4e15cd43f8c63a97`  
-**Parent:** `91f70e64aca345da4e7e3c51efa382a11d57749a`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-10-01T15:34:24-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:32:25-05:00`  
+**SHA:** `78b40833d20b86204cfa0fdd4e15cd43f8c63a97`
+
+**Parent:** `91f70e64aca345da4e7e3c51efa382a11d57749a`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-10-01T15:34:24-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:32:25-05:00`
+
 **Subject (label only):** test: live gate for Claude Code subagent session isolation
 
 **Behavior:** Add foreground native subagent E72 script and source before/after claims.
@@ -280,11 +320,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 09 — P1
 
-**SHA:** `cb8d1a59a103e006359e048a9d0275cf814351ee`  
-**Parent:** `78b40833d20b86204cfa0fdd4e15cd43f8c63a97`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-10-01T15:51:19-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:32:25-05:00`  
+**SHA:** `cb8d1a59a103e006359e048a9d0275cf814351ee`
+
+**Parent:** `78b40833d20b86204cfa0fdd4e15cd43f8c63a97`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-10-01T15:51:19-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:32:25-05:00`
+
 **Subject (label only):** test: type the Claude Code subagent key test context
 
 **Behavior:** Replace unsafe test-context casts with typed Hono Context helper; no production change.
@@ -299,11 +344,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 10 — P1
 
-**SHA:** `50d4a59d0ca5e55e625ec801fa2a9eb187d508ed`  
-**Parent:** `cb8d1a59a103e006359e048a9d0275cf814351ee`  
-**Author:** Noah Passalacqua <noah@passabilities.dev>  
-**AuthorDate:** `2026-10-01T15:56:41-05:00`  
-**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:32:25-05:00`  
+**SHA:** `50d4a59d0ca5e55e625ec801fa2a9eb187d508ed`
+
+**Parent:** `cb8d1a59a103e006359e048a9d0275cf814351ee`
+
+**Author:** Noah Passalacqua <noah@passabilities.dev>
+
+**AuthorDate:** `2026-10-01T15:56:41-05:00`
+
+**Committer / CommitDate:** Noah Passalacqua <noah@passabilities.dev> / `2026-10-04T09:32:25-05:00`
+
 **Subject (label only):** docs: note the backgrounded Claude Code session replay limitation
 
 **Behavior:** Document one-full-history replay for newly backgrounded main/fork-of-main agent key; later turns resume.
@@ -319,11 +369,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 11 — P2 + hygiene
 
-**SHA:** `32e8f198fac1c496cba7978dd6b06d7a7efd5da3`  
-**Parent:** `50d4a59d0ca5e55e625ec801fa2a9eb187d508ed`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-04T23:27:01-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-04T23:27:01-05:00`  
+**SHA:** `32e8f198fac1c496cba7978dd6b06d7a7efd5da3`
+
+**Parent:** `50d4a59d0ca5e55e625ec801fa2a9eb187d508ed`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-04T23:27:01-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-04T23:27:01-05:00`
+
 **Subject (label only):** cache fix
 
 **Behavior:** Detect agent-summary fork by final-user prompt; replay latest assistant step only with recursively clipped strings (2,000 chars); hook feeds reduced replay. Adds accidental node_modules symlink and source summary harness.
@@ -346,11 +401,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 12 — P2
 
-**SHA:** `a879e8b223bf59d07c7e0b71ca0dc32b027adc36`  
-**Parent:** `32e8f198fac1c496cba7978dd6b06d7a7efd5da3`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T00:11:41-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T00:11:41-05:00`  
+**SHA:** `a879e8b223bf59d07c7e0b71ca0dc32b027adc36`
+
+**Parent:** `32e8f198fac1c496cba7978dd6b06d7a7efd5da3`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T00:11:41-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T00:11:41-05:00`
+
 **Subject (label only):** fix(claude-code): stop a progress summary colliding with the turn it forks
 
 **Behavior:** Prevent auxiliary from rebinding complete durable tool checkpoint or sharing/deciding cached MCP server/defer pin; retain session pin lookup.
@@ -369,11 +429,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 13 — Hygiene
 
-**SHA:** `88cdd4db08f6d036efeb566c6299403614c88f55`  
-**Parent:** `a879e8b223bf59d07c7e0b71ca0dc32b027adc36`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T00:11:44-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T00:11:44-05:00`  
+**SHA:** `88cdd4db08f6d036efeb566c6299403614c88f55`
+
+**Parent:** `a879e8b223bf59d07c7e0b71ca0dc32b027adc36`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T00:11:44-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T00:11:44-05:00`
+
 **Subject (label only):** chore: untrack the worktree's node_modules symlink
 
 **Behavior:** Remove exact accidental node_modules symlink added by11, no product delta.
@@ -388,11 +453,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 14 — P2 + P8 + hygiene
 
-**SHA:** `407f115614e8a5379151be276b8b5000588e29ed`  
-**Parent:** `88cdd4db08f6d036efeb566c6299403614c88f55`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T01:59:25-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T01:59:25-05:00`  
+**SHA:** `407f115614e8a5379151be276b8b5000588e29ed`
+
+**Parent:** `88cdd4db08f6d036efeb566c6299403614c88f55`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T01:59:25-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T01:59:25-05:00`
+
 **Subject (label only):** draft of both fixes
 
 **Behavior:** Add classifier prompt-growth hook, stable 16,384-char chunks/2,048-char tail cache layout and optional 1h cache points; disable child caching; request-specific auxiliary idle default30s; detect cache_control refusal, retry plain and disable layout for process. Reintroduce symlink.
@@ -428,11 +498,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 15 — Hygiene
 
-**SHA:** `0615b1a1e1eb5630d173ff06f1572164cb1bf382`  
-**Parent:** `407f115614e8a5379151be276b8b5000588e29ed`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T02:00:45-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T02:00:45-05:00`  
+**SHA:** `0615b1a1e1eb5630d173ff06f1572164cb1bf382`
+
+**Parent:** `407f115614e8a5379151be276b8b5000588e29ed`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T02:00:45-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T02:00:45-05:00`
+
 **Subject (label only):** removed node modules
 
 **Behavior:** Remove identical accidental symlink from14, net final node_modules delta empty.
@@ -447,11 +522,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 16 — P2
 
-**SHA:** `9b15f19f7e0bdb929437210a7a268c2c858ab6f4`  
-**Parent:** `0615b1a1e1eb5630d173ff06f1572164cb1bf382`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T03:38:45-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T03:38:45-05:00`  
+**SHA:** `9b15f19f7e0bdb929437210a7a268c2c858ab6f4`
+
+**Parent:** `0615b1a1e1eb5630d173ff06f1572164cb1bf382`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T03:38:45-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T03:38:45-05:00`
+
 **Subject (label only):** last fixes
 
 **Behavior:** For owned cache layout also disable CLI git instructions; broaden refusal fallback rationale to TTL rejection; update cache script/claims.
@@ -473,11 +553,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 17 — P3
 
-**SHA:** `2a5d97266fb71ca6775a128071b3c80475ed4fee`  
-**Parent:** `9b15f19f7e0bdb929437210a7a268c2c858ab6f4`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T12:14:46-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T12:45:30-05:00`  
+**SHA:** `2a5d97266fb71ca6775a128071b3c80475ed4fee`
+
+**Parent:** `9b15f19f7e0bdb929437210a7a268c2c858ab6f4`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T12:14:46-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T12:45:30-05:00`
+
 **Subject (label only):** fix: hold deferred-tool passthrough sessions to the single-turn cap
 
 **Behavior:** Keep deferred-marked passthrough under single-turn cap when SDK ToolSearch stripped; alter early-stop comments and query eligibility; add real-CLI/scripted-API CI gate and source live scripts.
@@ -509,11 +594,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 18 — P4
 
-**SHA:** `762f0955420b95a5552cc80d52ac021074e5331f`  
-**Parent:** `2a5d97266fb71ca6775a128071b3c80475ed4fee`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T15:06:59-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T15:06:59-05:00`  
+**SHA:** `762f0955420b95a5552cc80d52ac021074e5331f`
+
+**Parent:** `2a5d97266fb71ca6775a128071b3c80475ed4fee`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T15:06:59-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T15:06:59-05:00`
+
 **Subject (label only):** fix: resume Claude Code tool rounds after a one-request system reminder
 
 **Behavior:** Canonicalize Claude system-turn ancestry by dropping blocks after last cache breakpoint, plus exact trailing batching reminder when another block remains; actual execution keeps request.
@@ -532,11 +622,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 19 — P4
 
-**SHA:** `849ea02700a7854d25adfcd3b35a9c6df7a57060`  
-**Parent:** `762f0955420b95a5552cc80d52ac021074e5331f`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T15:45:15-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T15:45:15-05:00`  
+**SHA:** `849ea02700a7854d25adfcd3b35a9c6df7a57060`
+
+**Parent:** `762f0955420b95a5552cc80d52ac021074e5331f`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T15:45:15-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T15:45:15-05:00`
+
 **Subject (label only):** docs: describe the Claude Code system-turn lineage rule
 
 **Behavior:** Describe post-breakpoint system-tail lineage rule in architecture; no production delta.
@@ -551,11 +646,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 20 — P3
 
-**SHA:** `c0f59adcfe22338260abd174704c1f21f257194d`  
-**Parent:** `849ea02700a7854d25adfcd3b35a9c6df7a57060`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T17:16:07-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T17:16:07-05:00`  
+**SHA:** `c0f59adcfe22338260abd174704c1f21f257194d`
+
+**Parent:** `849ea02700a7854d25adfcd3b35a9c6df7a57060`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T17:16:07-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T17:16:07-05:00`
+
 **Subject (label only):** fix: defer tools for real in passthrough sessions
 
 **Behavior:** Enable real SDK ToolSearch in passthrough; six-turn search bound and PreToolUse continue:false deny; mark executable that continues as deferral-ineligible; restrict custom upstreams; retain/reinsert same-message internal ToolSearch results at resume UUID. Count actual deferrable tools, pin auto-defer separately, add MCP prefix scope and two CLI CI arms.
@@ -596,11 +696,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 21 — P5
 
-**SHA:** `9cc451c435cea66ffaf3d2ee30bc77a69a23b4bf`  
-**Parent:** `c0f59adcfe22338260abd174704c1f21f257194d`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T19:42:37-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T19:42:37-05:00`  
+**SHA:** `9cc451c435cea66ffaf3d2ee30bc77a69a23b4bf`
+
+**Parent:** `c0f59adcfe22338260abd174704c1f21f257194d`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T19:42:37-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T19:42:37-05:00`
+
 **Subject (label only):** fix: fail over a model whose allowance is spent, and only that model
 
 **Behavior:** Recognize credits-era limit banners; ignore overage-paid rejection evidence; scope fresh reported allowance refusal to requested model; add model benches and reset refinement; propagate whole-pool earliest Retry-After in JSON/SSE; expose exhaustedModels telemetry.
@@ -627,11 +732,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 22 — P2
 
-**SHA:** `913c7b1c2dc9ed1c83bd4f525a27899e40c8d10b`  
-**Parent:** `9cc451c435cea66ffaf3d2ee30bc77a69a23b4bf`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T20:02:01-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T20:02:01-05:00`  
+**SHA:** `913c7b1c2dc9ed1c83bd4f525a27899e40c8d10b`
+
+**Parent:** `9cc451c435cea66ffaf3d2ee30bc77a69a23b4bf`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T20:02:01-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T20:02:01-05:00`
+
 **Subject (label only):** fix: write a Claude Code subagent's prompt cache for five minutes
 
 **Behavior:** Add promptCacheLifetime hook; valid-agent flows write5m via child env, classifier stays child's default; wire all retry/replay SDK option paths.
@@ -656,11 +766,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 23 — P3
 
-**SHA:** `46f4936051052b0c8c8f99fcefa6d10de553bdda`  
-**Parent:** `913c7b1c2dc9ed1c83bd4f525a27899e40c8d10b`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T22:58:56-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T22:58:56-05:00`  
+**SHA:** `46f4936051052b0c8c8f99fcefa6d10de553bdda`
+
+**Parent:** `913c7b1c2dc9ed1c83bd4f525a27899e40c8d10b`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T22:58:56-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T22:58:56-05:00`
+
 **Subject (label only):** fix: leave the Claude Code preset off for a Claude Code client
 
 **Behavior:** Set Claude adapter feature default codeSystemPrompt=false so supplied client system is not prefixed with duplicate Claude preset.
@@ -677,11 +792,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 24 — P3
 
-**SHA:** `03f025a5a68a543dc25812b1a1e065b70ada8431`  
-**Parent:** `46f4936051052b0c8c8f99fcefa6d10de553bdda`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T22:59:05-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T22:59:05-05:00`  
+**SHA:** `03f025a5a68a543dc25812b1a1e065b70ada8431`
+
+**Parent:** `46f4936051052b0c8c8f99fcefa6d10de553bdda`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T22:59:05-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T22:59:05-05:00`
+
 **Subject (label only):** fix: run a Claude Code client's SDK child where the client works
 
 **Behavior:** Read Claude CWD from system prompt or client-framed message Environment/system-reminder block, including2.1.290; add exact captured-shape fixtures/tests.
@@ -701,11 +821,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 25 — P3
 
-**SHA:** `69115f6814dd745ac42e5e1b7f9ba8936a1eabbe`  
-**Parent:** `03f025a5a68a543dc25812b1a1e065b70ada8431`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T22:59:14-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T22:59:14-05:00`  
+**SHA:** `69115f6814dd745ac42e5e1b7f9ba8936a1eabbe`
+
+**Parent:** `03f025a5a68a543dc25812b1a1e065b70ada8431`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T22:59:14-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T22:59:14-05:00`
+
 **Subject (label only):** fix: send a Claude Code client's tools as it would send them itself
 
 **Behavior:** Replace blanket Haiku ToolSearch exclusion with recorded unsupported-model list; add exact deferrable names/MCP-prefix union, client threshold0 versus operator0-off; increase description cap to1,000,000 for whole client descriptions; add Claude deferred-tool roster and wire retry options.
@@ -734,11 +859,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 26 — P3/P5 evidence
 
-**SHA:** `4d03504c30a1d9bb57c72008f4f49167681e1bff`  
-**Parent:** `69115f6814dd745ac42e5e1b7f9ba8936a1eabbe`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-05T22:59:23-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T22:59:23-05:00`  
+**SHA:** `4d03504c30a1d9bb57c72008f4f49167681e1bff`
+
+**Parent:** `69115f6814dd745ac42e5e1b7f9ba8936a1eabbe`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-05T22:59:23-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-05T22:59:23-05:00`
+
 **Subject (label only):** test: hold what a Claude Code request carries, through an account switch
 
 **Behavior:** Add actual-account-switch script and source system/CWD/tool/TTL parity claims/docs; no production file changes.
@@ -758,11 +888,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 27 — P3
 
-**SHA:** `9045f2941f2752ec7893cb464556cb1d88a6ee47`  
-**Parent:** `4d03504c30a1d9bb57c72008f4f49167681e1bff`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T01:26:30-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T01:26:30-05:00`  
+**SHA:** `9045f2941f2752ec7893cb464556cb1d88a6ee47`
+
+**Parent:** `4d03504c30a1d9bb57c72008f4f49167681e1bff`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T01:26:30-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T01:26:30-05:00`
+
 **Subject (label only):** fix: name a Claude Code client's deferred tools in its turns
 
 **Behavior:** Announce added/removed deferred tools at final user turn instead of frozen system snapshot; track announced names per SDK session in process-local LRU, reset on fresh/rollback; add delta/append helper and Claude opt-in.
@@ -788,11 +923,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 28 — P5
 
-**SHA:** `fbedb1426736ce26c3fdd379149a4449993ac637`  
-**Parent:** `9045f2941f2752ec7893cb464556cb1d88a6ee47`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T01:45:48-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T01:45:48-05:00`  
+**SHA:** `fbedb1426736ce26c3fdd379149a4449993ac637`
+
+**Parent:** `9045f2941f2752ec7893cb464556cb1d88a6ee47`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T01:45:48-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T01:45:48-05:00`
+
 **Subject (label only):** feat: send an active+priority failover to the fallback with the most room
 
 **Behavior:** Default active+priority fallback ordering by available room, prefer weekly reset<24h then room/unknown/near-cap; configured env opt-out; merge OAuth/SDK-window observations; background quota GETs when move near/refusal; update settings UI.
@@ -813,11 +953,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 29 — P3
 
-**SHA:** `8ffd056a543327e3676e2d3aaf4513a20c9fb613`  
-**Parent:** `fbedb1426736ce26c3fdd379149a4449993ac637`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T02:02:03-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T02:02:03-05:00`  
+**SHA:** `8ffd056a543327e3676e2d3aaf4513a20c9fb613`
+
+**Parent:** `fbedb1426736ce26c3fdd379149a4449993ac637`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T02:02:03-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T02:02:03-05:00`
+
 **Subject (label only):** fix: add only the replay note to a Claude Code client's system prompt
 
 **Behavior:** Opt Claude into loopback/same-CWD shared child environment, omit separating note there; suppress scratchpad counter-instruction by client default; deduplicate SDK identity first line; preserve explicit operator settings.
@@ -843,11 +988,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 30 — P3/P5 evidence
 
-**SHA:** `73fb28d57018b4d32b08a528f8e3865f4b935ea3`  
-**Parent:** `8ffd056a543327e3676e2d3aaf4513a20c9fb613`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T02:14:11-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T02:14:11-05:00`  
+**SHA:** `73fb28d57018b4d32b08a528f8e3865f4b935ea3`
+
+**Parent:** `8ffd056a543327e3676e2d3aaf4513a20c9fb613`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T02:14:11-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T02:14:11-05:00`
+
 **Subject (label only):** test: record the parity follow-ups against real accounts
 
 **Behavior:** Add deferred-tool-in-turns live and fallback-order live scripts plus source parity/ranking claims; no production changes.
@@ -865,11 +1015,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 31 — P6
 
-**SHA:** `835cbf192cd6dc742ef29241724d2e2c988f8239`  
-**Parent:** `73fb28d57018b4d32b08a528f8e3865f4b935ea3`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T03:23:02-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T03:23:02-05:00`  
+**SHA:** `835cbf192cd6dc742ef29241724d2e2c988f8239`
+
+**Parent:** `73fb28d57018b4d32b08a528f8e3865f4b935ea3`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T03:23:02-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T03:23:02-05:00`
+
 **Subject (label only):** fix: take a moved conversation's session with it
 
 **Behavior:** Choose newest valid mapped account copy; divert older own copy; introduce sessionCarry private JSONL discovery/parse/sessionId rewrite/copy, publication mapping and defer/announcement carry. Add account-return/session-copy tests and scripts; delete duplicate announcement call.
@@ -895,11 +1050,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 32 — P6/P7 evidence
 
-**SHA:** `af6b82b50bbdac6508453d33eaa2aad420c53c65`  
-**Parent:** `835cbf192cd6dc742ef29241724d2e2c988f8239`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T03:23:13-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T03:23:13-05:00`  
+**SHA:** `af6b82b50bbdac6508453d33eaa2aad420c53c65`
+
+**Parent:** `835cbf192cd6dc742ef29241724d2e2c988f8239`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T03:23:13-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T03:23:13-05:00`
+
 **Subject (label only):** test: hold parallel subagents and a restart through the proxy
 
 **Behavior:** Add parallel-subagent and proxy-restart scripts; no production delta.
@@ -915,11 +1075,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 33 — P6 evidence
 
-**SHA:** `2b6448baf0bac5088a477d8eb437fb0e67cbe5bd`  
-**Parent:** `af6b82b50bbdac6508453d33eaa2aad420c53c65`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T03:23:24-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T03:23:24-05:00`  
+**SHA:** `2b6448baf0bac5088a477d8eb437fb0e67cbe5bd`
+
+**Parent:** `af6b82b50bbdac6508453d33eaa2aad420c53c65`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T03:23:24-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T03:23:24-05:00`
+
 **Subject (label only):** test: record moves, parallel subagents and a restart against real clients
 
 **Behavior:** Append source claims for account moves, parallel subagents and restart in E2E docs.
@@ -934,11 +1099,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 34 — P6
 
-**SHA:** `48e63e385bdeb21f27800db974bc06a3c3b920cf`  
-**Parent:** `2b6448baf0bac5088a477d8eb437fb0e67cbe5bd`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T03:36:45-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T03:36:45-05:00`  
+**SHA:** `48e63e385bdeb21f27800db974bc06a3c3b920cf`
+
+**Parent:** `2b6448baf0bac5088a477d8eb437fb0e67cbe5bd`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T03:36:45-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T03:36:45-05:00`
+
 **Subject (label only):** fix: keep a carried transcript private to its owner
 
 **Behavior:** Set carried target directory0700 and file0600 instead of inherited creation defaults.
@@ -954,11 +1124,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 35 — P6
 
-**SHA:** `48f782521901867b7dcd8a82a1d84efceadf2ecc`  
-**Parent:** `48e63e385bdeb21f27800db974bc06a3c3b920cf`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T04:14:50-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T04:14:50-05:00`  
+**SHA:** `48f782521901867b7dcd8a82a1d84efceadf2ecc`
+
+**Parent:** `48e63e385bdeb21f27800db974bc06a3c3b920cf`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T04:14:50-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T04:14:50-05:00`
+
 **Subject (label only):** fix: carry a conversation only from a copy that holds more of it
 
 **Behavior:** Rank copies by messagesHeld rather than latest-use alone; favor continuation; poll private UUID records for last turn with abortable wait; in-place exclusive file write replaces temp rename; assert durable write authority and cleanup target outside canceled admission signal.
@@ -980,11 +1155,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 36 — P7
 
-**SHA:** `e836030083bb1e62f630cdb953fe391a4b067ffb`  
-**Parent:** `48f782521901867b7dcd8a82a1d84efceadf2ecc`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T04:43:55-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T04:43:55-05:00`  
+**SHA:** `e836030083bb1e62f630cdb953fe391a4b067ffb`
+
+**Parent:** `48f782521901867b7dcd8a82a1d84efceadf2ecc`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T04:43:55-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T04:43:55-05:00`
+
 **Subject (label only):** fix: stop the model when a client cancels a priority-routed request
 
 **Behavior:** Only detach abort link created by handler; priority attempts adopting outer request link keep cancellation attached across dispatch/attempt sequence. Add cancellation controls/script.
@@ -1003,11 +1183,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 37 — P6/P7 evidence
 
-**SHA:** `ca46feb25daf7d6331201cf0a62959fc51f4e783`  
-**Parent:** `e836030083bb1e62f630cdb953fe391a4b067ffb`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T04:45:41-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T04:45:41-05:00`  
+**SHA:** `ca46feb25daf7d6331201cf0a62959fc51f4e783`
+
+**Parent:** `e836030083bb1e62f630cdb953fe391a4b067ffb`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T04:45:41-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T04:45:41-05:00`
+
 **Subject (label only):** test: record the carry review and a cancelled priority request
 
 **Behavior:** Record source carry review and canceled-priority-request claims in E2E docs.
@@ -1022,11 +1207,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 38 — P5/P6
 
-**SHA:** `1d628183cd6e8b6acbcd4a3e854d93966df94d64`  
-**Parent:** `ca46feb25daf7d6331201cf0a62959fc51f4e783`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T05:49:17-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T05:49:17-05:00`  
+**SHA:** `1d628183cd6e8b6acbcd4a3e854d93966df94d64`
+
+**Parent:** `ca46feb25daf7d6331201cf0a62959fc51f4e783`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T05:49:17-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T05:49:17-05:00`
+
 **Subject (label only):** fix: place a failover by usage read and where the conversation was
 
 **Behavior:** Preserve previous fallback after active re-refuses; refresh/await unknown quota readings up to3s; reorder remaining candidates after refusal; infer previous account from durable copy last use within1h, keyed by agent/root.
@@ -1048,11 +1238,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 39 — P6
 
-**SHA:** `0b9c8c4004bbdeb3bd456ed501847e90fa1218a3`  
-**Parent:** `1d628183cd6e8b6acbcd4a3e854d93966df94d64`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T05:53:20-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T05:53:20-05:00`  
+**SHA:** `0b9c8c4004bbdeb3bd456ed501847e90fa1218a3`
+
+**Parent:** `1d628183cd6e8b6acbcd4a3e854d93966df94d64`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T05:53:20-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T05:53:20-05:00`
+
 **Subject (label only):** fix: carry a conversation keyed by its fingerprint as one keyed by a session
 
 **Behavior:** Find/carry account copies by profile-scoped conversation fingerprint as well as explicit session id; publish through durableMappingKey.
@@ -1069,11 +1264,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 40 — P6
 
-**SHA:** `8f6ec0f700a07ec1440843a999a8e9189cb16ca3`  
-**Parent:** `0b9c8c4004bbdeb3bd456ed501847e90fa1218a3`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T06:04:46-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T06:04:46-05:00`  
+**SHA:** `8f6ec0f700a07ec1440843a999a8e9189cb16ca3`
+
+**Parent:** `0b9c8c4004bbdeb3bd456ed501847e90fa1218a3`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T06:04:46-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T06:04:46-05:00`
+
 **Subject (label only):** fix: carry a session over a copy that no longer matches, never past a lost reply
 
 **Behavior:** Look for history-holding copy when own mapping diverges except missing-session-header; refuse resume if would drop supplied assistant replies after held prefix; add resumeDropsReplies helper.
@@ -1094,11 +1294,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 41 — P7
 
-**SHA:** `38d43c0d6a836006a7090378b28bc44a25582b19`  
-**Parent:** `8f6ec0f700a07ec1440843a999a8e9189cb16ca3`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T06:07:38-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T06:07:38-05:00`  
+**SHA:** `38d43c0d6a836006a7090378b28bc44a25582b19`
+
+**Parent:** `8f6ec0f700a07ec1440843a999a8e9189cb16ca3`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T06:07:38-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T06:07:38-05:00`
+
 **Subject (label only):** fix: say at startup that a proxy under Bun cannot stop a cancelled request
 
 **Behavior:** Emit startup Bun warning about pre-first-byte disconnect not aborting node:http request; recommend built Node server.
@@ -1117,11 +1322,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 42 — P6 evidence
 
-**SHA:** `401e69058df71a1b17bb8c72d903a0d874762c1e`  
-**Parent:** `38d43c0d6a836006a7090378b28bc44a25582b19`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T06:40:46-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T06:40:46-05:00`  
+**SHA:** `401e69058df71a1b17bb8c72d903a0d874762c1e`
+
+**Parent:** `38d43c0d6a836006a7090378b28bc44a25582b19`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T06:40:46-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T06:40:46-05:00`
+
 **Subject (label only):** test: carry a keyless and a compacted conversation through the real proxy, SDK and CLI
 
 **Behavior:** Add real-proxy keyless/compacted conversation carry script and source E2E claims.
@@ -1137,11 +1347,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 43 — P5 evidence
 
-**SHA:** `9564ff0b7a76e74f26fa2076d596b10dc961178f`  
-**Parent:** `401e69058df71a1b17bb8c72d903a0d874762c1e`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T07:45:55-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T07:45:55-05:00`  
+**SHA:** `9564ff0b7a76e74f26fa2076d596b10dc961178f`
+
+**Parent:** `401e69058df71a1b17bb8c72d903a0d874762c1e`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T07:45:55-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T07:45:55-05:00`
+
 **Subject (label only):** test: record where a failover goes before anything is read, and keep the parallel gate's routing
 
 **Behavior:** Record initial-read fallback ordering claim and preserve parallel harness routing configuration.
@@ -1157,11 +1372,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 44 — P8
 
-**SHA:** `efe30d633ca9d49da667ca3a58ab19f529f74bc9`  
-**Parent:** `9564ff0b7a76e74f26fa2076d596b10dc961178f`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T07:46:52-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T07:46:52-05:00`  
+**SHA:** `efe30d633ca9d49da667ca3a58ab19f529f74bc9`
+
+**Parent:** `9564ff0b7a76e74f26fa2076d596b10dc961178f`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T07:46:52-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T07:46:52-05:00`
+
 **Subject (label only):** fix: start a stream's idle limit once its request has an SDK slot
 
 **Behavior:** Record SDK semaphore-wait state; upstream stream idle guard pauses/restarts window while waiting for SDK slot and measures from attempt start; add idle/admission tests and source script.
@@ -1183,11 +1403,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 45 — P5/P7 evidence
 
-**SHA:** `9e506b5b96edfbd0f88f28208bfcee924d775098`  
-**Parent:** `efe30d633ca9d49da667ca3a58ab19f529f74bc9`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T09:25:54-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T09:25:54-05:00`  
+**SHA:** `9e506b5b96edfbd0f88f28208bfcee924d775098`
+
+**Parent:** `efe30d633ca9d49da667ca3a58ab19f529f74bc9`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T09:25:54-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T09:25:54-05:00`
+
 **Subject (label only):** test: record parallel subagents under active+priority and what a failed request was answered
 
 **Behavior:** Update parallel client script/source claims for active+priority and failed-response reporting.
@@ -1203,11 +1428,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 46 — P5
 
-**SHA:** `50ff9e325885126ca5dd7159437c4d189d295588`  
-**Parent:** `9e506b5b96edfbd0f88f28208bfcee924d775098`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T10:00:26-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T10:00:26-05:00`  
+**SHA:** `50ff9e325885126ca5dd7159437c4d189d295588`
+
+**Parent:** `9e506b5b96edfbd0f88f28208bfcee924d775098`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T10:00:26-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T10:00:26-05:00`
+
 **Subject (label only):** fix: place the first move after a restart by what the run before it read
 
 **Behavior:** Persist last-good OAuth usage windows/extraUsage in usage.json with restored flag and rename publication; load newer readings at startup, use/read restored snapshot in fallback placement; stop persistence during shutdown.
@@ -1229,11 +1459,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 47 — P5 evidence
 
-**SHA:** `4a662faaa46852f006c77f19adab448d5784eb8f`  
-**Parent:** `50ff9e325885126ca5dd7159437c4d189d295588`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T16:14:57-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T16:14:57-05:00`  
+**SHA:** `4a662faaa46852f006c77f19adab448d5784eb8f`
+
+**Parent:** `50ff9e325885126ca5dd7159437c4d189d295588`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T16:14:57-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T16:14:57-05:00`
+
 **Subject (label only):** test: check a restarted proxy's first move while the endpoint refuses its reads
 
 **Behavior:** Extend fallback-order live script to first move after restart while usage endpoint refuses reads; add source claims.
@@ -1249,11 +1484,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 48 — P7
 
-**SHA:** `5afedf10450f4d0f4d31faf0b7d5d9a72b74884e`  
-**Parent:** `4a662faaa46852f006c77f19adab448d5784eb8f`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-06T17:18:34-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T17:18:34-05:00`  
+**SHA:** `5afedf10450f4d0f4d31faf0b7d5d9a72b74884e`
+
+**Parent:** `4a662faaa46852f006c77f19adab448d5784eb8f`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-06T17:18:34-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-06T17:18:34-05:00`
+
 **Subject (label only):** fix: probe each request's SDK wrapper without holding the event loop
 
 **Behavior:** Capture other-process incarnation asynchronously via execFile ps/PowerShell, same parsers,10s probe bound; SDK process gate awaits capture; Linux retains file-based probe.
@@ -1272,11 +1512,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 49 — P4
 
-**SHA:** `0e092fe8a4ce5258d9bc4badd1ecb2a76d641669`  
-**Parent:** `5afedf10450f4d0f4d31faf0b7d5d9a72b74884e`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-08T07:43:28-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-08T07:43:28-05:00`  
+**SHA:** `0e092fe8a4ce5258d9bc4badd1ecb2a76d641669`
+
+**Parent:** `5afedf10450f4d0f4d31faf0b7d5d9a72b74884e`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-08T07:43:28-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-08T07:43:28-05:00`
+
 **Subject (label only):** fix: resume Fable rounds after a system turn that is the reminder alone
 
 **Behavior:** Omit exact batching-reminder-only trailing system turns from canonical lineage; record assistant SDK UUID at lineageMessages length rather than raw allMessages length across JSON/SSE/retry/recovery publication.
@@ -1295,11 +1540,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 50 — P2
 
-**SHA:** `94cd0b17a8f9ed0861727fa70737f0fd6a4495f0`  
-**Parent:** `0e092fe8a4ce5258d9bc4badd1ecb2a76d641669`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-08T07:53:44-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-08T07:53:44-05:00`  
+**SHA:** `94cd0b17a8f9ed0861727fa70737f0fd6a4495f0`
+
+**Parent:** `0e092fe8a4ce5258d9bc4badd1ecb2a76d641669`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-08T07:53:44-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-08T07:53:44-05:00`
+
 **Subject (label only):** fix: keep Claude Code's recap and next-prompt suggestion off the conversation
 
 **Behavior:** Detect away-summary and prompt-suggestion final-user forks as auxiliaries; reduce to opening user, latest typed user and latest assistant step+prompt, clip strings; preserve old progress-label reduction.
@@ -1318,11 +1568,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 51 — P8
 
-**SHA:** `9e6ca4e64e9774f7b143073460b664dfc3f49650`  
-**Parent:** `94cd0b17a8f9ed0861727fa70737f0fd6a4495f0`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-08T08:16:59-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-08T08:16:59-05:00`  
+**SHA:** `9e6ca4e64e9774f7b143073460b664dfc3f49650`
+
+**Parent:** `94cd0b17a8f9ed0861727fa70737f0fd6a4495f0`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-08T08:16:59-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-08T08:16:59-05:00`
+
 **Subject (label only):** fix: give a tool call being written longer than a turn's idle limit
 
 **Behavior:** Track open tool-input block indices in upstream idle guard; default5m tool-input idle for nonaux turns, adapt deny hold and stalled-setting name; isolate new test process in package test script.
@@ -1345,11 +1600,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 52 — P8
 
-**SHA:** `f9fc51d71d223e67bfe9688523908db3ff44066c`  
-**Parent:** `9e6ca4e64e9774f7b143073460b664dfc3f49650`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-09T07:13:42-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T07:13:42-05:00`  
+**SHA:** `f9fc51d71d223e67bfe9688523908db3ff44066c`
+
+**Parent:** `9e6ca4e64e9774f7b143073460b664dfc3f49650`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-09T07:13:42-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T07:13:42-05:00`
+
 **Subject (label only):** fix: give a tool call being written fifteen minutes, and the turn room for it
 
 **Behavior:** Introduce pure turnLimits: default tool-input idle900,000ms and session hold max600,000/tool-window+300,000; default lease becomes20m; explicit operator lease remains override.
@@ -1370,11 +1630,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 53 — P8/P3
 
-**SHA:** `2c45f814e749ad14a6fc599ce7ba8474fdbc357e`  
-**Parent:** `f9fc51d71d223e67bfe9688523908db3ff44066c`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-09T07:18:32-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T07:18:32-05:00`  
+**SHA:** `2c45f814e749ad14a6fc599ce7ba8474fdbc357e`
+
+**Parent:** `f9fc51d71d223e67bfe9688523908db3ff44066c`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-09T07:18:32-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T07:18:32-05:00`
+
 **Subject (label only):** fix: ask the SDK child to stream a tool call's input as it is written
 
 **Behavior:** Set fine-grained/eager tool-input child env by default only first-party Anthropic base with no enumerated alternate-provider switches; preserve inherited override; reuse exported upstream helpers; add script.
@@ -1395,11 +1660,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 54 — P2
 
-**SHA:** `4a72b66f6fab78565e60675ffc6c0aae28f1584d`  
-**Parent:** `2c45f814e749ad14a6fc599ce7ba8474fdbc357e`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-09T07:20:44-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T07:20:44-05:00`  
+**SHA:** `4a72b66f6fab78565e60675ffc6c0aae28f1584d`
+
+**Parent:** `2c45f814e749ad14a6fc599ce7ba8474fdbc357e`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-09T07:20:44-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T07:20:44-05:00`
+
 **Subject (label only):** fix: recognise Claude Code's permission check sent without a stop sequence
 
 **Behavior:** Allow classifier-shape fallback without closing stop: no-tools/nonstream body containing a standalone user text block<transcript>; same helper also controls growing prompt and classifier TTL exemption.
@@ -1418,11 +1688,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 55 — P8
 
-**SHA:** `ca854c09a4b81882528fb0f64403306a1ab886ef`  
-**Parent:** `4a72b66f6fab78565e60675ffc6c0aae28f1584d`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-09T07:31:50-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T07:31:50-05:00`  
+**SHA:** `ca854c09a4b81882528fb0f64403306a1ab886ef`
+
+**Parent:** `4a72b66f6fab78565e60675ffc6c0aae28f1584d`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-09T07:31:50-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T07:31:50-05:00`
+
 **Subject (label only):** fix: keep the SDK child's stream watchdog above the tool-input window
 
 **Behavior:** Set child CLAUDE_STREAM_IDLE_TIMEOUT_MS to derived session turn hold ahead of inherited override so SDK watchdog sits above input window; update limit docs.
@@ -1441,11 +1716,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 56 — P5/P8
 
-**SHA:** `41ffc35ea83658759560a1352e9c7492ca19b121`  
-**Parent:** `ca854c09a4b81882528fb0f64403306a1ab886ef`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-09T08:19:35-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T08:19:35-05:00`  
+**SHA:** `41ffc35ea83658759560a1352e9c7492ca19b121`
+
+**Parent:** `ca854c09a4b81882528fb0f64403306a1ab886ef`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-09T08:19:35-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T08:19:35-05:00`
+
 **Subject (label only):** fix: fail a stream over when the refusal comes after a keep-alive ping
 
 **Behavior:** Make heartbeat interval configurable; first-frame priority SSE sniff skips comment-only keepalives until default120s account refusal wait; then decides on first noncomment/expired-wait frame. Add late-refusal script/tests.
@@ -1465,11 +1745,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 57 — P8 evidence
 
-**SHA:** `864fd7b5c52bf31ae907db7f639b1d2598c44997`  
-**Parent:** `41ffc35ea83658759560a1352e9c7492ca19b121`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-09T08:19:35-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T08:19:35-05:00`  
+**SHA:** `864fd7b5c52bf31ae907db7f639b1d2598c44997`
+
+**Parent:** `41ffc35ea83658759560a1352e9c7492ca19b121`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-09T08:19:35-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T08:19:35-05:00`
+
 **Subject (label only):** docs: record the live check of eager tool-input streaming
 
 **Behavior:** Append eager tool-input live check claims in E2E docs.
@@ -1484,11 +1769,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 58 — P8
 
-**SHA:** `c9c86cb1ebb8fdf98e389bb9ccd8272a2238b5bb`  
-**Parent:** `864fd7b5c52bf31ae907db7f639b1d2598c44997`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-09T12:03:15-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T12:03:15-05:00`  
+**SHA:** `c9c86cb1ebb8fdf98e389bb9ccd8272a2238b5bb`
+
+**Parent:** `864fd7b5c52bf31ae907db7f639b1d2598c44997`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-09T12:03:15-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T12:03:15-05:00`
+
 **Subject (label only):** fix: hand over a capped tool turn the CLI answered without streaming
 
 **Behavior:** Extract unstreamed visible-turn SSE synthesis; let nonstreamed captured calls satisfy coverage from tracker alone; open envelope at recoverable cap/error catch before emitting tools. Add source capped-turn script/tests.
@@ -1506,11 +1796,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 59 — P5 evidence
 
-**SHA:** `a134177d9bb9ee2346031e218f5360d346723b30`  
-**Parent:** `c9c86cb1ebb8fdf98e389bb9ccd8272a2238b5bb`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-09T12:03:15-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T12:03:15-05:00`  
+**SHA:** `a134177d9bb9ee2346031e218f5360d346723b30`
+
+**Parent:** `c9c86cb1ebb8fdf98e389bb9ccd8272a2238b5bb`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-09T12:03:15-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-09T12:03:15-05:00`
+
 **Subject (label only):** docs: record the live check of failover after a keep-alive ping
 
 **Behavior:** Append source live failover-after-ping claims in E2E docs.
@@ -1525,11 +1820,16 @@ Every entry uses exact Git commit identity and its full first-parent SHA. Change
 
 ### 60 — P9
 
-**SHA:** `3617ecacebeb39ded1da24d8764ef81a7a1d43f1`  
-**Parent:** `a134177d9bb9ee2346031e218f5360d346723b30`  
-**Author:** =DEX <eamonbachari@gmail.com>  
-**AuthorDate:** `2026-10-10T01:15:38-05:00`  
-**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-10T01:15:38-05:00`  
+**SHA:** `3617ecacebeb39ded1da24d8764ef81a7a1d43f1`
+
+**Parent:** `a134177d9bb9ee2346031e218f5360d346723b30`
+
+**Author:** =DEX <eamonbachari@gmail.com>
+
+**AuthorDate:** `2026-10-10T01:15:38-05:00`
+
+**Committer / CommitDate:** =DEX <eamonbachari@gmail.com> / `2026-10-10T01:15:38-05:00`
+
 **Subject (label only):** fix: let the session GC keep up with the transcripts turns leave
 
 **Behavior:** Raise default session GC deletes16→64 and derive pending bound from grace×deletion throughput×3 (floor256); share grace variable; add capacity/throughput script andtests plus preload change.
