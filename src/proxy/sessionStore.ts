@@ -2071,6 +2071,8 @@ export function attachSharedTranscriptLocator(
       }
     } else {
       attachedGeneration = getStoredSessionGeneration(existing, key)
+      // API success is independent of publication: this locked draft is unchanged.
+      return false
     }
     return true
   })
