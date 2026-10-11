@@ -1,4 +1,8 @@
-{ pkgs, home-manager }:
+{
+  home-manager,
+  pkgs,
+  self,
+}:
 let
   inherit (pkgs) lib;
   evaluate =
@@ -6,7 +10,7 @@ let
     (home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
-        (import ../hm-module.nix { meridian = pkgs.emptyDirectory; })
+        (import "${self}/nix/modules/home.nix" { meridian = pkgs.emptyDirectory; })
         {
           home = {
             username = "meridian-test";
@@ -64,7 +68,7 @@ assert
       }).systemd.user.services
       true
   )).success;
-pkgs.runCommand "meridian-home-module"
+pkgs.runCommand "meridian-home"
   {
     nativeBuildInputs = [ pkgs.gnugrep ];
     defaultUnit = default.xdg.configFile."systemd/user/meridian.service".source;

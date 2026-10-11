@@ -77,12 +77,12 @@
 
             packages = {
               default = config.packages.meridian;
-              meridian = pkgs.callPackage ./nix/package.nix { };
+              meridian = pkgs.callPackage ./nix/pkgs/meridian/package.nix { inherit self; };
             };
 
             # Home Manager only renders systemd user units on Linux.
             checks = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-              home-module = import ./nix/tests/hm-module.nix { inherit pkgs home-manager; };
+              home = import ./nix/tests/home.nix { inherit home-manager pkgs self; };
             };
 
             legacyPackages.meridianPlugins = pipe inputs [
@@ -90,7 +90,7 @@
               (mapAttrs' (
                 pname: src:
                 nameValuePair (removePrefix "meridian-plugin-" pname) (
-                  pkgs.callPackage ./nix/plugin.nix { inherit pname src; }
+                  pkgs.callPackage ./nix/pkgs/meridian-plugin/package.nix { inherit pname src; }
                 )
               ))
             ];
@@ -100,7 +100,7 @@
           homeModules = {
             default = self.homeModules.meridian;
             meridian = moduleWithSystem (
-              { self', ... }: flake-parts.lib.importApply ./nix/hm-module.nix self'.packages
+              { self', ... }: flake-parts.lib.importApply ./nix/modules/home.nix self'.packages
             );
           };
 
@@ -109,8 +109,7 @@
             meridian =
               _: prev:
               withSystem prev.stdenv.hostPlatform.system (
-                { self', ... }:
-                {
+                { self', ... }: {
                   inherit (self'.packages) meridian;
                   inherit (self'.legacyPackages) meridianPlugins;
                 }

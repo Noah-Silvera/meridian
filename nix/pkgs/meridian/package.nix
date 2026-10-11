@@ -5,6 +5,7 @@
   lib,
   makeWrapper,
   nodejs_22,
+  self,
   stdenvNoCC,
 }:
 let
@@ -13,21 +14,23 @@ let
   inherit (lib.sources) cleanSource;
   inherit (lib.strings) removePrefix versionOlder;
   inherit (lib.trivial) importJSON;
-  package = importJSON ../package.json;
+  package = importJSON "${self}/package.json";
   # Sonnet 5.5 requires 2.1.284 before nixpkgs has packaged it. Reuse the
   # nixpkgs derivation (patching, wrappers and version check), with Anthropic's
   # immutable release manifest; automatically prefer nixpkgs once it catches up.
   # Source: https://downloads.claude.ai/claude-code-releases/2.1.284/manifest.zst.json
   claudeManifest = importJSON ./claude-code-manifest.json;
-  claudeCode = if versionOlder claude-code.version claudeManifest.version then
-    claude-code.override { manifest = claudeManifest; }
-  else claude-code;
+  claudeCode =
+    if versionOlder claude-code.version claudeManifest.version then
+      claude-code.override { manifest = claudeManifest; }
+    else
+      claude-code;
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
   inherit (package) version;
   pname = "meridian";
 
-  src = cleanSource ../.;
+  src = cleanSource self;
 
   nativeBuildInputs = [
     bun
@@ -36,7 +39,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     nodejs_22
   ];
 
-  bunDeps = bun2nix.fetchBunDeps { bunNix = ../bun.nix; };
+  bunDeps = bun2nix.fetchBunDeps { bunNix = "${self}/bun.nix"; };
   # Keep the hoisted linker: its flat layout is what makes libsql's optional
   # platform package (@libsql/darwin-arm64, @libsql/linux-x64-gnu) resolvable at
   # runtime. bun2nix's isolated default scopes those under node_modules/.bun,
