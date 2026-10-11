@@ -35,7 +35,7 @@ client run and does not claim plugin/client qualification.
 - The committed lock stayed unchanged; nixpkgs is
   `6510408d147d8c5e6d76043e899e9251756f6a75`. Nix 2.35.2 built with
   `--no-update-lock-file`, public `cache.nixos.org` only, and no cache/GitHub
-  credentials. [Build log](build.log): exit 0, 16:56:21–16:58:28 UTC (127 seconds).
+  credentials. [Build log](build.log.gz): exit 0, 16:56:21–16:58:28 UTC (127 seconds).
 - A **new owned** Docker container, `meridian-haiku55-nix-installed-20261011`,
   used the requested immutable `nixos/nix` image digest, 2 CPUs, 4 GiB RAM/swap
   limit and 256-process limit. No existing container/baseline was reused or touched.
@@ -60,7 +60,7 @@ client run and does not claim plugin/client qualification.
 
 ## Qualified assertions
 
-[Final run](run-6.json), [sanitized log](run-6.log), [summary](summary.json):
+[Final run](run-6.json), [sanitized log](run-6.log.gz), [summary](summary.json):
 **10/10 cases pass**, comprising six actual SDK/native generations and four
 pre-query refusals:
 
@@ -143,8 +143,13 @@ validation. Its original bytes are now compressed, not trimmed: decoded SHA-256
 `3da72c9c7d0999f90f4996d9e6eaa390e95fa8622315ce8b911708360afcd661`.
 The original reviewed [manifest](artifact-manifest-r5.json.gz) and
 [README](README-r5.md.gz) remain byte-preserved; the current artifact manifest
-indexes the compressed wrapper and updated explanatory README. This is an
-escrow-format correction, not a wrapper rebuild or changed executable.
+indexes the compressed wrapper and updated explanatory README. The repository
+ignores raw `*.log` files, so all sixteen build/run/custody logs are also retained
+as byte-exact `.log.gz` files; their decoded hashes/sizes preserve every original
+reviewed manifest identity. Decode compressed entries to verify the historical
+manifest. This is an escrow-format correction, not a rebuild, rerun or changed
+executable. Final staging verifies every indexed artifact is actually in Git,
+not merely present in an ignored working-tree path.
 
 ## Reproduction and holds
 
