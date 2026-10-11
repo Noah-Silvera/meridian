@@ -45,8 +45,24 @@ landed main `109cf9e45`. [Durable native before/after receipts, runnable escrow,
 source hashes and qualification](evidence/sdk-process-close-join.md) distinguish
 actual original close/SIGKILL from signal attempts. Both new native tests fail
 baseline; ten new/adjacent controls and Darwin Bun/Node plus Linux arm64 Node
-harness pass candidate. Full final local gates, independent review, PR and
-exact-head CI remain owed; no original #1326 resolution is claimed.
+harness pass candidate. Final local `npm test` is 5,576 pass / 0 fail / 35 skip
+in 21 isolated invocations; standalone typecheck/build pass at `ea868971`.
+Independent Pi/GPT-6.1-Sol high-effort review approves the precise implementation
+(no P1/P2) and reproduces baseline failures, candidate native arms, and zero/
+short/default/concurrent/cached-join controls. Its P3 historical baseline digest
+mismatch is answered by byte-for-byte artifact escrow and exact command/layout:
+parent reproduces the reviewer's alternate digest and verifies that only six
+Bun source-path comments differ, no runtime code. **Landing remains held for
+actual SDK/client/model acceptance or explicit owner scope determination**;
+controlled native processes and green CI cannot waive the product gate. No
+extra quota-exhausted generation, paid usage or account switch is attempted.
+Create only an explicitly held draft with final-head CI; keep #1326 open.
+
+Post-#1333 live pagination across all six repositories finds 52 remaining open
+items (before this new held SDK delivery); no older hold is discarded. Continue
+in combined creation-date order, exclude draft/release work and preserve current
+owner decisions. Newest error/profile contributions still need their own review
+and specific acceptance; this checkpoint does not claim the queue is exhausted.
 
 Original dirty checkout remains untouched. Existing #1324 and #1332 deliveries
 are already merged in live main; their older pending entries below are historical.

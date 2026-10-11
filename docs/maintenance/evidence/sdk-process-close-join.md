@@ -2,8 +2,10 @@
 
 ## Scope and disposition
 
-Accept a small, independently reproduced internal cleanup correction. This is
-**not a resolution of #1326**. Its reported Linux/OpenCode 1.18.31 /
+**Implementation reviewed; delivery held for actual SDK/client acceptance.**
+The precise internal join contract is independently reproduced, but that does
+not waive the project's affected-flow product gate. No owner scope exception
+has been supplied. This is **not a resolution of #1326**. Its reported Linux/OpenCode 1.18.31 /
 opencode-with-claude 1.10.4 / SDK 0.2.141 / Claude Code 2.1.293 / Opus `[1m]`
 OAuth-refresh hang has not been reproduced. No successful model/client inference
 is claimed, and that issue remains open.
@@ -98,6 +100,22 @@ archive `6e510dbcb` into a disposable directory, copy the **same** committed
 harness to its `scripts/`, build and run there; expect exit 1. The leaf bundle
 requires no installed model package at runtime.
 
+The exact historical baseline bytes are now retained at
+[`artifacts/sdk-close-join-baseline.mjs`](artifacts/sdk-close-join-baseline.mjs).
+Their SHA-256 is `47e9246316cbd1f82bcdc8140b090433fc7f70db0a5e5500adbc8fccf146b6c2`,
+matching both original native receipts. `node` on that retained bundle still
+fails the same assertions and joins/removes all fixtures. It is deliberately a
+**failing owned-process fixture**, not product code to import or deploy.
+
+Independent review rebuilt the baseline archive with Bun 1.3.14 and observed
+`79974d20308f85b7d634d76a6a86f014f0fb826a4947ac63e8d0416fc2dea26c` rather than
+the historical digest. Parent reproduced that exact alternate digest and
+compared both bundles: only Bun's generated source-path section comments
+(`// ...src/proxy/session/...` and `// ...scripts/...`) differ. Normalizing those
+six headers produces byte-identical content; no runtime code is excluded or
+changed. The manifest retains the original command, cwd and actual artifact,
+so historical tested-byte provenance no longer relies on a generic path layout.
+
 `src/__tests__/sdk-process-gate-close.test.ts` retains the same two direct
 regression controls. Identical tests fail both assertions on baseline and pass
 after. The first new typecheck caught that the SDK's minimal `SpawnedProcess`
@@ -109,5 +127,17 @@ POSIX controls explicitly skip Windows. Existing Windows process-gate tests and
 required Windows CI remain adjacent gates; this is not native Windows proof.
 No original Linux x64/consumer/model tuple, arbitrary descendant custody, SDK
 error-result HTTP path or production #1326 resolution is claimed. Keep missing
-original-flow acceptance separate. Final local gates, independent review and
-exact-head CI remain required before integration. No release is authorized.
+original-flow acceptance separate. Final local gates at `ea868971` pass: `npm test` 5,576 pass / 0 fail / 35 skip
+in 21 isolated invocations, standalone typecheck and build. Independent
+Pi/GPT-6.1-Sol high-effort review found no P1/P2 implementation defect,
+independently reproduced both baseline failures and candidate controls, and
+added armed zero/short/default and concurrent/cached-join probes. Its P3 bundle
+provenance finding is answered above without changing production, tests or
+harness bytes.
+
+Actual SDK/client/model acceptance remains a **material landing hold**, unless
+the owner explicitly determines this precise internal correction is outside
+that product gate. Native fixtures are not that approval. The current account
+is quota-exhausted; no extra generation, account switch or paid-usage change is
+attempted. A held draft and exact-head CI may preserve progress, but green CI
+cannot waive acceptance. Keep #1326 open. No release is authorized.
