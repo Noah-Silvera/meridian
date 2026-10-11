@@ -1,4 +1,5 @@
 /** Pure rendering of client tool history for SDK replay. */
+import { createHash } from "node:crypto"
 import { sanitizeAssistantText } from "./sanitize"
 import { describeToolCall, MULTIMODAL_TYPES, REPLAY_CONTEXT_OPEN, REPLAY_CONTEXT_CLOSE, type ToolCallInfo } from "./messages"
 
@@ -31,6 +32,22 @@ function record(value: unknown): value is Record<string, unknown> {
 function mediaType(block: unknown): string | undefined {
   return record(block) && typeof block.type === "string" && MULTIMODAL_TYPES.has(block.type)
     ? block.type : undefined
+}
+
+/** A URL is not byte identity. Opaque fields and malformed encodings must also
+ * remain visible to SDK validation rather than disappearing behind a duplicate.
+ * Fresh replay has already stripped cache controls and flattened tool results. */
+function historicalImageIdentity(block: unknown): string | undefined {
+  if (!record(block) || block.type !== "image" || !record(block.source)) return undefined
+  if (Object.keys(block).some(key => key !== "type" && key !== "source")) return undefined
+  const source = block.source
+  if (Object.keys(source).some(key => key !== "type" && key !== "media_type" && key !== "data")) return undefined
+  if (source.type !== "base64" || typeof source.data !== "string" || !source.data) return undefined
+  if (source.media_type !== "image/png" && source.media_type !== "image/jpeg"
+    && source.media_type !== "image/gif" && source.media_type !== "image/webp") return undefined
+  const bytes = Buffer.from(source.data, "base64")
+  if (bytes.toString("base64") !== source.data) return undefined
+  return createHash("sha256").update(source.media_type).update("\u0000").update(bytes).digest("hex")
 }
 
 function mediaCounts(content: unknown): Record<"image" | "document" | "file", number> {
@@ -79,6 +96,8 @@ export function frameStructuredReplay<T extends { message: { content: unknown } 
       `Earlier replayed turns contain ${mediaSummary(historical)}. ` +
       `Those historical media are not new user attachments in this turn.]`
     : ""
+  const historicalImages = new Map<string, number>()
+  let historicalImageReferences = 0
   const framed = messages.map((entry, index) => {
     const isHistory = endsWithUser && index < lastIndex
     const prefix = !endsWithUser ? "" : index === 0 ? REPLAY_CONTEXT_OPEN : index === lastIndex
@@ -86,15 +105,29 @@ export function frameStructuredReplay<T extends { message: { content: unknown } 
         ? "Any images, documents, or files above came from earlier turns in this replay. They are not attachments to the user's current message below.\n\n"
         : "") : ""
     const content = entry.message.content
-    const suffix = index === lastIndex ? provenance : ""
+    const suffix = index === lastIndex ? provenance + (historicalImageReferences > 0
+      ? `\n[Meridian historical image reuse: ${historicalImageReferences} repeated historical image ${historicalImageReferences === 1 ? "reference is" : "references are"} represented by text above, not attached again.]`
+      : "") : ""
     if (!Array.isArray(content)) {
       if (!prefix && !suffix) return entry
       return { ...entry, message: { ...entry.message, content: prefix + String(content ?? "") + suffix } }
     }
     const blocks = isHistory ? content.flatMap(block => {
       const type = mediaType(block)
+      const identity = type === "image" ? historicalImageIdentity(block) : undefined
+      const priorVisual = identity === undefined ? undefined : historicalImages.get(identity)
+      if (priorVisual !== undefined) {
+        historicalImageReferences++
+        return [{ type: "text", text: `Historical image reference: identical bytes to historical visual #${priorVisual} shown above; not a new attachment to the current user message.\n` }]
+      }
+      let visualLabel = ""
+      if (identity !== undefined) {
+        const visual = historicalImages.size + 1
+        historicalImages.set(identity, visual)
+        visualLabel = ` (historical visual #${visual})`
+      }
       return type
-        ? [{ type: "text", text: `Historical ${type} from an earlier turn, not an attachment to the current user message:\n` }, block]
+        ? [{ type: "text", text: `Historical ${type} from an earlier turn, not an attachment to the current user message${visualLabel}:\n` }, block]
         : [block]
     }) : content
     if (!prefix && !suffix && blocks === content) return entry

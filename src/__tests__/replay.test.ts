@@ -49,6 +49,102 @@ const textOf = (block: unknown): string =>
   block !== null && typeof block === "object" && "text" in block && typeof block.text === "string"
     ? block.text : ""
 
+describe("historical image replay deduplication", () => {
+  const image = { type: "image", source: { type: "base64", media_type: "image/png", data: Buffer.from("synthetic historical image").toString("base64") } }
+  const images = (content: unknown): unknown[] => Array.isArray(content)
+    ? content.filter(block => block !== null && typeof block === "object" && "type" in block && block.type === "image") : []
+
+  it("prevents the 1, 2, 4 attachment read-back feedback loop without erasing recorded results", () => {
+    const history: Array<{ message: { content: unknown } }> = [
+      { message: { content: [image, { type: "text", text: "ORIGINAL_IMAGE_CONTEXT" }] } },
+    ]
+    const counts: number[] = []
+    for (let turn = 0; turn < 3; turn++) {
+      const current = { message: { content: `TEXT_ONLY_CURRENT_${turn}` } }
+      const source = [...history, current]
+      const before = structuredClone(source)
+      const blocks = frameStructuredReplay(source)[0]!.message.content
+      const outbound = images(blocks)
+      counts.push(outbound.length)
+      expect(source).toEqual(before)
+      expect(JSON.stringify(blocks)).toContain("ORIGINAL_IMAGE_CONTEXT")
+      expect(JSON.stringify(blocks)).toContain(`TEXT_ONLY_CURRENT_${turn}`)
+      for (let prior = 0; prior < turn; prior++) expect(JSON.stringify(blocks)).toContain(`read-back-${prior}-0`)
+      history.push(current)
+      for (let index = 0; index < outbound.length; index++) {
+        history.push({ message: { content: normalizeStructuredUserContent([
+          { type: "tool_result", tool_use_id: `read-back-${turn}-${index}`, is_error: false,
+            content: [{ type: "text", text: `RECORDED_READ_${turn}_${index}` }, outbound[index]] },
+        ]) } })
+      }
+    }
+    expect(counts).toEqual([1, 1, 1])
+  })
+
+  it("keeps current copies and distinct historical images, with references at omitted historical positions", () => {
+    const distinct = { ...image, source: { ...image.source, data: Buffer.from("different image").toString("base64") } }
+    const result = { type: "tool_result", tool_use_id: "historical-read", is_error: true,
+      content: [{ type: "text", text: "FAILED_READ_CONTEXT" }, structuredClone(image)] }
+    const source = [
+      { message: { content: [{ type: "text", text: "BEFORE_ORIGINAL" }, image, distinct] } },
+      { message: { content: normalizeStructuredUserContent([result]) } },
+      { message: { content: [{ type: "text", text: "CURRENT_TURN" }, image, structuredClone(image), distinct] } },
+    ]
+    const before = structuredClone(source)
+    const blocks = frameStructuredReplay(source)[0]!.message.content
+    expect(Array.isArray(blocks)).toBe(true)
+    if (!Array.isArray(blocks)) throw new Error("expected structured blocks")
+    const boundary = blocks.findIndex(block => textOf(block).includes("</conversation_history>"))
+    expect(images(blocks.slice(0, boundary))).toEqual([image, distinct])
+    expect(images(blocks.slice(boundary))).toEqual([image, image, distinct])
+    const text = blocks.map(textOf).join("\n")
+    expect(text).toContain('"tool_use_id":"historical-read"')
+    expect(text).toContain('"is_error":true')
+    expect(JSON.stringify(blocks)).toContain("FAILED_READ_CONTEXT")
+    expect(JSON.stringify(blocks)).toContain("historical visual #1")
+    expect(JSON.stringify(blocks)).toContain("Earlier replayed turns contain 3 images")
+    expect(JSON.stringify(blocks)).toContain("current client turn contains exactly 3 images")
+    expect(source).toEqual(before)
+  })
+
+  it("does not deduplicate documents, files, URLs, malformed/opaque images or different MIME interpretations", () => {
+    const variants = [
+      { type: "document", source: { ...image.source } },
+      { type: "file", source: { ...image.source } },
+      { type: "image", source: { type: "url", url: "https://example.invalid/dynamic.png" } },
+      { ...image, source: { ...image.source, data: "not valid base64!" } },
+      { ...image, detail: "opaque-client-field" },
+      { ...image, source: { ...image.source, opaque: true } },
+    ]
+    for (const block of variants) {
+      const blocks = frameStructuredReplay([
+        { message: { content: [block, structuredClone(block)] } }, { message: { content: "CURRENT" } },
+      ])[0]!.message.content
+      expect(Array.isArray(blocks)).toBe(true)
+      if (!Array.isArray(blocks)) throw new Error("expected structured blocks")
+      expect(blocks.filter(item => JSON.stringify(item) === JSON.stringify(block))).toHaveLength(2)
+    }
+    const jpeg = { ...image, source: { ...image.source, media_type: "image/jpeg" } }
+    expect(images(frameStructuredReplay([
+      { message: { content: [image, jpeg] } }, { message: { content: "CURRENT" } },
+    ])[0]!.message.content)).toEqual([image, jpeg])
+  })
+
+  it("leaves checkpoint wrappers, ordinary coalesced deltas and non-user-ending/single-turn inputs alone", () => {
+    const native = [{ type: "tool_result", tool_use_id: "native", content: [image, structuredClone(image)] }]
+    expect(normalizeStructuredUserContent(native, true)).toEqual(native)
+    const source = [{ message: { content: [image, structuredClone(image)] } }, { message: { content: "DELTA" } }]
+    expect(images(coalesceStructuredUserMessages(source)[0]!.message.content)).toHaveLength(2)
+    expect(images(frameStructuredReplay(source, false)[0]!.message.content)).toHaveLength(2)
+    expect(frameStructuredReplay(source.slice(0, 1))).toEqual(source.slice(0, 1))
+    const once = frameStructuredReplay(source)
+    const twice = frameStructuredReplay(source)
+    expect(once).toEqual(twice)
+    expect(images(once[0]!.message.content)).toHaveLength(1)
+    expect(frameStructuredReplay(once)).toEqual(once)
+  })
+})
+
 describe("faithful tool history rendering", () => {
   it("delivers a complete resume delta atomically without changing native results, media or input", () => {
     const result = { type: "tool_result", tool_use_id: "a", is_error: true, content: "actual failure" }
