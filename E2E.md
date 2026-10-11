@@ -7668,6 +7668,22 @@ its browser probe at 320/375/414/768/1280; require intact warnings/updates,
 uncut pricing values, no new overflow, reversible provenance fitting and
 unchanged desktop geometry. These UI gates do not require SDK/model generation.
 
+## Identical transcript locator publication (#1303)
+
+Run `bun scripts/e2e-session-locator-noop.ts` with actual Bun 1.4.2 on Linux
+`/dev/shm` tmpfs. The script invokes the production session store with synthetic
+metadata only, without model, SDK, HTTP or credential calls. Use the pinned,
+network-disabled Docker command and owned machine-id from
+[the native before/after proof](docs/maintenance/evidence/1303-transcript-locator-noop.md).
+At 100 and 900 retained sessions, five identical attachments must return the
+existing generation and preserve bytes plus inode/mtime/ctime, with zero store
+replacement payload. Twenty genuine mutations must still publish in each
+fixture. Copy the identical harness into an exact unchanged-main archive to
+reproduce the failing assertion; retain both measured arms, not merely a green
+exit. Run the ordinary/priority/locking/mutation-loop-lag suites and full local
+gates too. This does not change genuine-mutation write volume, eliminate lock
+maintenance, measure SSD writes or approve the held storage migration.
+
 ## Proposed SQLite migration retirement review
 
 For #1243, use `scripts/e2e-session-store-retirement-review.mjs` with explicit

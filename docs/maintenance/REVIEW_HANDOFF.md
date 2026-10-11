@@ -1,5 +1,22 @@
 ## Current oldest-first continuation — 2026-10-11
 
+Remaining newer-slice read-only triage refreshed 24 named items beyond #1261:
+20 open non-draft/non-release items and four excluded drafts. No item was
+already landing-ready; no repository changes, tests or auth/model calls were
+made by triage. Parent selected #1303's independently actionable, narrowly
+reported identical-locator no-op, **not** the held SQL redesign. The two-line
+transaction correction retains locked rollback/SDK-ID/expected-generation
+checks and successful existing-generation return, while skipping unchanged
+JSON publication. The identical escrow fails exact main `7e89f843` and passes
+candidate on actual Linux arm64/Bun 1.4.2/tmpfs, with network disabled and only
+owned synthetic metadata. For 900 sessions, five identical calls formerly
+replaced 42,668,775 payload bytes; candidate replaces zero. Twenty genuine
+mutations still publish; their full-store cost is unchanged. Sixty-three
+focused controls pass. [Runnable native proof and exact receipts](evidence/1303-transcript-locator-noop.md)
+record the narrower scope and required full local/review/final-head CI gates.
+**Keep #1303 open** for its broader storage work and preserve every existing
+hold below. No model quota retry or owner-policy exception is involved.
+
 Fresh discovery still finds six managed repositories, no additional accessible
 organization scrub candidates. Combined creation-date order and explicit owner
 holds remain in force; no releases or community comments are authorized. The

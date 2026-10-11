@@ -932,12 +932,16 @@ describe("durable priority route publication", () => {
     // Each compared optional field is significant. Real changes still publish
     // mapping and route generations together; old-generation calls stay fenced.
     let generation = attached
-    for (const changed of [
-      { ...locator, configDir: join(dir, "changed-config") },
-      { ...locator, projectDir: join(dir, "changed-project") },
-      { ...locator, lifecycleGeneration: "changed-generation" },
-      { sessionId: sdkId, configDir: dir },
+    for (const change of [
+      { configDir: join(dir, "changed-config") },
+      { projectDir: join(dir, "changed-project") },
+      { lifecycleGeneration: "changed-generation" },
+      { projectDir: undefined },
+      { lifecycleGeneration: undefined },
     ]) {
+      const current = lookupSharedSession(key)?.currentTranscript
+      if (!current) throw new Error("current fixture locator is missing")
+      const changed = { ...current, ...change }
       const prior = generation
       const priorRoute = lookupPriorityAssignmentResult("locator-noop")
       const updated = attachSharedTranscriptLocator(key, sdkId, changed, prior)
