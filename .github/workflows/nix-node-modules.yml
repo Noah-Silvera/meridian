@@ -1,4 +1,4 @@
-name: Sync bun.nix
+name: Nix node_modules hash
 
 on:
   workflow_dispatch:
@@ -6,11 +6,10 @@ on:
     paths:
       - bun.lock
       - package.json
-      - bun.nix
       - flake.nix
       - flake.lock
       - nix/**
-      - .github/workflows/bun-nix-sync.yml
+      - .github/workflows/nix-node-modules.yml
   push:
     branches: [main]
     paths:
@@ -23,12 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run nix:lock
+      - uses: cachix/install-nix-action@v31
+      - run: nix run --inputs-from . nixpkgs#nix-update -- --flake --version=skip --subpackage node_modules meridian
       - run: |
-          git diff --exit-code bun.nix || {
-            echo "::error::bun.nix is out of sync — run 'bun run nix:lock' locally and commit the result"
+          git diff --exit-code nix/pkgs/meridian/node_modules.nix || {
+            echo "::error::the node_modules hash is out of date; run 'nix run --inputs-from . nixpkgs#nix-update -- --flake --version=skip --subpackage node_modules meridian' and commit the result"
             exit 1
           }
 
@@ -37,28 +35,21 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run nix:lock
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: cachix/install-nix-action@v31
+      - run: nix run --inputs-from . nixpkgs#nix-update -- --flake --version=skip --subpackage node_modules meridian
+      - uses: peter-evans/create-pull-request@v7
         with:
-          commit_message: "chore: sync bun.nix"
-          file_pattern: bun.nix
+          commit-message: "chore: update the nix node_modules hash"
+          title: "chore: update the nix node_modules hash"
+          body: Automated `nix-update` of the `node_modules` hash after a lockfile change.
+          branch: chore/update-nix-node-modules-hash
+          add-paths: nix/pkgs/meridian/node_modules.nix
+          delete-branch: true
 
-  # Actually build the derivation.
-  #
-  # `verify` above only proves bun.nix is in sync with bun.lock. It never builds,
-  # so a lockfile that regenerates cleanly can still produce a derivation that
-  # does not build — which is exactly how #913 shipped: `nix build` broke in
-  # 1.62.7 and nothing noticed until a user bisected it.
   build:
-    # Both platforms on purpose. #913 reproduces ONLY on Darwin: bun2nix's
-    # default install flags differ by platform (it adds --backend=symlink on
-    # Darwin), and this repo overrides the linker for both. A Linux-only gate
-    # builds green while macOS users cannot install at all — verified here, the
-    # ubuntu leg passed while the bug was live.
     strategy:
       fail-fast: false
       matrix:
@@ -69,11 +60,9 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
         continue-on-error: true
-      - name: nix build
-        run: nix build --print-build-logs --no-update-lock-file .#meridian
-      - name: Built binary runs
-        run: |
-          ./result/bin/meridian --version
+      - run: nix build --print-build-logs --no-update-lock-file .#meridian
+      - run: nix build --print-build-logs --no-update-lock-file --no-link --rebuild .#meridian.node_modules
+      - run: ./result/bin/meridian --version
       - name: Installed macOS SDK and native HTTP compatibility
         if: runner.os == 'macOS'
         env:

@@ -1,19 +1,20 @@
 {
   bun,
-  bun2nix,
+  callPackage,
   claude-code,
   lib,
   makeWrapper,
   nodejs_22,
   self,
   stdenvNoCC,
+  versionCheckHook,
 }:
 let
-  inherit (lib.cli) toCommandLineGNU;
   inherit (lib.meta) getExe;
   inherit (lib.sources) cleanSource;
-  inherit (lib.strings) removePrefix versionOlder;
+  inherit (lib.strings) escapeShellArgs removePrefix versionOlder;
   inherit (lib.trivial) importJSON;
+  inherit (stdenvNoCC) hostPlatform;
   package = importJSON "${self}/package.json";
   # Sonnet 5.5 requires 2.1.284 before nixpkgs has packaged it. Reuse the
   # nixpkgs derivation (patching, wrappers and version check), with Anthropic's
@@ -32,46 +33,21 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   src = cleanSource self;
 
+  strictDeps = true;
+
   nativeBuildInputs = [
     bun
-    bun2nix.hook
     makeWrapper
     nodejs_22
   ];
 
-  bunDeps = bun2nix.fetchBunDeps { bunNix = "${self}/bun.nix"; };
-  # Keep the hoisted linker: its flat layout is what makes libsql's optional
-  # platform package (@libsql/darwin-arm64, @libsql/linux-x64-gnu) resolvable at
-  # runtime. bun2nix's isolated default scopes those under node_modules/.bun,
-  # where the bundled CLI cannot find them — the build still succeeds and the
-  # installed binary dies on first import, which is worse than failing loudly.
-  #
-  # Pin the backend to copyfile. Each of the alternatives fails somewhere in the
-  # Nix sandbox, because everything is materialised out of the read-only store:
-  #
-  #   clonefile  Darwin's default. Carries the source's mode across, so package
-  #              directories land mode 444 and the hoisted linker's nested mkdir
-  #              hits AccessDenied — this is #913 itself.
-  #   hardlink   Linux's default. Directories are created fresh so the install
-  #              succeeds, but the files share an inode with the store, and
-  #              bun2nix's own `chmod -R u+rwx ./node_modules` in
-  #              bunLifecycleScriptsPhase then fails "Operation not permitted".
-  #   symlink    Only usable with the isolated linker, whose layout hides
-  #              libsql's optional platform package from the bundled CLI.
-  #
-  # copyfile creates directories fresh AND gives every file its own inode, so
-  # both the nested mkdir and the later chmod succeed.
-  #
-  # Invisible until #880: the tree previously needed ZERO nested node_modules,
-  # and now needs 8 ("Failed to install 19 packages"). Linux was never affected
-  # because its default backend is already hardlink, which creates fresh
-  # directories — which is exactly why a Linux-only CI gate built green while
-  # macOS users could not install at all.
-  bunInstallFlags = toCommandLineGNU { } {
-    ignore-scripts = true;
-    linker = "hoisted";
-    backend = "copyfile";
-  };
+  buildInputs = [ nodejs_22 ];
+
+  configurePhase = ''
+    runHook preConfigure
+    cp -R ${finalAttrs.passthru.node_modules}/build/node_modules .
+    runHook postConfigure
+  '';
 
   buildPhase = ''
     runHook preBuild
@@ -83,10 +59,15 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook preInstall
 
     mkdir -p $out/lib/meridian
-    cp -r dist node_modules plugin package.json $out/lib/meridian/
-
-    rm -rf $out/lib/meridian/node_modules/@anthropic-ai/{claude-code,claude-code-*,claude-agent-sdk-*} \
-      $out/lib/meridian/node_modules/.bin/claude
+    cp -r dist plugin package.json $out/lib/meridian/
+    cp -R ${finalAttrs.passthru.node_modules}/runtime/node_modules $out/lib/meridian/
+    chmod -R u+w $out/lib/meridian/node_modules
+    node ${./prune-foreign-platforms.mjs} $out/lib/meridian/node_modules ${
+      escapeShellArgs [
+        hostPlatform.node.platform
+        hostPlatform.node.arch
+      ]
+    }
 
     makeWrapper ${getExe nodejs_22} $out/bin/${finalAttrs.meta.mainProgram} \
       --add-flags "$out/lib/meridian/dist/cli.js" \
@@ -94,6 +75,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     runHook postInstall
   '';
+
+  doInstallCheck = true;
+
+  nativeInstallCheckInputs = [ versionCheckHook ];
+
+  passthru.node_modules = callPackage ./node_modules.nix { inherit (finalAttrs) pname src version; };
 
   meta = {
     inherit (package) description;
