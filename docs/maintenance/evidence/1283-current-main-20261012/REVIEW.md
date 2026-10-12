@@ -127,3 +127,27 @@ to recreate the missing bind source as a directory. No grant was recreated. The
 empty directory was removed; package metadata was instead read from a new
 credentialless invocation of the same immutable test image, with no volumes or
 client/model launch. This does not change the live run's retained report.
+
+
+## Qualified E41 and timeout-fixture correction in progress
+
+`scripts/e2e-qualified-passthrough-turns.mjs` retains the original E41 gates
+and adds explicit installed OpenCode server scrub preflight/invocation, HTTP/SSE
+error admission stop, owned-file restriction and original child/pipe joins.
+It is a direct protocol fixture, not an actual client-plugin witness; the actual
+client is separately qualified above. Sequential JSON has passed real Opus 5.5
+with exact 1+1+1 batches, immutable parents, one real answer per call, durable
+forks/follow-up and cache continuity. The other three arms stop on the first
+failure. No complete four-mode pass is claimed until their receipts finish.
+
+The diagnostic full run did not reproduce the cross-process 500; instead it
+exposed a timeout fixture startup race. The 400ms Git boundary killed a Node
+fixture before it wrote calls.jsonl, so the test failed ENOENT before checking
+its assertion. A dedicated finite fixture now installs ignored TERM in a shell,
+logs its original pid and execs /bin/sleep in that same pid. No descendant is
+left behind. An explicit TERM control takes at least 1.2s and exits zero, proving
+resistance; production gitOutput still rejects at its unchanged 400ms budget
+and must finish below the unchanged 1s assertion. Both original pids are checked
+joined. This changes test setup only, not production timeouts or expectations.
+The focused control passes. The unrelated earlier cross-process 500 remains
+unexplained rather than declared fixed by its isolated pass.
