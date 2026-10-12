@@ -100,3 +100,27 @@ This is credentialless installed transport evidence, not a live model/account or
 OpenCode-executable run. Combined source `0730fab1` now also includes streaming
 main `8edccd790`; its full local gate is active in session 8226. Old-package
 success alone does not validate that combined tree. No credentials were staged.
+
+## Combined installed live fallback
+
+Original session 23810 exited 0 against independently installed clean a41e1998
+including streaming main. SDK 0.2.141, actual system-selected native CLI 2.1.296
+(version independently checked), Node 22.22.3, Darwin ARM64, Opus 5.5 confirmed
+through supported SDK assistant history in both cases. This is the installed
+OpenCode client hook protocol host with server scrub 0.2.3, not the OpenCode
+executable and not a naturally exhausted account. The local refusal prevents
+deliberately spending quota to construct a test. Each case records exactly one
+refused account and one answering account, despite four native refusal requests.
+SSE headers arrive in 25.1 ms, heartbeat precedes the first refusal, no refusal
+leaks, and exactly one message_start reaches the client. Nonstream parity passes.
+Both plugin witnesses run with zero errors. All original actors/pipes join, grant
+removed, Extra Usage disabled; no credential refresh or account switch. Actual
+OpenCode executable and four-mode E41 qualification remain open.
+
+Four-mode E41 finished in original session 78225, exit 0. All four modes pass
+on frozen cbb340eba (combined streaming-main product) in Linux amd64 Docker,
+SDK 0.2.141/native 2.1.296/Opus 5.5, installed V1 hook plus server scrub 0.2.3.
+Sequential 1+1+1 and parallel 3 tool batching, result identity, immutable source
+history, forks, continuation and cache predicates pass. All original actors/pipes
+join; temporary grants removed. Receipts adjacent. Actual OpenCode executable
+qualification and integration of newly merged image main remain open.
