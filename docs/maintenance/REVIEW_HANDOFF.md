@@ -1,3 +1,27 @@
+## Current MCP/plugin checkpoint — 2026-10-12
+
+This entry supersedes stale running-session and draft descriptions below.
+MCP delivery [#1349](https://github.com/rynfar/meridian/pull/1349) preserves
+source #1283 as authored cherry-pick `158e6c18d` from fresh main `ab615ca70`.
+Actual independently installed Linux OpenCode 1.18.34 / Opus 5.5 read and
+same-session continuation passed with both matching client plugin and scrub
+0.2.3, all four requests 200 and original processes/pipes joined.
+
+E41 sequential JSON passed protocol predicates; SSE failed cache continuity
+and exact model identity (recorded both Opus 4.8 and 5.5). No cause established.
+Parallel arms were not run. The protocol fixture lacked client-plugin execution,
+so its live entry point is now disabled before grant/server access. Both plugins
+are required before live use; do not substitute the old direct script. Full
+receipts, local test failures, fixture correction and remaining gates are in
+[evidence](evidence/1283-current-main-20261012/REVIEW.md). No more model calls
+were made while diagnosing these failures. Latest full local gate remains
+owned session 85278, `/tmp/meridian-1283-final-local.log`; poll that process,
+not a replacement. Do not merge or close #1283 yet.
+
+Priority remains #1338 paid-overage routing, #1283 lost tools, #1294 stalled
+streaming, scrub #22/#23 cwd corruption, #1214 SSE failover and #1310 image
+amplification, before feature work. Haiku 5.5 is already published in 1.81.0.
+
 ## Active prepared deliveries — 2026-10-12
 
 - MCP #1283 → [draft #1349](https://github.com/rynfar/meridian/pull/1349),
