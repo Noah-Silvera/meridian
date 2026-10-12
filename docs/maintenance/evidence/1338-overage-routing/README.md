@@ -1,6 +1,6 @@
 # Priority overage routing — issue 1338
 
-Status: implementation and local qualification in progress; not live accepted.
+Status: final local gates pass; draft PR 1347 is not live accepted.
 Baseline: `16fac4c6b4b95a97f7dbb7ff4d00946d5e3aa06f` (published package is 1.81.0).
 Host: Darwin ARM64, Node 22.22.3. Focused reproduction: Bun 1.3.14.
 Full local qualification uses CI's Bun 1.3.11.
@@ -96,3 +96,8 @@ Original failing cases:
 (fail) priority cooldown resolution > never shortens an existing mark with an earlier OAuth reset [76.92ms]
 (fail) priority cooldown resolution > clamps the synchronous mark to the 6-hour cap even when the profile's own reset is far beyond it [46.28ms]
 ```
+
+Final local gates: 5,650 pass, 35 skips, zero failures across all npm test batches;
+standalone typecheck and build exit zero. See local-gates.json. The old live
+Opus quota-blocker interpretation is withdrawn: the October 12 streaming harness
+omitted server scrub. Correctly configured actual acceptance remains to be run.

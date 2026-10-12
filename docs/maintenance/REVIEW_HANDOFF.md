@@ -1,3 +1,18 @@
+## Draft 1347 local qualification completed — 2026-10-12
+
+Paid-overage routing final local gates pass 5,650 tests / 35 skips / zero failures,
+standalone typecheck and build. Five original cooldown fixtures now explicitly
+select `priorityOverage=always` to preserve their intended reactive-refusal path;
+all assertions remain. Default-policy regressions still require avoiding the
+spent account. Delivery #1347 remains draft for real affected-flow acceptance.
+
+Do not inherit the prior streaming/Extra Usage account-quota hold: those recent
+OpenCode harnesses omitted server scrub. Their PR bodies now carry the correction.
+The current read-only default-account usage check shows 9% five-hour and 8% weekly
+utilization, Extra Usage disabled, valid scope/expiry and unchanged source record.
+This is readiness, not proof of model entitlement. Harness correction and fresh
+properly configured acceptance are underway separately.
+
 ## Impact-prioritized queue continuation — 2026-10-12
 
 Owner renewed the backlog goal: consequential fixes first, then good features.
