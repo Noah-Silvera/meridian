@@ -57,3 +57,37 @@ Acceptance remains open: qualified setup/host coverage, all four E41 modes,
 relevant E42, full final local/CI gates and final adversarial review. No merge,
 source closure or release is claimed. Reporter specified haiku without an exact
 served version; this independent proof explicitly covers Haiku5.5.
+
+## Additional gates completed
+
+Clean head0aab7d26 original local28183 exited0:5743pass/35skip/0fail,
+full npm test, standalone typecheck and build.
+E41 original32660 exited0: all four chain/parallel by JSON/SSE modes pass on
+Darwin ARM64 with actual Opus5.5, installed client hook and server scrub,
+exact call/result pairing, unchanged source history, cache continuity and
+joined original actors. Each grant was removed after joined=true.
+Offline E42 original83785 exited0: all three pinned betas18314/18866/19271
+pass source and independently installed-package gates, six arms total.
+Sanitized receipts preserve gate verdicts/catalog/cold-start/invalidation facts
+without raw request authorization or attestation headers.
+Installed actual released OpenCode2.0.16 E42 original57684 exits0: setup,
+primary signature, title/generate isolation, same-session resume, xhigh discovery,
+real tool result, fork/original isolation and compaction all pass. Actual Haiku5.5
+is observed through supported SDK messages; server scrub is verified before and
+after. Original SDK and client processes/pipes join; grant removed. Exact
+external-proxy wrapper is escrowed here with fixed owned fixture paths.
+
+## Extended beta gate remains open
+
+Original34036 failed because the external proxy adapter lacked the gate's
+mid-run proxy.close/restart handle. Original61202 then failed at selecting
+claude-haiku-4-5#xhigh (provider.no-route). Both original processes joined and
+grants were removed. Neither is counted as acceptance. The second adapter
+restarted only the proxy instance, not its OS process; that is insufficient
+for the existing durable process-restart assertion even though it advanced
+past that assertion. Preserve a real subprocess restart in the corrected gate.
+The live beta harness also assumes Haiku4.5 advertises xhigh; update the live
+model/catalog expectation to the actual supported Haiku5.5 while retaining
+the offline fixture's controlled catalog and all resume/cache checks. Do not
+weaken the restart or effort-discovery assertions merely to obtain a pass.
+These harness corrections and the 2.0.21 setup qualification remain open.

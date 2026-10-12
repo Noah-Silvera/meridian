@@ -1,3 +1,29 @@
+## Latest #1354 checkpoint — broad gates passed, extended beta harness needs correction
+
+Clean0aab7d26 original28183 exited0:5743pass/35skip/0fail,typecheck/build.
+Original32660 all four qualified E41 modes pass (Opus5.5, joined grants removed).
+Original83785 all six offline E42 beta source/installed arms pass. Installed
+stable2.0.16 live E42 original57684 passes full flow with qualified external
+proxy/scrub, actual Haiku5.5, joined actors/grant removed. Durable receipts now
+under evidence/1301-opencode-instruction-update-20261012.
+
+Extended beta18314 original34036 failed missing external restart handle.
+Original61202 then failed stale Haiku4.5#xhigh catalog selection; its in-process
+proxy restart is also insufficient for the actual process-restart gate. Do not
+count either as acceptance. Both terminal/joined/grants removed. Next: update
+real subprocess e2e-opencode-proxy-host.mjs to require installed server scrub
+and explicit private access-only profiles, capture SDK original process joins,
+and keep the beta harness's genuine child-process restart. Use current live
+Haiku5.5 for xhigh, retaining controlled offline catalog. Then run each beta's
+extended live flow. Do not rerun completed local28183 absent material changes.
+OpenCode2.0.21 still rejected by setup; its actual manual-fixture instruction
+proof is retained without claiming qualified setup support. No merge/release.
+
+#1334 refreshed unchanged10f4132a, linked to thread; held draft. Quota blocker
+is now stale but actual SDK/client acceptance remains. Existing authored branch
+/Users/rynfar/repos/meridian-sdk-close-completion-1334-20261011 is a lead; inspect
+worktree state before using. Keep #1326 original hang issue open independently.
+
 ## Latest OpenCode #1354 evidence
 
 Actual installed OpenCode2.0.21/Haiku5.5 now reproduces the trailing-system
