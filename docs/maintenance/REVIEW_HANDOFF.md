@@ -1,3 +1,13 @@
+## SSE installed fixture terminal failure — 2026-10-12
+
+Original session 25498 is terminal exit 1, not still running. Independently
+installed `a9fece93` with Docker network disabled passes nonstreaming fallback,
+then fails absolute SSE header deadline: 335.1 ms observed versus 100 ms asserted.
+All original processes/pipes joined. Durable report/console and analysis:
+[evidence](evidence/1214-sse-failover-20261012/REVIEW.md). No grant or model call.
+Review the timing assertion against baseline before rerunning; do not claim live
+or packaged SSE success. Streaming merge `8edccd790` remains verified and complete.
+
 ## Streaming merged; SSE installed fixture active — 2026-10-12
 
 Streaming #1344 merged as `8edccd790f56fdee72a20b71337eef8ab6dec1ed`.

@@ -64,3 +64,16 @@ standalone typecheck and build pass. Clean certified package source is `a9fece93
 see local-gates.json. The independently installed fixture package is being built;
 its passing execution and all live acceptance gates remain unproven. Do not restart
 that completed full-suite process.
+
+## Independently installed fixture failed its header deadline
+
+Clean installed `a9fece93`, Node 22.23.3 / SDK 0.2.141 / CLI 2.1.296,
+Linux amd64 Docker under Darwin ARM64 emulation, with Docker network disabled:
+nonstreaming failover passes (one refused/one served telemetry attempt; the native
+CLI made four local refusal HTTP calls). SSE headers arrived in 335.1 ms, failing
+the contributor's absolute 100 ms assertion before the stream assertions ran.
+Original actors/pipes joined; original session 25498 exited 1. No credentials or
+remote model requests were involved. Report and console are retained adjacent.
+This is an installed-fixture FAIL, not a passed SSE acceptance gate. Do not rerun
+unchanged and call it fixed; review the timing predicate against the retained
+15-second delayed-header baseline and preserve a discriminating before/after check.
