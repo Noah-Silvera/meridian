@@ -83,3 +83,13 @@ Syntax validation passes. Missing E2E_PLUGIN_PATH rejects before grant access or
 client launch (actual negative invocation exits 1 with the preflight assertion).
 The actual run is not yet claimed. This short flow supplements, not replaces,
 the causal overlap transport matrix, E41 modes or relevant V2/E42 checks.
+
+
+The independent frozen-install full run also exited 1: the bundled-worker case
+passes, but the unchanged cross-process modified-history/non-passthrough/JSON
+case received HTTP 500 instead of 400. Its focused rerun passes unchanged
+(1 pass, four assertions). This does not prove a resolved flaky failure. The
+fixture now includes its synthetic response in the failing assertion so a future
+failure preserves the diagnostic that the old assertion discarded. Expected
+status and all original assertions remain unchanged. Full-suite acceptance is
+still open; do not replace either failed full result with the targeted pass.
