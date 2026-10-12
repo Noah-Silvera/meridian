@@ -53,6 +53,8 @@ def main():
     (root / 'home/.config/polytoken/config.json').write_text(
         json.dumps({'version': 4, 'default_permission_matcher': 'bypass'}))
     (root / 'work/fixture.txt').write_text('MERIDIAN_LIVE_FIXTURE_91\n')
+    for index in range(1, 4):
+        (root / f'work/fixture-{index}.txt').write_text(f'MERIDIAN_LIVE_FIXTURE_91_{index}\n')
     (config / 'facets/live-probe.md').write_text('''---
 name: live-probe
 description: Verify live conversation isolation.
@@ -61,7 +63,7 @@ polytoken:
   tools: [file_read, subagent, job_block, job_result, job_status]
   undeferred_tools: [file_read, subagent, job_block, job_result, job_status]
 ---
-Follow the verification prompt exactly. Use only fixture.txt. Report failures honestly.
+Follow the verification prompt exactly. Use only the fixture*.txt files. Report failures honestly.
 Finish using exec_structured_output.
 ''')
     (config / 'subagents/live-worker.md').write_text('''---
@@ -74,7 +76,7 @@ polytoken:
   undeferred_tools: [file_read]
   allow_subagent_spawn: false
 ---
-Read fixture.txt three times in three separate assistant tool-call turns, not a batch.
+Read fixture-1.txt, fixture-2.txt, and fixture-3.txt in that order in three separate assistant tool-call turns, not a batch.
 Report your assigned marker and the file contents using exit_tool with success true.
 {{ prompt }}
 ''')
@@ -90,7 +92,7 @@ Report your assigned marker and the file contents using exit_tool with success t
         prompt = (prefix + 'Call the subagent tool exactly twice in total, with count=1 on each call '
                   '(not count=2). Both calls must use subagent_type="live-worker" and model_override="live-model". '
                   f'Name the first {name}-alpha and the second {name}-beta. '
-                  'In each child prompt explicitly require exactly three file_read calls for fixture.txt '
+                  'In each child prompt explicitly require one file_read for each of fixture-1.txt, fixture-2.txt, fixture-3.txt in order '
                   'in three separate assistant turns, followed by exit_tool with success=true. '
                   'Launch both before waiting, then use job_block or job_result to collect those two existing jobs. '
                   'Never call subagent again, even if a job is pending or failed. '
