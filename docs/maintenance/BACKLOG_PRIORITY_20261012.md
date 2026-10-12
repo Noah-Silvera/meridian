@@ -77,3 +77,16 @@ blobs from7475d08c. Root-wide deletion still lacks pin/ownership protection and
 joined, mutually exclusive admission. Revisit a corrected ownership-aware design;
 do not accept text-only replay as proof that native history survives. Process
 identity diagnostics #1266 remain held for exact macOS/nono/client proof.
+
+## Detached lifecycle feature disposition
+
+[#1302](https://github.com/rynfar/meridian/issues/1302) is the first feature
+recommended for implementation after consequential fixes. The
+[concrete lifecycle proposal](proposals/1302-detached-cli.md) covers every requested
+behavior using private local control, original child ownership, bounded logs and
+explicit readiness. No new public shutdown endpoint or plugin contract is needed.
+A simple PID-file/kill implementation is rejected because it cannot protect an
+unrelated reused PID or prove owned-child shutdown. Windows graceful stop must
+use child IPC rather than assuming SIGTERM behaves like POSIX. Actual process,
+source/installed package, platform and active-turn drain gates remain required.
+This is an implementation design, not a shipped feature.

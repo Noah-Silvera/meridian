@@ -1,3 +1,16 @@
+## Detached CLI feature #1302 — concrete implementation design
+
+[Lifecycle proposal](proposals/1302-detached-cli.md) on isolated branch
+codex/detached-cli-1302-20261012 from e0f9feab defines a private supervisor/child
+handshake, nonce-bound control channel, fail-closed ownership recovery, targeted
+graceful stop, bounded readiness and logs, and source/installed cross-platform
+verification. It does not change exported plugin interfaces or add HTTP shutdown.
+Adversarial review corrected signal-based stop to private child IPC because
+SIGTERM is not a portable graceful-stop guarantee on Windows. Log retention is
+bounded per endpoint across launches, not merely per process incarnation.
+Status: worth implementing after consequential fixes; no new runtime behavior
+is implemented or accepted yet. No model call, credential change or release.
+
 ## Current Nix runtime integration — #1342 → #1357
 
 Authored current-main incorporation26e2dd4a5/dd4bf666 preserves Connor Grady's

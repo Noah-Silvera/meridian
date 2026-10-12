@@ -79,8 +79,9 @@ Authenticate every request with the record's random nonce and instance ID. The
 listener reports the same ID; a response from a replacement endpoint is not a
 match. Keep the protocol private/versioned, with bounded frames, connection
 count, read deadline, and no arbitrary command/path fields. Supported requests
-are inspect and stop only. Stop is executed by the supervisor through its live
-child handle, never through a recorded numeric PID.
+are inspect and stop only. Stop is executed by the supervisor through its original authenticated child
+IPC channel, never through a recorded numeric PID. The live child handle is
+retained for lifecycle observation and joining.
 
 Process incarnation is evidence for stale metadata recovery, not authorization
 to signal an unknown process. Use the existing fail-closed process-incarnation
@@ -106,8 +107,10 @@ has bound; the supervisor independently probes the existing `/readyz` route.
 Ready means local server admission readiness, not guaranteed upstream model
 entitlement, quota, or a successful inference. Do not add a model call to startup.
 
-Stop sends the first graceful signal once through the supervisor's original child
-handle. It then observes the child's original close event and both output streams.
+Stop sends a graceful-stop message once through the supervisor's original child
+IPC channel. The CLI invokes the same close path used by its first shutdown
+signal. This avoids Node's nonportable SIGTERM behavior on Windows. The
+supervisor observes the child's original close event and both output streams.
 Repeated stop requests during draining must not send a second signal: the current
 CLI treats a second SIGTERM/SIGINT as forced exit. Preserve the current
 `proxy.close()` drain semantics and configured grace window.
@@ -127,7 +130,8 @@ socket-activation behavior remains unchanged.
 
 The supervisor consumes both child output streams and writes private logs outside
 stdout of the launching application. Bound storage to 10 MiB per active file plus
-one rotated file per instance, document the exact path, and preserve stream ordering
+one rotated file per endpoint across successive launches, document the exact
+path, and preserve stream ordering
 as observed without making cross-stream ordering claims. Handle backpressure and
 write failures explicitly; an unwritable log destination fails startup. A later
 logging failure must remain observable and cannot leave unbounded in-memory data.
@@ -137,7 +141,7 @@ Do not log environment/config secrets. Tests must cover rotation and permissions
 ## Repository boundaries
 
 - `bin/cli.ts`: argument dispatch, invoking the detached lifecycle API, and the
-  private child-ready notification. Keep default foreground behavior intact.
+  private child-ready/stop protocol. Keep default foreground behavior intact.
 - New `src/cli/` modules: private protocol, instance persistence/recovery,
   supervisor, bounded logging, and command formatting. Separate pure parsing and
   lifecycle state transitions from I/O for direct regression tests.
