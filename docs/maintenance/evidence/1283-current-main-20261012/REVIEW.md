@@ -1,6 +1,6 @@
 # MCP tool-loss fix: current-main incorporation
 
-Disposition: accept with maintainer harness corrections; live acceptance pending.
+Disposition: accept with maintainer harness corrections; actual V1 client and all four plugin-qualified E41 modes pass. Full local gate, final-head CI and remaining adjacent-flow review are pending.
 Source #1283 remains `571a671676d6b8604cde932199d77c34bc6a46f3`, authored by
 Nowaker <spam@nowaker.net>, 2026-10-04T05:57:11Z. Actual authored cherry-pick
 `158e6c18d` preserves Author/AuthorDate on main `ab615ca70`. No contributor
@@ -246,3 +246,36 @@ wrong-model supported source snapshot, before another model request. The final
 assertions remain unchanged. A further live run must use both actual installed
 plugins and records the changed qualification as such, not an unexplained
 green rerun of the old incomplete fixture.
+
+
+## All four plugin-qualified E41 modes pass
+
+The final qualification uses harness `451c43c7` with the unchanged contributor
+product code in server source `e5cce1f71`, SDK 0.2.141/native 2.1.296, Linux amd64
+under Docker emulation. Image and exact harness hash are in
+`e41-qualified-matrix.json`. The actual bundled client hook comes from the
+independently installed clean `51c37b71` package; its hash is identical to the
+current build. Scrub 0.2.3 is independently installed and active.
+
+Sequential JSON/SSE both deliver exact 1+1+1 batches; parallel JSON/SSE both
+deliver one batch of three. Every mode retains one real answer per call,
+unchanged source histories, distinct durable forks, saved-session follow-up,
+exact Opus 5.5 in supported SDK history, and at least 95% prior-prefix cache
+reads on every continuation. Client and server hooks each execute 16 times
+across the matrix with zero errors. All original observed processes and pipes
+join. Grants are removed after receipts are copied and joins confirmed.
+Read-only readiness before each arm showed included capacity and Extra Usage
+disabled; no refresh, account switch, or billing setting change occurred.
+
+This is successful qualification of the corrected two-plugin protocol host,
+not proof of the cause of the older plugin-incomplete model/cache failure. Both
+failed receipts and the supported-API audit remain preserved. Actual OpenCode
+1.18.34 installed-package read/result/continuation is separately qualified.
+No V2 executable or interrupted-client-flow success is inferred from E41.
+
+Adversarial product review reconfirms that only three product files differ: the
+tool-set factory, its query-option caller, and cache comments/log wording. Tool
+names, schema/order/definition objects and cache keys remain stable; no plugin
+API, V2 dispatch, model routing, session identity or checkpoint policy changes.
+The loopback shared-server mutant fails, and separate native overlap/cancel
+controls establish transport lifetime independently of model prose.
