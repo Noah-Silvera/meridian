@@ -40,3 +40,16 @@ final-head CI and final review. The reporter gives Meridian 1.75.0 and Pi but do
 not specify Pi version, model or OS. Record the actual qualification environment
 and that limit rather than claiming an exact reporter-environment reproduction.
 No model call, package release, issue closure or merge is claimed.
+
+## Combined current main and isolated dependencies
+
+Initial full suite terminated exit 1: 5239 pass, 35 skip, one build-observer
+failure. Bun reported EISDIR while reading the shared-worktree zod/index.js;
+the target was actually a regular file. Removed only this worktree's dependency
+symlink and installed its frozen dependencies locally. The same four build-observer
+controls then pass. Do not infer a product image regression or claim the upstream
+Bun cause is established. Failure and passing control are retained adjacent.
+
+Streaming main `8edccd790` is incorporated as `2127507c`, with no product conflict.
+Fresh combined npm test/typecheck/build is running in original session 32853,
+log /tmp/meridian-1351-combined-gates.log. Actual Pi/SDK and E41/E65 remain open.
