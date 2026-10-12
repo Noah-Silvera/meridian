@@ -1,3 +1,28 @@
+## Streaming merged; SSE installed fixture active — 2026-10-12
+
+Streaming #1344 merged as `8edccd790f56fdee72a20b71337eef8ab6dec1ed`.
+Verified exact tree equality against `5f26a29b` and Nowaker co-author credit.
+Source #1294 was rechecked unchanged at `7f0a0235` and closed without a comment.
+Final-head test, Windows, Docker, desktop, Linux/macOS builds and replacement
+Nix CI pass. Earlier cancelled Nix duplicate is superseded. No release published.
+Post-merge discovery/pagination still covers six managed repos: 36 open PRs and
+22 issues, including new draft deliveries #1350/#1351 and source/delivery pairs.
+
+SSE #1350 clean `a9fece93` passed full local gates. Independent installed image
+`meridian1350:installed-20261012` is running its credentialless native fixture
+in original exec session 25498, container `meridian-1350-fixture-20261012`, with
+Docker network disabled. Only loopback refusal/answer fixtures are reachable.
+Log `/tmp/meridian-1350-package-20261012/fixture-console.txt`. Node and original
+claude.exe were confirmed live; no timeout/restart inference. Report comes from
+owned root printed on completion. Copy report before removing anything. No grant
+was staged. Pack metadata is in the same directory. Integrate new main into #1350
+and revalidate final combined tree after this exact-source result is recorded.
+
+Image #1310 → draft #1351 has owned full local gate session 73954 active at
+`/tmp/meridian-1310-full-gates.log`; source `6d522aaa` remains based on old main
+`3f5f4f81`, so integrate streaming before final acceptance. 19 pure and 44 HTTP
+controls pass; actual Pi/SDK and applicable live gates remain. No issue closure.
+
 ## SSE full local gate complete — 2026-10-12
 
 #1350 clean `a9fece93` completed original session 54534 with exit 0: 5707 pass,
