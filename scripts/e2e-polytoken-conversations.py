@@ -116,10 +116,32 @@ Report your assigned marker and the file contents using exit_tool with success t
             if message.get('type') == 'subagent_complete':
                 children.append({'session': log.parent.name, 'handle': message.get('handle'),
                                  'outcome': message.get('outcome')})
-    passed = all(r['exit'] == 0 for r in runs) and len(children) == 4 and all(
+    # Verify actual executed reads, not the model's natural-language claims.
+    read_evidence = []
+    for log in (root / 'xdg-data/polytoken/sessions-v1').glob('*/*.jsonl'):
+        if log.name != 'log.jsonl' and not log.name.startswith('subagent-'):
+            continue
+        turns = 0
+        for line in log.read_text().splitlines():
+            event = json.loads(line)
+            body = event.get('public_payload', {}).get('item', {}).get('body', event)
+            if body.get('type') not in ('assistant', 'assistant_message'):
+                continue
+            reads = [b for b in body.get('blocks', [])
+                     if b.get('type') == 'tool_use' and b.get('name') == 'file_read']
+            if reads:
+                turns += 1
+        read_evidence.append({'session': log.parent.name, 'transcript': log.name,
+                              'read_turns': turns})
+    expected_transcripts = 6 if args.title_first else 4
+    checked_reads = [r for r in read_evidence if args.title_first or r['transcript'] != 'log.jsonl']
+    reads_passed = len(checked_reads) == expected_transcripts and all(
+        r['read_turns'] >= 3 for r in checked_reads)
+    passed = reads_passed and all(r['exit'] == 0 for r in runs) and len(children) == 4 and all(
         c['outcome'] and c['outcome'].get('kind') == 'success' for c in children)
     result = {'runs': runs, 'children': children, 'passed': passed,
-              'note': 'Inspect transcripts for three reads and distinct stored SDK mappings; exit alone does not prove resume.'}
+              'read_evidence': read_evidence,
+              'note': 'Three distinct read turns verified; server harness must verify SDK mappings.'}
     (root / 'result.json').write_text(json.dumps(result, indent=2))
     print(json.dumps(result, indent=2))
     return 0 if passed else 1

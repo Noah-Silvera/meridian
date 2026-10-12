@@ -41,6 +41,25 @@ describe("polytokenAdapter identity", () => {
     }))).toBe("thread-only")
   })
 
+  it("isolates the native title-only contract without changing ordinary conversation identity", () => {
+    const c = ctx({ "x-polytoken-conversation": "thread" })
+    const title = {
+      system: "You summarize the conversation so far into a short session title. Respond ONLY by calling the provided tool with a single `title` string.\n\nThe title must be plain text.",
+      tools: [{ name: "_infer_title", input_schema: { type: "object" } }],
+    }
+    const key = polytokenAdapter.getSessionId(c, title)
+    expect(key).not.toBe("thread")
+    expect(key).toBe(polytokenAdapter.getSessionId(c, title))
+    expect(polytokenAdapter.getSessionId(ctx({ "x-polytoken-conversation": "other" }), title)).not.toBe(key)
+    expect(polytokenAdapter.getSessionId(ctx(), title)).toBeUndefined()
+    for (const body of [
+      { ...title, system: "User-defined title tool" },
+      { ...title, tools: [...title.tools, { name: "file_read" }] },
+      { ...title, tools: [{ name: "infer_title" }] },
+      { ...title, tools: [] },
+    ]) expect(polytokenAdapter.getSessionId(c, body)).toBe("thread")
+  })
+
   it("falls back to legacy session identity only when conversation identity is absent or blank", () => {
     expect(polytokenAdapter.getSessionId(ctx({
       "x-polytoken-session": " legacy ",

@@ -307,6 +307,34 @@ describe("Polytoken native session concurrency", () => {
     }
   })
 
+  it("keeps native title inference out of the working conversation and resumes the original checkpoint", async () => {
+    const app = createProxyServer({ port: 0, host: "127.0.0.1", silent: true }).app
+    const headers = { "x-polytoken-conversation": "working-thread" }
+    const main = fetchTracked(app, nativeRequest("parent", "opening", headers))
+    const mainControl = await waitForControl(0)
+    const titleRequest = nativeRequest("parent", "opening", headers)
+    const title = fetchTracked(app, new Request(titleRequest.url, {
+      method: "POST", headers: titleRequest.headers,
+      body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 128, stream: false,
+        messages: [{ role: "user", content: "opening" }],
+        system: "You summarize the conversation so far into a short session title. Respond ONLY by calling the provided tool with a single `title` string.",
+        tools: [{ name: "_infer_title", input_schema: { type: "object", properties: { title: { type: "string" } } } }],
+      }),
+    }))
+    const titleControl = await waitForControl(1)
+    expect(maxActiveQueries).toBe(2)
+    expect(capturedInputs[1]!.options?.sessionId).not.toBe(capturedInputs[0]!.options?.sessionId)
+    titleControl.release()
+    expect((await title).status).toBe(200)
+    mainControl.release()
+    expect((await main).status).toBe(200)
+    const next = fetchTracked(app, nativeRequest("parent", "opening", headers, continuationMessages("opening", "continue")))
+    const continuation = await waitForControl(2)
+    expect(capturedInputs[2]!.options?.resume).toBe(capturedInputs[0]!.options?.sessionId)
+    continuation.release()
+    expect((await next).status).toBe(200)
+  })
+
   it("still rejects stale requests sharing a conversation even across session headers", async () => {
     const app = createProxyServer({ port: 0, host: "127.0.0.1", silent: true }).app
     const headers = { "x-polytoken-conversation": "same-thread" }

@@ -1,0 +1,127 @@
+{
+  "result": "PASS",
+  "scope": "Polytoken 0.8.21 / actual Haiku 4.5 / Darwin arm64; source build with maintainer title isolation",
+  "statuses": {
+    "200": 35,
+    "500": 3
+  },
+  "cancelledTitles": [
+    "owned-174bff24-ca34-4969-aa71-2751d759a290",
+    "owned-656c6556-ca75-4fbd-9a3a-a1d8c06caa59",
+    "owned-0366cc18-ebc4-4547-b6bb-e36a80b5c7b7"
+  ],
+  "conversations": [
+    {
+      "kind": "working",
+      "requests": 8,
+      "resumes": 7,
+      "sdkSessions": [
+        "046dd895-d2d6-4a36-aec3-047d7d34b9ec",
+        "256f6868-3c16-4d57-8026-c924992d3b63",
+        "2a07f1d4-cd61-4f45-9f42-d3cd40c7beea",
+        "3165f8cb-4d87-472a-92ab-95245ddf0f33",
+        "4a9879ef-51ad-43ba-b67c-58d3aeb637ad",
+        "85ed803d-1acf-460b-ba54-4f78919d43f1",
+        "e7c48422-f927-47e3-9ba4-1bfef675b7b9",
+        "faa2b9f8-240f-4654-9659-aa1cb996d370"
+      ]
+    },
+    {
+      "kind": "working",
+      "requests": 6,
+      "resumes": 5,
+      "sdkSessions": [
+        "030f4de2-9a3d-41bc-b3b0-f27bbd7a81f1",
+        "7533b29a-7975-47be-85f2-dbfca8cea9d1",
+        "8c622454-2396-480e-bca7-6c2e37ff229b",
+        "95d65d48-6329-478b-8c2c-30e3398d4a88",
+        "9c7a9bc8-555b-405a-8011-c2d03b6d0397",
+        "e04f048c-fb97-4db0-b09f-fa43bf101388"
+      ]
+    },
+    {
+      "kind": "native-title",
+      "requests": 2,
+      "resumes": 0,
+      "sdkSessions": [
+        "29256bc6-2ae7-44bf-bafd-b387dcee73cf",
+        "6be61062-e9c3-4770-b9b8-50b91c500dcc"
+      ]
+    },
+    {
+      "kind": "working",
+      "requests": 6,
+      "resumes": 5,
+      "sdkSessions": [
+        "a8ba78cd-5b7e-42a0-ab32-1cbf46985542",
+        "d256350e-9947-4362-8ece-30d1a4ac3a3a",
+        "d41de1a8-783f-4092-8cea-14ab544a5fcc",
+        "ed139b30-658d-4fbd-9eb5-f51aa1a27ddf",
+        "eee7cccf-5092-455f-afb2-e230bc8eb99e",
+        "fd6ec333-65cb-4e41-af1d-ba0667358dde"
+      ]
+    },
+    {
+      "kind": "working",
+      "requests": 5,
+      "resumes": 4,
+      "sdkSessions": [
+        "0c8c377a-d4b8-4906-bf75-97b4630bd51b",
+        "40a03002-e7f0-4381-bb3f-2277ef8b127f",
+        "84c67123-4161-4bcc-b208-7ed91543c02c",
+        "df98c2c0-66ea-4c67-a958-879455da8335",
+        "f34c10dc-b941-4150-8f57-2a26b5301535"
+      ]
+    },
+    {
+      "kind": "working",
+      "requests": 5,
+      "resumes": 4,
+      "sdkSessions": [
+        "116b9480-e8f2-4f17-ab97-6f3ceb2308e4",
+        "2279b18b-e47f-4e46-aedf-4f096daaed6b",
+        "3c6f3728-aa54-4c07-86b8-b50051ead524",
+        "d98b0fdf-6c65-4758-8454-9aa4e1f69bb3",
+        "fcc51711-f3fc-4baf-a7ec-40254c6d880f"
+      ]
+    },
+    {
+      "kind": "working",
+      "requests": 5,
+      "resumes": 4,
+      "sdkSessions": [
+        "26c4666d-9c03-4148-985c-0dd1ed23f9e2",
+        "407d70b7-ea71-4b0d-bc66-4558f2019e01",
+        "7f4c2b57-1bc4-4549-9799-055c115d9061",
+        "943f022d-c3f4-4d95-aba8-b4b3576d0521",
+        "9783a2c6-2329-46d9-807d-5126b6a17084"
+      ]
+    },
+    {
+      "kind": "native-title",
+      "requests": 1,
+      "resumes": 0,
+      "sdkSessions": [
+        "6438e51f-47a3-4c9a-99aa-1c6cfeca8921"
+      ]
+    }
+  ],
+  "joined": true,
+  "readTurns": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "limitations": [
+    "Native title requests were cancelled by actual client; this does not prove completed title generation."
+  ],
+  "priorFailures": [
+    "Initial model execution spawned six children instead of four.",
+    "Two attempts received revoked-token 401; current access-only credential was re-read, never refreshed.",
+    "Observer data listener consumed request body; corrected to passive event observation."
+  ],
+  "reportSha256": "8df7f55dfef7808db67fcca3ce4f5dc79a93b69eb8073b4ee54141ff07e80d84"
+}
