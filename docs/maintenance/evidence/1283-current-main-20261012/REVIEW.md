@@ -1,6 +1,6 @@
 # MCP tool-loss fix: current-main incorporation
 
-Disposition: accept with maintainer harness corrections; actual V1 client and all four plugin-qualified E41 modes pass. Full local gate, final-head CI and remaining adjacent-flow review are pending.
+Disposition: accept with maintainer harness corrections; actual V1 client and all four plugin-qualified E41 modes pass. Full local gate passes; final-head CI and remaining adjacent-flow review are pending.
 Source #1283 remains `571a671676d6b8604cde932199d77c34bc6a46f3`, authored by
 Nowaker <spam@nowaker.net>, 2026-10-04T05:57:11Z. Actual authored cherry-pick
 `158e6c18d` preserves Author/AuthorDate on main `ab615ca70`. No contributor
@@ -279,3 +279,17 @@ names, schema/order/definition objects and cache keys remain stable; no plugin
 API, V2 dispatch, model routing, session identity or checkpoint policy changes.
 The loopback shared-server mutant fails, and separate native overlap/cancel
 controls establish transport lifetime independently of model prose.
+
+
+## Full local gate completed
+
+Owned session 4259 terminated exit 0. Under CI Bun 1.3.11, `npm test` passes
+5,659 tests, skips 35, and fails zero; `npm run typecheck` and `npm run build`
+then pass. Exact command, source identity, product hashes and full-log hash are
+in `final-local-gates.json`. Product and tested source remained unchanged during
+the run; later changes were the E41 diagnostic script and evidence.
+
+Earlier failures stay recorded. The finite Git and crash-reporter fixture
+races have specific corrected causes; this successful full run alone does not
+explain the earlier non-passthrough cross-process 500 or bundler EISDIR. Neither
+path exercises this MCP server factory. No broad flaky-test fix is claimed.

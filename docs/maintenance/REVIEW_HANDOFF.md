@@ -7,23 +7,20 @@ Actual independently installed Linux OpenCode 1.18.34 / Opus 5.5 read and
 same-session continuation passed with both matching client plugin and scrub
 0.2.3, all four requests 200 and original processes/pipes joined.
 
-E41 sequential JSON passed protocol predicates; SSE failed cache continuity
-and exact model identity (recorded both Opus 4.8 and 5.5). No cause established;
-parallel arms were not run. Those runs lacked client-plugin execution and are
-not qualified acceptance. The temporary live stop has now been replaced with
-mandatory actual installed-client config/header hook execution before grant
-access and on every request. Missing/inert/wrong/changed plugins fail closed.
-Credentialless controls pass; no new live run or resolution of E41 is claimed.
+All four corrected E41 modes now pass with real Opus 5.5, SDK 0.2.141/native
+2.1.296, Linux amd64, actual installed client hook and scrub 0.2.3. Both hooks
+run 16 times with zero errors; all histories/cache predicates pass and actors
+join. Every grant is removed. Earlier plugin-incomplete cache/model failures
+and their supported-API audit remain preserved, not explained away.
 See [evidence](evidence/1283-current-main-20261012/REVIEW.md).
 
-Full local session 85278 terminated exit 1 (5229 pass / 35 skip / 1 fail),
-revealing the crash-reporter test's pending-versus-claimed-file wait race.
-`4d84388a` corrects its wait without relaxing the final assertion or deadline.
-Plugin/reporter focused checks pass 19 tests / 121 assertions on Bun 1.3.11;
-typecheck passes. Latest full local gate for `659d98ee` is owned session **4259**,
-`/tmp/meridian-1283-plugin-final-gates.log`, with npm test then typecheck/build.
-Poll that process, not a replacement. Earlier cross-process 500 remains
-unexplained; no full-green claim. Do not merge or close #1283 yet.
+Owned local gate session **4259 is terminal exit 0**: 5659 pass / 35 skip /
+zero failures, then typecheck/build pass, with CI Bun 1.3.11. Do not restart or
+poll that completed process. Earlier full-run fixture races were corrected
+without changing final assertions; the unrelated cross-process 500 remains
+unexplained. Final-head CI and adjacent V2/interrupted-flow applicability and
+qualification review remain before merge/source closure. No model process is
+currently running. Product code is unchanged from authored source incorporation.
 
 Priority remains #1338 paid-overage routing, #1283 lost tools, #1294 stalled
 streaming, scrub #22/#23 cwd corruption, #1214 SSE failover and #1310 image
