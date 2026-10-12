@@ -1,3 +1,41 @@
+## Impact-prioritized queue continuation — 2026-10-12
+
+Owner renewed the backlog goal: consequential fixes first, then good features.
+Live paginated discovery covers Meridian and five owner-managed scrub repos,
+including hudscrub; three accessible organizations add no scrub candidates.
+Snapshot: 57 open items, including 30 Meridian PRs and 21 Meridian issues.
+The owner explicitly reaffirmed matching client and scrub plugins for every
+actual harness; preserve config/load/route evidence before interpreting refusals.
+
+Priority: paid-overage #1338; missing passthrough tools #1283; streaming #1294/
+#1344; OpenCode scrub #23/#22; SSE failover #1214; image amplification #1310;
+OpenCode checkpoint #1301; narrow no-op writes #1303 and held SDK joins #1334.
+High-value later features: AGY idle retention #1341, managed detached lifecycle
+#1302, neutral agent headers #1311. Preserve prior owner deferrals, especially
+#1193 and the Claude-side-call stack, and all drafts. Do not waive source/client
+acceptance gates to clear queue counts. No new release authorization is inferred.
+
+#1338 implementation is isolated on `codex/priority-routing-1338-20261012`, base
+`16fac4c6b`. Both JSON/SSE regressions fail unchanged main and pass candidate;
+16 focused controls pass, with no live model/credential requests. See
+[evidence and remaining scope](evidence/1338-overage-routing/README.md).
+Final local gates and real affected-flow acceptance are separate from these
+controls. The original issue stays open until qualified completion. An unrelated
+npm-lock mismatch makes `npm ci` fail on baseline; frozen Bun install succeeds.
+
+#1283 source remains `571a6716`, non-draft with no comments/reviews. Recovered
+preparation `codex/mcp-current-main-1283-20261008` at `b43067491` already contains
+24+ authored/correction commits and durable seven-case native transport proof.
+Do not restart or blindly merge its 97-file aggregate diff: actual Linux/OpenCode/
+Opus retry/tool/history, guardian/custody, E41/E42 and final-head CI remain held.
+Its preserved REVIEW.md records matching client AND scrub plugin evidence and
+an earlier failed missing-scrub arm. No new actual-client call occurred here.
+
+Live refresh confirms Extra Usage #1346 merged at `16fac4c6b` and source #1327
+closed. Polytoken #1343 merged at `a48a8498`; source #1339 closed. Both are after
+published 1.81.0, whose fresh-install Haiku evidence is recorded below. This
+supersedes older pending-CI/merge notes without erasing their historical evidence.
+
 ## Haiku release completed — 2026-10-12
 
 **1.81.0 is published and fresh-registry-install live verified.** Release merge
