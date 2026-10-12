@@ -1,3 +1,20 @@
+## Combined streaming package verified — 2026-10-12
+
+#1344 incorporates landed MCP main `3f5f4f81`. Clean package/source `6ef677ce`
+passes all four plugin-qualified E41 modes and actual Linux OpenCode 1.18.34 /
+Opus 5.5 long write, tool result and same-session continuation: 49,037 characters
+over 123 seconds, max gap 511 ms below 15-second deadline. All four requests 200,
+all actors/pipes joined and temporary grants removed. Local suite records 5674
+pass /35 skip /zero failures, typecheck and certified build. Only documentation
+and evidence change afterward. Required final-head CI is still a merge gate.
+
+Earlier SSE refusal remains preserved: supported SDK inspection found ordinary
+end_turn refusal text, not a proven classifier event; no causal explanation or
+transport fault established. New-tree success does not erase it. See the
+[current evidence](evidence/stream-idle-1294-20261012.md) for the applicability
+review, package identity, baseline reproduction and retained failures. No release.
+Source #1294 last refreshed unchanged at `7f0a0235`; recheck before closure.
+
 ## MCP merged; streaming updated to current main — 2026-10-12
 
 MCP [#1349](https://github.com/rynfar/meridian/pull/1349) merged as
