@@ -96,6 +96,17 @@ They use the same real SDK/native model and original actor/HTTP custody gates.
 
 > **Droid tests (D1–D10)** additionally require `droid` installed (`droid --version` ≥ 0.89.0) and a Factory AI account for BYOK configuration. Tests D1–D10 cover internal mode (the default). Passthrough mode for Droid is opt-in via `MERIDIAN_PASSTHROUGH=1` and requires `droid` ≥ 0.109 — see "Droid passthrough mode" below.
 
+## OpenCode refusal and long-tool harness prerequisites
+
+`e2e-extra-usage-opencode.mjs` and the streaming-idle delivery's
+`e2e-tool-input-opencode.mjs` require both the matching Meridian client plugin
+and an independently installed OpenCode server scrub plugin. Set
+`E2E_PLUGIN_PATH` to the scrub's absolute built entrypoint and optionally
+`E2E_SCRUB_VERSION` to pin its package version. Missing/wrong/inactive plugins
+must stop before inference; retain loaded identity and successful onRequest
+invocations. The October 12 runs omitted the server scrub: their refusals cannot
+establish account exhaustion or correctly configured client acceptance.
+
 ## Required Meridian OpenCode plugin preflight
 
 Every actual OpenCode live test against Claude must load the **Meridian OpenCode
