@@ -22,7 +22,10 @@ stdenvNoCC.mkDerivation (
     inherit (package) version;
 
     strictDeps = true;
-    nativeBuildInputs = [ typescript nodejs ];
+    nativeBuildInputs = [
+      typescript
+      nodejs
+    ];
 
     buildPhase = ''
       runHook preBuild
