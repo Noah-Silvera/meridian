@@ -10,7 +10,7 @@
  * the active fork's supported SDK message history. It never reads or mutates
  * Claude's private transcript files.
  *
- *   bun scripts/e2e-passthrough-turns.mjs [--stream]
+ * Live execution is disabled until matching client-plugin execution is wired.
  */
 import assert from "node:assert/strict"
 import * as cp from "node:child_process"
@@ -18,6 +18,7 @@ import { spyOn } from "bun:test"
 import { mkdirSync } from "node:fs"
 import { observeChildClosure, stopAndJoinChild } from "./lib/e2eProcessCustody.mjs"
 import { resolveOpenCodeScrub, configureOpenCodeScrub, verifyOpenCodeScrub } from "./lib-opencode-scrub-preflight.mjs"
+throw new Error("Live E41 protocol execution disabled: this fixture lacks the matching client plugin. Use the actual OpenCode client harness with both client plugin and server scrub; integrate a client-plugin execution witness here before enabling live E41.")
 assert.equal(process.env.E2E_ALLOW_LIVE_MODEL, "1", "Explicit live opt-in required")
 assert(process.env.E2E_LIVE_PROFILE_FILE, "Explicit access-only grant required")
 assert(!process.env.PROBE_ADAPTER || process.env.PROBE_ADAPTER === "opencode", "This qualified E41 gate is the OpenCode protocol fixture")

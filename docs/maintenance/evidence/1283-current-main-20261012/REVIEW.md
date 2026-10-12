@@ -151,3 +151,40 @@ and must finish below the unchanged 1s assertion. Both original pids are checked
 joined. This changes test setup only, not production timeouts or expectations.
 The focused control passes. The unrelated earlier cross-process 500 remains
 unexplained rather than declared fixed by its isolated pass.
+
+
+## E41 stopped: SSE cache and model identity failures
+
+Source `e5cce1f71` ran in immutable Linux/amd64 image
+`sha256:0984ed32d37682f0390a5258fb9757a5a79c1c28cf59374ffe8fdf31fa1173ff`
+with Bun 1.3.11, SDK 0.2.141/native 2.1.296 and installed server scrub 0.2.3.
+Sequential JSON passed its original predicates. Sequential SSE failed:
+turn 2 read 763 cached tokens against a prior cached prefix of 2803
+(required at least 95%). The supported SDK active history also reported both
+`claude-opus-4-8` and `claude-opus-5-5`; exact-model qualification therefore
+failed independently. Tool batches, immutable source histories, result delivery,
+fork shape and saved follow-up passed. Neither failure has an established cause;
+no attribution to the contributor factory change is justified yet.
+
+The matrix stopped before either parallel arm. All original observed processes
+and pipes joined in both completed arms, and access-only grants were deleted.
+The adjacent JSON receipts and bounded console verdicts preserve both outcomes.
+No quota refusal, paid-usage diagnosis or four-mode success is claimed.
+
+These direct protocol fixtures load the server scrub but do not exercise the
+actual client plugin. They cannot replace the separately qualified real OpenCode
+client run. Per the owner's required plugin constraint, do not launch additional
+live protocol arms until the matching client plugin path is integrated and its
+execution verified before inference. Credentialless diagnosis may continue.
+
+Image preparation initially lacked development dependency `glob` because it
+reused production dependencies. A credentialless preflight caught this before
+grant staging. A frozen source dependency install corrected the image; the next
+negative preflight stopped on the absent grant with all actors joined.
+
+The direct E41 entry point now exits with an explicit missing-client-plugin
+error before grant access, server startup or actor creation. A credentialless
+launch verified exit 1 at that guard. E2E.md documents the restriction and forbids
+fallback to the older unqualified direct script. The prior JSON pass remains
+a protocol observation, not qualified live acceptance under the owner's plugin
+requirement. No additional live inference was performed during this diagnosis.

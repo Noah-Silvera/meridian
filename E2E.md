@@ -4750,19 +4750,20 @@ entry. Through the live proxy (E17 shape): output 306 → 144 and cache_read
 *"I attempted to read that file, but the tool call w…"* — content the client
 never sees and the account is billed for.
 
-## Qualified OpenCode E41 execution
+## OpenCode E41 qualification status
 
-For the OpenCode-shaped direct HTTP matrix, use
-`scripts/e2e-qualified-passthrough-turns.mjs` with Bun 1.3.11 in an isolated
-runtime, `E2E_ALLOW_LIVE_MODEL=1`, a private access-only `E2E_LIVE_PROFILE_FILE`,
-`E2E_PLUGIN_PATH` and optionally pinned `E2E_SCRUB_VERSION`. Explicitly set
-`PROBE_MODEL=claude-opus-5-5`; run the four `PROBE_PARALLEL=0|1` ×
-`--stream`/no-flag combinations separately. Each retains the original E41
-batching/history/cache gates and requires active server scrub, hook execution,
-and original child/pipe joins. HTTP/SSE errors stop subsequent requests.
-The report is `qualified-e41-report.json` in the printed owned fixture root.
-This is a protocol fixture; separately qualify the actual client with its
-matching Meridian plugin. It does not claim a client-plugin witness itself.
+`scripts/e2e-qualified-passthrough-turns.mjs` is disabled before grant access
+or server startup: it loads the server scrub but lacks the matching client
+plugin execution path. Both plugins are required for live harness use. Do not
+use the older direct protocol script as a workaround. Integrate and verify the
+client plugin before re-enabling this matrix; retain all original batching,
+history, exact-model, cache and process-join assertions.
+
+The separate `scripts/e2e-mcp-client-opencode.mjs` runs the actual OpenCode client
+with its matching installed Meridian plugin and server scrub. Its single-read
+acceptance does not replace E41's four-mode gate. Recorded sequential JSON passed;
+sequential SSE failed cache continuity and exact-model identity, and the matrix
+stopped before parallel arms. See the [durable evidence](docs/maintenance/evidence/1283-current-main-20261012/REVIEW.md).
 
 ## E41: Passthrough multi-turn: one call, one answer
 
