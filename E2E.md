@@ -1,3 +1,21 @@
+## Antigravity completed-conversation idle window (#1341)
+
+Run `node scripts/e2e-antigravity-idle-conversation.mjs <server.js> <pi-integration.js> <pi-cli.js> <official-agy> <new-report.json> <label>`
+against unchanged main and candidate builds. The gate pins the verified official
+agy1.2.7 macOS ARM64 binary hash and uses actual Pi1.1.0/Gemini3.8FlashLow.
+It validates the real provider-specific Pi retry integration against a local
+fixture before allowing generation, and retains its request-ID check at native
+admission. The independently installed arm uses the packaged
+`dist/antigravity-clients/pi.js`, not a stand-in extension.
+
+The measured completion-to-next-prompt interval must be longer than the tool
+deadline and shorter than the completed-conversation idle window. Assert the
+same native conversation and `continuation=live`, then require expiry beyond
+the idle deadline. Native readiness checks must not be inserted into the timed
+pause. CLI self-updates are disabled, paid-credit/provider guards remain active,
+and original child/pipe closure and final executable identity are required.
+See [before/after receipts, retained timing failure and limits](docs/maintenance/evidence/1341-idle-window-20261012.md).
+
 # End-to-End Testing
 
 ## Overlapping passthrough queries
