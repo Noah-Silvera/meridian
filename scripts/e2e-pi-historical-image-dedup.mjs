@@ -89,7 +89,7 @@ try{
     const manager=pi.SessionManager.inMemory(project)
     for(const message of history)manager.appendMessage(message)
     let reads=0
-    const read=pi.createReadToolDefinition(project,{operations:{access:async path=>assert.equal(path,file),readFile:async path=>{assert.equal(path,file);reads++;return readFileSync(path)},detectImageMimeType:async path=>{assert.equal(path,file);return 'image/png'}}})
+    const read=pi.createReadToolDefinition(project,{autoResizeImages:false,operations:{access:async path=>assert.equal(path,file),readFile:async path=>{assert.equal(path,file);reads++;return readFileSync(path)},detectImageMimeType:async path=>{assert.equal(path,file);return 'image/png'}}})
     const loader={getExtensions:()=>({extensions:[],errors:[],runtime:pi.createExtensionRuntime()}),getSkills:()=>({skills:[],diagnostics:[]}),getPrompts:()=>({prompts:[],diagnostics:[]}),getThemes:()=>({themes:[],diagnostics:[]}),getAgentsFiles:()=>({agentsFiles:[]}),getSystemPrompt:()=>undefined,getSystemPromptSource:()=>undefined,getAppendSystemPrompt:()=>[],getAppendSystemPromptSources:()=>[],extendResources:()=>{},reload:async()=>{}}
     const before=await(await fetch(`${baseUrl}/telemetry/requests?limit=100&hops=1`)).json()
     const seen=new Set(before.map(r=>r.requestId))
