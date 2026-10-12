@@ -122,21 +122,28 @@ Report your assigned marker and the file contents using exit_tool with success t
         if log.name != 'log.jsonl' and not log.name.startswith('subagent-'):
             continue
         turns = 0
+        read_ids = set()
+        successful_reads = set()
         for line in log.read_text().splitlines():
             event = json.loads(line)
             body = event.get('public_payload', {}).get('item', {}).get('body', event)
+            if body.get('type') == 'tool_result':
+                for result in body.get('results', []):
+                    if not result.get('is_error') and 'MERIDIAN_LIVE_FIXTURE_91' in json.dumps(result.get('content')):
+                        successful_reads.add(result.get('tool_use_id'))
             if body.get('type') not in ('assistant', 'assistant_message'):
                 continue
             reads = [b for b in body.get('blocks', [])
                      if b.get('type') == 'tool_use' and b.get('name') == 'file_read']
             if reads:
                 turns += 1
+                read_ids.update(b['id'] for b in reads)
         read_evidence.append({'session': log.parent.name, 'transcript': log.name,
-                              'read_turns': turns})
+                              'read_turns': turns, 'successful_reads': len(read_ids & successful_reads)})
     expected_transcripts = 6 if args.title_first else 4
     checked_reads = [r for r in read_evidence if args.title_first or r['transcript'] != 'log.jsonl']
     reads_passed = len(checked_reads) == expected_transcripts and all(
-        r['read_turns'] >= 3 for r in checked_reads)
+        r['read_turns'] >= 3 and r['successful_reads'] >= 3 for r in checked_reads)
     passed = reads_passed and all(r['exit'] == 0 for r in runs) and len(children) == 4 and all(
         c['outcome'] and c['outcome'].get('kind') == 'success' for c in children)
     result = {'runs': runs, 'children': children, 'passed': passed,
