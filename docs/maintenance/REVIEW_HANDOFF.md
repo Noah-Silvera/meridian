@@ -1,3 +1,25 @@
+## Current checkpoint: SSE merged; Nix environment fix active — 2026-10-12
+
+SSE #1350 merged736e9fd6162ebd8cadbfbcd687dfec2c7acdc129. Verified exact
+merged tree versus76038fb7 and Aleksey Proshutinskiy co-author credit. Source
+#1214 rechecked unchanged1c8f17099 and closed without comment. Final gates5730
+pass/35skip/zero failures,typecheck/build; exact-head CI all passes. Actual
+installed OpenCode1.18.34/SDK0.2.141/native2.1.296/Opus5.5 realread/result/
+continuation passes in session62951 exit0. Bothplugins verified; alloriginal
+actors/pipes join and grant removed. Final receipts escrowed here; full final
+acceptance and packageintegrity in #1350 body. No new release.
+
+Nix source #1352 → draft #1353, worktree meridian-nix-systemd-env-1352-20261012.
+Both Connor Grady commits cherry-picked with Author/Date preserved. Actual
+NixOS25.11 ARM64/systemd258.7 user-unit before/after passes all7candidatecases;
+main reproduces JSON/pathcorruption. Committed credentialless harness and receipts
+under1352-nix-systemd-env-20261012. Full local gates currently original session
+24351 at /tmp/meridian-1352-local-gates.log; do not restart on timeout. This gate
+started on image maina8a214bfc; integrate SSE main only AFTER it finishes, not
+while tests mutate/read files. Actual Meridian service startup qualification is
+being prepared in owned isolated OrbStack VMmeridian-nix-1352; no credentials
+or model call. Node22 installation original session51300. Source remains open.
+
 ## Image actual Pi and E41 pass; malformed-padding correction — 2026-10-12
 
 #1351 has actual independently installed Pi before/after evidence: published
