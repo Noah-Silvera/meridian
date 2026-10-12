@@ -4750,6 +4750,20 @@ entry. Through the live proxy (E17 shape): output 306 → 144 and cache_read
 *"I attempted to read that file, but the tool call w…"* — content the client
 never sees and the account is billed for.
 
+## Qualified OpenCode E41 execution
+
+For the OpenCode-shaped direct HTTP matrix, use
+`scripts/e2e-qualified-passthrough-turns.mjs` with Bun 1.3.11 in an isolated
+runtime, `E2E_ALLOW_LIVE_MODEL=1`, a private access-only `E2E_LIVE_PROFILE_FILE`,
+`E2E_PLUGIN_PATH` and optionally pinned `E2E_SCRUB_VERSION`. Explicitly set
+`PROBE_MODEL=claude-opus-5-5`; run the four `PROBE_PARALLEL=0|1` ×
+`--stream`/no-flag combinations separately. Each retains the original E41
+batching/history/cache gates and requires active server scrub, hook execution,
+and original child/pipe joins. HTTP/SSE errors stop subsequent requests.
+The report is `qualified-e41-report.json` in the printed owned fixture root.
+This is a protocol fixture; separately qualify the actual client with its
+matching Meridian plugin. It does not claim a client-plugin witness itself.
+
 ## E41: Passthrough multi-turn: one call, one answer
 
 **What it proves:** across dependent and parallel forwarded tool calls, the active
