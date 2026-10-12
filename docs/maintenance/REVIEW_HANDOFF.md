@@ -1,3 +1,20 @@
+## Historical image amplification preparation — 2026-10-12
+
+#1310 reproduced on current main `3f5f4f81`: fresh replay/read-back cycles emit
+1,2,4 identical images; both HTTP stream modes send duplicate SDK input blocks.
+Isolated `codex/historical-images-1310-20261012` now retains one historical visual
+copy with occurrence references, preserving current media and resume behavior.
+19 pure and 44 HTTP tests pass. Full local gates are running in original session
+73954, `/tmp/meridian-1310-full-gates.log`; actual Pi/SDK, E41/E65 and final CI
+remain. See [review/evidence](evidence/1310-historical-images-20261012/REVIEW.md).
+No live call or issue closure. Keep #1310 open until acceptance is established.
+
+SSE delivery #1350 is separately prepared at `a9fece93`; owned full local gate
+session 54534 remains active, `/tmp/meridian-1214-full-gates.log`. Its plugin-qualified
+probe is implemented but not yet fixture/live verified. Streaming #1344 at
+`5f26a29b` has complete combined-tree local/live evidence and is watched for CI.
+Last direct readiness check still had required jobs running; no merge was performed.
+
 ## Current MCP/plugin checkpoint — 2026-10-12
 
 This entry supersedes stale running-session and draft descriptions below.

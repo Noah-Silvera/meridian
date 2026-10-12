@@ -1,0 +1,42 @@
+# Historical image amplification — 2026-10-12
+
+Disposition: implement #1310, acceptance pending full/live verification. Issue
+reviewed live with no comments. Baseline current main is
+`3f5f4f81cd2205ebd62381d8c574d6a6f9ded2d9`. Isolated branch
+`codex/historical-images-1310-20261012`; no contributor PR is being rewritten.
+
+Exact feedback control on main: one historical image, three fresh replay/read-back
+cycles produces 1,2,4 outbound images. Four new pure controls fail; unchanged
+native checkpoint/resume control passes. The HTTP-to-SDK control also fails in
+both stream modes: two byte-identical images reach SDK input instead of one.
+
+Candidate: the feedback sequence is 1,1,1. Historical inline base64 images share
+one visual copy by SHA-256 of decoded bytes and MIME; each duplicate becomes an
+occurrence reference in its original position. Surrounding text, tool-result IDs,
+source history and original provenance counts remain. Current-turn media is never
+deduplicated, even if byte-identical to history. Distinct bytes/MIME, URL images,
+malformed payloads and extended unknown shapes remain for ordinary validation.
+Documents/files are outside this rule. Ending on assistant context also deduplicates
+historical images without inventing a current user turn. A single current input
+and native checkpoint/ordinary resume coalescing remain unchanged.
+
+Adversarial review: limited to pure fresh replay rendering, below server orchestration;
+no I/O, adapter logic or public contract changes. Normalization has already rendered
+tool-result metadata before deduplication. Both server call sites are fresh replay;
+ordinary resumes use coalesceStructuredUserMessages instead. Source mutation and
+current-image controls pass. The digest includes MIME and validates base64 roundtrip
+before comparing decoded bytes; URL equality is not treated as byte equality.
+
+19 pure replay tests and 44 HTTP/SDK-parameter tests pass; standalone typecheck
+passed after initial pure changes. Full npm test/typecheck/build is running in
+owned exec session 73954, log /tmp/meridian-1310-full-gates.log. Do not restart on
+observation timeout. These are synthetic/mocked proofs, not actual SDK attachment
+materialization or Pi acceptance.
+
+Remaining gates: full local checks; real affected Pi + matching client/server
+plugins + actual SDK/model input inspection through supported APIs, including
+read-back feedback and current-image control; applicable E41 four modes and E65;
+final-head CI and final review. The reporter gives Meridian 1.75.0 and Pi but does
+not specify Pi version, model or OS. Record the actual qualification environment
+and that limit rather than claiming an exact reporter-environment reproduction.
+No model call, package release, issue closure or merge is claimed.
