@@ -61,6 +61,11 @@ const pkgRoot = resolve(process.env.E2E_MERIDIAN_PKG ?? '.')
 const serverModule = join(pkgRoot, 'dist/server.js')
 const REFUSAL_DELAY_MS = Number(process.env.E2E_SSE_REFUSAL_DELAY_MS ?? 16_000)
 assert(Number.isFinite(REFUSAL_DELAY_MS) && REFUSAL_DELAY_MS > 15_000, 'the fixture refusal must be delayed past the 15s heartbeat for this gate to mean anything')
+// Bound delivery well before the fixed 15-second service heartbeat. The old
+// 100 ms wall-clock threshold mixed startup/scheduling cost with the withheld-
+// headers defect (335 ms on amd64 emulation). A 1-second bound still rejects
+// that defect by at least 15x; validate unchanged package and candidate alike.
+const HEADER_DEADLINE_MS = 1000
 const MODEL = process.env.E2E_SSE_MODEL ?? 'claude-haiku-4-5-20251001'
 const WORKING_FIXTURE = process.env.E2E_SSE_WORKING_FIXTURE === '1'
 const grantPath = process.env.E2E_LIVE_PROFILE_FILE
@@ -147,7 +152,7 @@ let workingProfile = { id: 'working', type: 'api', apiKey: 'local-fixture-key', 
 if (liveProfile) workingProfile = liveProfile
 
 const scrubConfig = scrub ? configureOpenCodeScrub(root, scrub) : {}
-const report = {root, result:'RUNNING', model:MODEL, scope:WORKING_FIXTURE ? 'Credentialless SDK transport fixture' : 'Local refusal plus live SDK/model with actual installed client hook and server scrub; protocol host, not OpenCode executable', cases:[]}
+const report = {root, result:'RUNNING', model:MODEL, headerDeadlineMs:HEADER_DEADLINE_MS, scope:WORKING_FIXTURE ? 'Credentialless SDK transport fixture' : 'Local refusal plus live SDK/model with actual installed client hook and server scrub; protocol host, not OpenCode executable', cases:[]}
 
 
 const start = async () => {
@@ -213,7 +218,7 @@ try {
     })
     const headerAt = Date.now()
     const headerMs = performance.now() - startedAt
-    if (stream) assert(headerMs < 100, `SSE headers took ${headerMs.toFixed(1)}ms; expected less than 100ms`)
+    if (stream) assert(headerMs < HEADER_DEADLINE_MS, `SSE headers took ${headerMs.toFixed(1)}ms; expected less than ${HEADER_DEADLINE_MS}ms before the 15-second heartbeat`)
 
     let body
     let firstChunkText = null
