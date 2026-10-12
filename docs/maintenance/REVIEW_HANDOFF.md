@@ -1,3 +1,14 @@
+## Polytoken final live and local gate — 2026-10-12
+
+Delivery #1343 product code is unchanged since `e5bac35d`; final harness head
+`ccb16eb9` passes actual Polytoken 0.8.21 / Haiku 4.5 on Darwin ARM64. Both
+parents and exactly four children complete; all six transcripts contain three
+successful fixture reads, all working conversations resume, distinct conversation
+SDK mappings remain disjoint, and original child processes/pipes join. The
+committed evidence retains prior authentication and ambiguous fixture failures.
+Full current-main local gates pass 5622 / 0 failures / 35 skips plus typecheck/build.
+Final-head CI, guarded merge, source-head recheck and contributor credit remain.
+
 ## Core-fix delivery checkpoint — 2026-10-12
 
 Owner order remains core fixes, potential fixes, then features. Haiku delivery
