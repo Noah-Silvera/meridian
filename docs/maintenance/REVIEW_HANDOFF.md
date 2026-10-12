@@ -1,3 +1,15 @@
+## Final integrated streaming gate remains open — 2026-10-12
+
+Clean #1344 package at `6974747fe` passed actual long-input streaming (42,900
+characters over 106 seconds, no idle timeout), both plugin witnesses and joins.
+Its following tool-result request received an explicit OAuth-token-revoked error.
+This final run is FAIL; do not merge until final-tree continuation is verified.
+The earlier qualified artifact's full successful continuation remains valid only
+for that artifact. Staged grant removed; no refresh, account change or retry.
+See the durable integrated report and identity under
+`evidence/stream-idle-qualified-20261012/`. The refusal is authentication evidence,
+not a new billing/quota explanation. Continue independent #1338/#1283 work.
+
 ## Scrub-qualified streaming progress — 2026-10-12
 
 Mandatory OpenCode server-scrub preflight merged as #1348, `ab615ca70`:
