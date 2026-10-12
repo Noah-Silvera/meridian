@@ -10,8 +10,8 @@ macOS Nix installed-native/SDK proof; no release was started. npm latest is
 1.80.0. Contrary to the old PR checkpoint, final-head test and platform builds
 at `34156cfb` passed. The missing runtime proof can run in the existing macOS Nix
 CI runner without installing Nix on the owner's host. The added launcher runs
-the existing ten-case installed HTTP/SDK/native harness with localhost-only
-sandboxing, original process/pipe joins, and Darwin executable observation.
+the existing ten-case installed HTTP/SDK/native harness with isolated loopback API configuration, original SDK process/pipe joins,
+and Darwin executable observation.
 The negative external-network control returns EPERM locally. CI must still
 execute this exact installed tuple; no passing runtime result is claimed yet.
 The first CI attempt built the package but failed before cases: the Linux
@@ -19,6 +19,15 @@ harness required `sleep` beside `/usr/bin/env`; macOS provides `/bin/sleep`.
 The corrected preflight resolves it through the actual sanitized PATH. Preserve
 [the original failed report](https://github.com/rynfar/meridian/actions/runs/38273029599/artifacts/11757534275);
 this was a harness prerequisite failure, not an SDK/model result.
+The second attempt reached the installed native/SDK versions but all HTTP
+cases returned 500 before SDK admission: macOS sandbox-exec refuses the setuid
+`/bin/ps` used by production incarnation checks. This is locally reproducible
+with sandbox-exec alone, independent of Meridian. The disposable macOS runner
+now uses cleared env, isolated config and dummy loopback API credentials without
+an OS-wide fence. Production synchronous identity probes are recorded with
+status/signal/error and output hashes; successful Node spawnSync completion is
+kept distinct from asynchronous SDK process/pipe joins. Unknown/failed sync
+probes still fail the gate. Neither change modifies production identity checks.
 Product code is unchanged. Existing real Pi/source and independent-pack evidence
 retains its original scope and failures. No release or community message has
 been sent. Current isolated worktree is

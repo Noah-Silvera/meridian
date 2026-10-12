@@ -5,7 +5,7 @@
  * owned Docker container from ALL networks. Run with the installed wrapper's Node:
  * E2E_NIX_OUT=/nix/store/...-meridian-... E2E_OUTPUT_DIR=/artifacts/fresh-run \
  *   /nix/store/...-nodejs-.../bin/node /artifacts/e2e-haiku55-nix-compat.mjs
- * On macOS use e2e-haiku55-nix-darwin.sh (inherited localhost-only sandbox).
+ * On macOS use e2e-haiku55-nix-darwin.sh on a disposable credentialless runner.
  * No npm-native override, SDK patch, source-helper bundle or credential input.
  */
 import assert from 'node:assert/strict'
@@ -14,7 +14,6 @@ import { createRequire, syncBuiltinESMExports } from 'node:module'
 import { once } from 'node:events'
 import { createServer } from 'node:http'
 import { networkInterfaces } from 'node:os'
-import { connect } from 'node:net'
 import { mkdirSync, readFileSync, writeFileSync, realpathSync, readdirSync, existsSync } from 'node:fs'
 import { join, resolve, dirname } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -85,10 +84,17 @@ for (const method of Object.keys(originals)) childProcess[method] = function (..
 }
 const synchronousOriginals = { spawnSync: childProcess.spawnSync, execFileSync: childProcess.execFileSync, execSync: childProcess.execSync }
 for (const method of Object.keys(synchronousOriginals)) childProcess[method] = function (...args) {
-  // Sync APIs do not expose original process/pipe objects. Detect them rather
-  // than silently treating their return status as a physical join witness.
-  report.synchronousSubprocesses.push({ method, command: String(args[0]), label: activeCase })
-  return synchronousOriginals[method].apply(this, args)
+  const state = { method, command: String(args[0]), label: activeCase }
+  report.synchronousSubprocesses.push(state)
+  try {
+    const result = synchronousOriginals[method].apply(this, args)
+    if (method === 'spawnSync') {
+      Object.assign(state, { pid: result.pid, status: result.status, signal: result.signal,
+        error: result.error ? String(result.error) : null,
+        stdoutSha256: hash(result.stdout ?? ''), stderrSha256: hash(result.stderr ?? '') })
+    }
+    return result
+  } catch (error) { state.error = String(error); throw error }
 }
 syncBuiltinESMExports()
 async function witnessGate(actor) {
@@ -165,16 +171,12 @@ try {
     assert.match(machineId, /^[0-9a-f]{32}$/, 'Owned minimal container needs a real task-owned machine identity')
     report.identities.ownedMachineIdSha256 = hash(machineId)
   } else {
-    // The CI launcher wraps this entire process in sandbox-exec. A numeric
-    // documentation-only address needs no DNS; EPERM proves outbound denial.
-    const denial = await bounded(new Promise(resolveDenial => {
-      const socket = connect({ host: '192.0.2.1', port: 443 })
-      socket.on('error', error => resolveDenial(error.code))
-      socket.on('connect', () => { socket.destroy(); resolveDenial('CONNECTED') })
-      socket.setTimeout(2000, () => { socket.destroy(); resolveDenial('TIMEOUT') })
-    }), 3000, 'Darwin network sandbox check')
-    assert.equal(denial, 'EPERM', 'Run under the committed localhost-only sandbox profile')
-    report.network = { fence: 'sandbox-exec inherited localhost-only network policy', outboundDenial: denial, generation: 'owned 127.0.0.1 fake Anthropic only', sandboxExec: true }
+    // macOS sandbox-exec cannot launch the setuid /bin/ps used by production
+    // process-incarnation checks. Use the disposable CI runner with cleared env,
+    // isolated config and a dummy API profile pointed at the owned loopback API.
+    // Unlike disconnected Linux, this does not claim an OS-wide network fence.
+    report.network = { fence: null, generation: 'owned 127.0.0.1 fake Anthropic only', sandboxExec: false,
+      limitation: 'No OS-wide network fence; SDK gate env and every observed generation endpoint are asserted' }
   }
   report.identities.coreutilsBin = dirname(realpathSync('/usr/bin/env'))
   report.identities.sleepExecutable = safeEnv.PATH.split(':').map(directory => join(directory, 'sleep')).find(existsSync)
@@ -365,7 +367,14 @@ finally {
   report.cleanup.sockets = sockets.map(owned => owned.state)
   if (!report.cleanup.joined || !report.cleanup.proxyListenerClose || !report.cleanup.fixtureListenerClose || activeHandlers || sockets.some(owned => !owned.state.close)) fail('Physical native/listener/socket cleanup unqualified; fixtures/container retained')
   for (const actor of actors) if (!actor.state.exit || actor.state.errors.length) fail(`Actor exit/error witness: ${actor.state.label}`)
-  if (report.synchronousSubprocesses.length) fail('Synchronous subprocesses lack original close/pipe objects; custody qualification held')
+  for (const probe of report.synchronousSubprocesses) {
+    // Node's spawnSync returns after the child and its captured output finish.
+    // Production Darwin identity probes are synchronous by design. Require a
+    // successful completed probe; do not pretend they expose async pipe events.
+    if (process.platform !== 'darwin' || probe.method !== 'spawnSync'
+      || !['/usr/sbin/ioreg', '/usr/sbin/sysctl', '/bin/ps'].includes(probe.command)
+      || probe.status !== 0 || probe.signal || probe.error) fail(`Unqualified synchronous probe: ${JSON.stringify(probe)}`)
+  }
   for (const method of Object.keys(originals)) childProcess[method] = originals[method]
   for (const method of Object.keys(synchronousOriginals)) childProcess[method] = synchronousOriginals[method]
   syncBuiltinESMExports()

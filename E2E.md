@@ -7757,8 +7757,9 @@ authorization. Repeat the successful flow from the published registry artifact
 before claiming a completed release. Nix Linux installed-native credentialless
 qualification is separate. The macOS Nix build now runs the same installed HTTP,
 SDK/native, thinking/pin and cleanup assertions through
-`scripts/e2e-haiku55-nix-darwin.sh`, under an inherited localhost-only network
-sandbox. CI uploads `haiku55-nix-darwin-runtime`; require its actual passing
+`scripts/e2e-haiku55-nix-darwin.sh`, on a disposable credentialless runner with isolated config and a dummy
+loopback API profile. macOS sandbox-exec prevents production setuid `/bin/ps`
+identity probes, so this platform does not claim an OS-wide network fence. CI uploads `haiku55-nix-darwin-runtime`; require its actual passing
 report before claiming the macOS runtime gap is closed. This scripted API gate
 proves installed compatibility, not real provider inference. To reproduce after
 `nix build .#meridian`, set `E2E_NIX_OUT` to the resolved `result` path and

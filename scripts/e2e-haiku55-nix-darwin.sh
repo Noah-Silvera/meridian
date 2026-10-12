@@ -13,13 +13,7 @@ JS
 E2E_NODE_WITNESS="$launcher_dir/node" NODE_OPTIONS="--import=$launcher_dir/witness.mjs" \
   "$E2E_NIX_OUT/bin/meridian" --version
 nix_node=$(cat "$launcher_dir/node")
-cat > "$launcher_dir/localhost.sb" <<'SB'
-(version 1)
-(allow default)
-(deny network*)
-(allow network-outbound (remote ip "localhost:*"))
-(allow network-inbound (local ip "localhost:*"))
-(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.securityd.xpc"))
-SB
-/usr/bin/sandbox-exec -f "$launcher_dir/localhost.sb" \
-  "$nix_node" "$(dirname "$0")/e2e-haiku55-nix-compat.mjs"
+# The parent must run production process-incarnation probes: sandbox-exec
+# refuses macOS's setuid /bin/ps. The harness clears its environment and uses
+# an isolated dummy API profile pointing exclusively at its loopback server.
+"$nix_node" "$(dirname "$0")/e2e-haiku55-nix-compat.mjs"
