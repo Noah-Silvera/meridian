@@ -177,7 +177,8 @@ try {
     report.network = { fence: 'sandbox-exec inherited localhost-only network policy', outboundDenial: denial, generation: 'owned 127.0.0.1 fake Anthropic only', sandboxExec: true }
   }
   report.identities.coreutilsBin = dirname(realpathSync('/usr/bin/env'))
-  assert(existsSync(join(report.identities.coreutilsBin, 'sleep')), 'Production POSIX gate needs real coreutils sleep on sanitized PATH')
+  report.identities.sleepExecutable = safeEnv.PATH.split(':').map(directory => join(directory, 'sleep')).find(existsSync)
+  assert(report.identities.sleepExecutable, 'Production POSIX gate needs sleep on sanitized PATH')
   const target = join(out, 'lib/meridian'), wrapper = join(out, 'bin/meridian')
   report.versions.meridian = JSON.parse(readFileSync(join(target, 'package.json'), 'utf8')).version
   report.identities.packageSha256 = hash(readFileSync(join(target, 'package.json')))

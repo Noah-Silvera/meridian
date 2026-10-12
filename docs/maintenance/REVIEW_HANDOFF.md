@@ -14,6 +14,11 @@ the existing ten-case installed HTTP/SDK/native harness with localhost-only
 sandboxing, original process/pipe joins, and Darwin executable observation.
 The negative external-network control returns EPERM locally. CI must still
 execute this exact installed tuple; no passing runtime result is claimed yet.
+The first CI attempt built the package but failed before cases: the Linux
+harness required `sleep` beside `/usr/bin/env`; macOS provides `/bin/sleep`.
+The corrected preflight resolves it through the actual sanitized PATH. Preserve
+[the original failed report](https://github.com/rynfar/meridian/actions/runs/38273029599/artifacts/11757534275);
+this was a harness prerequisite failure, not an SDK/model result.
 Product code is unchanged. Existing real Pi/source and independent-pack evidence
 retains its original scope and failures. No release or community message has
 been sent. Current isolated worktree is
