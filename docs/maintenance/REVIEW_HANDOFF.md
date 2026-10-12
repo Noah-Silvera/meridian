@@ -1,3 +1,27 @@
+## Current authoritative state — 2026-10-12
+
+Nix source #1352 is incorporated in draft #1353. Current SSE main `736e9fd61`
+is now integrated; only this chronological handoff conflicted. Product files
+merged cleanly. Before this integration, the original local gate completed:
+5,682 pass, 35 skip, zero failures, typecheck and build. A fresh combined gate
+is next. Do not restart completed session 24351.
+
+Live Nix qualification is complete for the changed configuration behavior:
+seven actual systemd unit-file cases pass, and installed Meridian starts with the
+configured profile. The unchanged module corrupts JSON and loses that profile.
+All proof and the retained harness limitations are in the #1353 evidence record.
+This is credentialless configuration testing, not model inference.
+
+SSE #1350 and image #1351 are merged and their originals are closed. No new
+release has been authorized. Historical “active” and “pending” entries below
+record earlier stages and are superseded by this section and final PR bodies.
+
+The owner's Docker cleanup is complete: 29 Meridian image tags and 33 stopped
+test containers removed; targeted build cache reduced from 30.65 GB to 14.58 GB.
+All 25 running containers and volumes were preserved. Old Docker image/container
+references are evidence identities, not available runtime fixtures. Rebuild only
+what is needed, and clean up completed test artifacts promptly.
+
 ## Latest local gate and owner storage request — 2026-10-12
 
 Nix draft #1353 original local session24351 finished exit0:5682pass/35skip/
@@ -40,6 +64,118 @@ while tests mutate/read files. Actual Meridian service startup qualification is
 being prepared in owned isolated OrbStack VMmeridian-nix-1352; no credentials
 or model call. Node22 installation original session51300. Source remains open.
 
+## Current authoritative checkpoint — 2026-10-12
+
+Image #1351 merged as a8a214bfc53784c3e87456447ae9a327be6a70b2, exact tree
+match against validated 5b58b1b9. #1310 closed. Final local gates original session
+3276 exit 0:5682 pass/35 skip/zero failures, typecheck/build, clean source.
+Final installed actual Pi session 26537 exit 0: historical image counts1,1,1,
+current control1old+1new, actualOpus5.5, scrub0.2.2 zeroerrors, allactors/pipes
+joined and grant removed. Full final-head CI passes. Final tarball integrity,
+review findings and acceptance are durable in #1351 body; prior records below
+are chronological history, not current pending gates. No new release.
+
+SSE #1350: combined installed local-refusal/live-working probe23810 exit0,
+headers25.1ms, actualOpus5.5 confirmed, bothplugins zeroerrors, joined and grant
+removed. Four-mode E41 session78225 exit0 allPASS on cbb340eba. Evidence is
+escrowed under1214-sse-failover-20261012. Newly merged image main is now being
+incorporated. Actual OpenCode executable qualification, combined final gates
+and final-head CI remain; source #1214 stays open. Do not rerun finished sessions.
+
+## SSE combined local gate complete — 2026-10-12
+
+Original session 8226 terminated exit 0: 5722 pass /35 skip /zero failures,
+typecheck and build, clean a41e1998 source including streaming main 8edccd790.
+Do not restart. Installed transport proof for a9fece93 remains valid for that
+package; final combined installed/live and four-mode E41 gates remain open.
+
+## SSE installed transport comparison complete — 2026-10-12
+
+Same revised harness `932c8f92` on unchanged installed baseline and candidate:
+baseline headers 15,083 ms FAIL versus 1000 ms bound; candidate 104 ms PASS.
+Nonstream parity, first heartbeat before local refusal, one account fallback,
+suppressed error and joined processes/pipes all pass on candidate. Network disabled;
+no grants or real model requests. Original sessions 94533 /7573 are terminal exit
+1/0. Preserve earlier absolute-100ms failure; see [durable review](evidence/1214-sse-failover-20261012/REVIEW.md).
+
+#1350 merged streaming main into `0730fab1`; final combined local gate remains
+active session 8226, log `/tmp/meridian-1350-combined-gates.log`. Both installed
+transport and live client/model evidence must qualify the final tree.
+#1351 merged streaming main as `2127507c`; isolated dependency installation makes
+the same four build-observer controls pass. Full combined gate session 32853 is
+active at `/tmp/meridian-1351-combined-gates.log`. Do not restart active handles.
+
+## SSE current-main integration — 2026-10-12
+
+Streaming main `8edccd790` is now incorporated into #1350. Product files merged
+cleanly; this handoff retains both evidence histories. Original-source installed
+fixture timing controls are active in sessions 94533 (unchanged package) and
+7573 (candidate a9fece93), network disabled and the same committed harness 932c8f92.
+Both use the one-second header deadline, well before the 15-second heartbeat;
+retain the earlier 100 ms failure. Do not equate their original-source results
+with final combined-tree acceptance. Fresh local/live gates follow integration.
+
+## SSE installed fixture terminal failure — 2026-10-12
+
+Original session 25498 is terminal exit 1, not still running. Independently
+installed `a9fece93` with Docker network disabled passes nonstreaming fallback,
+then fails absolute SSE header deadline: 335.1 ms observed versus 100 ms asserted.
+All original processes/pipes joined. Durable report/console and analysis:
+[evidence](evidence/1214-sse-failover-20261012/REVIEW.md). No grant or model call.
+Review the timing assertion against baseline before rerunning; do not claim live
+or packaged SSE success. Streaming merge `8edccd790` remains verified and complete.
+
+## Streaming merged; SSE installed fixture active — 2026-10-12
+
+Streaming #1344 merged as `8edccd790f56fdee72a20b71337eef8ab6dec1ed`.
+Verified exact tree equality against `5f26a29b` and Nowaker co-author credit.
+Source #1294 was rechecked unchanged at `7f0a0235` and closed without a comment.
+Final-head test, Windows, Docker, desktop, Linux/macOS builds and replacement
+Nix CI pass. Earlier cancelled Nix duplicate is superseded. No release published.
+Post-merge discovery/pagination still covers six managed repos: 36 open PRs and
+22 issues, including new draft deliveries #1350/#1351 and source/delivery pairs.
+
+SSE #1350 clean `a9fece93` passed full local gates. Independent installed image
+`meridian1350:installed-20261012` is running its credentialless native fixture
+in original exec session 25498, container `meridian-1350-fixture-20261012`, with
+Docker network disabled. Only loopback refusal/answer fixtures are reachable.
+Log `/tmp/meridian-1350-package-20261012/fixture-console.txt`. Node and original
+claude.exe were confirmed live; no timeout/restart inference. Report comes from
+owned root printed on completion. Copy report before removing anything. No grant
+was staged. Pack metadata is in the same directory. Integrate new main into #1350
+and revalidate final combined tree after this exact-source result is recorded.
+
+Image #1310 → draft #1351 has owned full local gate session 73954 active at
+`/tmp/meridian-1310-full-gates.log`; source `6d522aaa` remains based on old main
+`3f5f4f81`, so integrate streaming before final acceptance. 19 pure and 44 HTTP
+controls pass; actual Pi/SDK and applicable live gates remain. No issue closure.
+
+## SSE full local gate complete — 2026-10-12
+
+#1350 clean `a9fece93` completed original session 54534 with exit 0: 5707 pass,
+35 skip, zero failures, typecheck and certified build. No restart needed. Independent
+package fixture image is building in owned session 33870, log
+`/tmp/meridian-1350-package-20261012/build.log`. Package source remains clean;
+subsequent changes are evidence only. Real affected-client/model/account and E41
+remain required. No live call, merge or release.
+
+## SSE failover preparation — 2026-10-12
+
+Source #1214 at `1c8f17099` incorporated from current main `3f5f4f81` in isolated
+`/Users/rynfar/repos/meridian-sse-failover-1214-20261012`, branch
+`codex/sse-failover-1214-20261012`. Actual authored mappings and review are in
+[evidence](evidence/1214-sse-failover-20261012/REVIEW.md). Clean main reproduces
+heartbeat preventing failover; candidate passes the same HTTP test. Corrected
+unbounded non-SSE inspection; 37 relay controls and typecheck pass. Live harness now requires explicit opt-in, an access-only grant and both installed
+plugin preflights, with original process/pipe join receipts. Three credentialless
+negative preflights pass; installed fixture/live execution is still pending. No model calls.
+
+Full local gates running in owned exec session 54534; log
+`/tmp/meridian-1214-full-gates.log`. Observe the same handle, do not restart on a
+wait timeout. Installed package fixture and qualified actual-client/account E2E,
+four-mode E41 and final CI still required. No merge/source closure/release.
+Streaming #1344 at `5f26a29b` remains watched for final CI with combined-package
+and four-mode live evidence published; do not rerun those without a changed gate.
 ## Image actual Pi and E41 pass; malformed-padding correction — 2026-10-12
 
 #1351 has actual independently installed Pi before/after evidence: published

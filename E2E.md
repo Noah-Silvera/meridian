@@ -5151,6 +5151,36 @@ condition we cannot cause, not the behavior under test.
 alone the gate fails with the refused attempt recorded 500 and no failover,
 which is what identified the missing status allowance.
 
+### Delayed refusal after an SSE heartbeat
+
+Run the credentialless packaged-path gate against an independently installed tarball:
+
+```bash
+E2E_SSE_WORKING_FIXTURE=1 \
+  E2E_MERIDIAN_PKG=/path/to/node_modules/@rynfar/meridian \
+  E2E_SSE_MODEL=claude-opus-5-5 \
+  node scripts/e2e-sse-quota-failover-heartbeat.mjs
+```
+
+The real SDK/CLI reaches a local account-refusal fixture delayed past the
+15-second heartbeat, then a local answering fixture. The gate requires headers
+and a heartbeat before the first refusal, exactly one refused telemetry attempt
+and one answering profile, no leaked suppressed error, and non-stream parity.
+This exercises transport mechanics, not live subscription or actual-client behavior.
+
+For the bounded live answering leg, omit E2E_SSE_WORKING_FIXTURE and provide
+E2E_ALLOW_LIVE_MODEL=1, a mode-0600 E2E_LIVE_PROFILE_FILE with one access-only
+OAuth profile, E2E_CLIENT_PLUGIN_PATH pointing to the installed V1 plugin, and
+E2E_PLUGIN_PATH pointing to the installed server scrub (version assertions use
+E2E_CLIENT_VERSION / E2E_SCRUB_VERSION). Both plugins preflight before the grant
+is read; actual client hooks generate request headers and active server scrub
+is checked before and after requests. Original children/pipes must join before
+the final report succeeds. Use an isolated container for credential and SDK state.
+The refused leg always remains a local fixture. This is a protocol host, not the
+OpenCode executable or naturally exhausted-account evidence. Real affected-client
+acceptance, actual model identity and four-mode E41 remain separate gates. Do not
+use fixtures as substitutes or enable paid usage to manufacture a refusal.
+
 ## E45: Codex auto-defer
 
 **What it proves:** a Codex request past the auto-defer threshold keeps its
