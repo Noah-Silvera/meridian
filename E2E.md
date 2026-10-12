@@ -4883,6 +4883,15 @@ and `0.0.0-beta-19271`, plus the released 2.0.16 host below.
 The beta CLI can update itself, so the automated gate verifies its exact version
 before and after each run and disables automatic updates. Use isolated installs:
 
+Live beta runs now use `e2e-qualified-opencode-proxy-host.mjs`. Set
+`E2E_ALLOW_LIVE_MODEL=1`, `E2E_LIVE_PROFILE_FILE` to a private access-only
+OAuth profile array, `E2E_PLUGIN_PATH` to the installed server scrub,
+`E2E_NATIVE_BIN` to the qualified native CLI, and `E2E_PROXY_REPORT_DIR` to an
+owned artifact directory. Each actual proxy subprocess records its SDK child
+exit/close and pipe-close witnesses; preserve both distinct process reports
+across the restart before deleting the grant. Live effort discovery targets
+Haiku 5.5; the offline fixture retains its controlled Haiku 4.5 catalog.
+
 ```bash
 npm install --prefix /tmp/opencode-18314 @opencode-ai/cli@0.0.0-beta-18314
 npm install --prefix /tmp/opencode-18866 @opencode-ai/cli@0.0.0-beta-18866

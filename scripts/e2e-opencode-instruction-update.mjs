@@ -69,10 +69,9 @@ try{
   response.end=function(chunk,...args){if(typeof chunk!=='function')observe(chunk);return end.call(this,chunk,...args)}
   response.once('close',()=>row.status=response.statusCode)
  })
- writeFileSync(join(config,'opencode.json'),JSON.stringify({model:`anthropic/${model}`,share:'disabled',plugins:[join(repo,'dist/meridian-v2')],providers:{anthropic:{settings:{apiKey:'owned-loopback',baseURL:`${url}/v1`},models:{[model]:{name:model,limit:{context:200000,output:4096}}}}}}))
- // 2.0.21 is the reported client, outside setup's current qualified-version list.
- // Configure only this owned fixture explicitly; this does not widen setup support.
- report.setupQualification='manual-owned-fixture; setup does not qualify 2.0.21'
+ writeFileSync(join(config,'opencode.json'),JSON.stringify({model:`anthropic/${model}`,share:'disabled',providers:{anthropic:{settings:{apiKey:'owned-loopback',baseURL:`${url}/v1`},models:{[model]:{name:model,limit:{context:200000,output:4096}}}}}}))
+ const setup=await run('setup',process.execPath,[join(repo,'dist/cli.js'),'setup','--v2','--opencode-bin',client]);assert.equal(setup.code,0,'Qualified setup must accept the exact client')
+ report.setupQualification='actual installed setup --v2'
  const configured=JSON.parse(readFileSync(join(config,'opencode.json'),'utf8'))
  const expectedPlugin=realpathSync(join(repo,'dist/meridian-v2'))
  assert.deepEqual(configured.plugins.map(p=>realpathSync(p)),[expectedPlugin]);report.plugin=expectedPlugin

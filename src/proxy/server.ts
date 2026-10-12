@@ -2904,7 +2904,8 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
         // `system` update after tool results. Fresh replay already delivers the reminder as user
         // text, so resuming only avoids rewriting the whole history cache. The opencode adapter is
         // also the default for unrecognised clients: safety comes from the single echo of the
-        // exact pending tool IDs, not from knowing the client. See allowTrailingSystemReminder.
+        // exact pending tool IDs plus the validated stored history prefix, not from knowing
+        // the client. See allowTrailingSystemReminder.
         const trailingSystemReminderOptions = adapterBase === "claude-code" || adapterBase === "pi" || adapterBase === "opencode"
           ? { allowTrailingSystemReminder: true }
           : undefined
