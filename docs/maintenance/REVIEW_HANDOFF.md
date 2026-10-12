@@ -1,3 +1,15 @@
+## Haiku release completed — 2026-10-12
+
+**1.81.0 is published and fresh-registry-install live verified.** Release merge
+`d4d60c406362750b8e96e3d1507f83b96a839125`, npm latest/integrity/gitHead,
+SLSA source/workflow, 109 registry signatures and 15 attestations verified.
+Fresh npm installation passed actual Pi 1.1.0 → SDK 0.2.141 / native 2.1.296 →
+Haiku 5.5 owned tool read on Darwin ARM64, with original processes/pipes joined.
+All Release Please jobs succeeded, signed macOS assets are attached, and GHCR
+1.81.0 includes amd64/arm64. npm's processing delay and failed early registry
+reads are preserved in [durable release evidence](evidence/release-1.81.0-20261012.json).
+Polytoken #1343 landed after this release and is not part of 1.81.0.
+
 ## Polytoken final live and local gate — 2026-10-12
 
 Delivery #1343 product code is unchanged since `e5bac35d`; final harness head
