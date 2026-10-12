@@ -18,9 +18,9 @@
 //   E2E_SSE_REFUSAL_DELAY_MS         fixture refusal delay (default 16000; must exceed the 15s heartbeat)
 //   E2E_SSE_WORKING_FIXTURE=1        use a local Anthropic answer fixture
 import assert from 'node:assert/strict'
-import { mkdtempSync, realpathSync, readFileSync, statSync, writeFileSync } from 'node:fs'
+import { mkdtempSync, mkdirSync, realpathSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import childProcess from 'node:child_process'
-import {syncBuiltinESMExports} from 'node:module'
+import {createRequire,syncBuiltinESMExports} from 'node:module'
 import {observeChildClosure, stopAndJoinChild} from './lib/e2eProcessCustody.mjs'
 import {resolveOpenCodeScrub, configureOpenCodeScrub, verifyOpenCodeScrub} from './lib-opencode-scrub-preflight.mjs'
 import {resolveOpenCodeClient, loadOpenCodeClient} from './lib-opencode-client-preflight.mjs'
@@ -96,10 +96,12 @@ childProcess.spawn = function (...args) {
 syncBuiltinESMExports()
 
 const root = realpathSync(mkdtempSync(join(tmpdir(), 'meridian-sse-quota-failover-')))
+mkdirSync(join(root,'home'),{mode:0o700})
 for (const key of Object.keys(process.env)) {
-  if (key.startsWith('MERIDIAN_') || key.startsWith('CLAUDE_PROXY_')) delete process.env[key]
+  if (/^(MERIDIAN_|CLAUDE_|CLAUDE_PROXY_|ANTHROPIC_|OPENCODE_)/.test(key)) delete process.env[key]
 }
 Object.assign(process.env, {
+  HOME:join(root,'home'),
   MERIDIAN_CONFIG_DIR: join(root, 'config'),
   MERIDIAN_SESSION_DIR: join(root, 'sessions'),
   MERIDIAN_WORKDIR: root,
@@ -285,7 +287,27 @@ try {
     assert.equal(response.status, 200)
     assert(reply.trim().length > 0, 'The answering leg must produce visible text')
     const scrubWitness = scrub ? verifyOpenCodeScrub(await (await fetch(`http://127.0.0.1:${port}/plugins/list`)).json(),scrub,true) : null
-    report.cases.push({mode,status:response.status,headerMs,refusedCalls:refusedCalls-callsBefore,clientPlugin:clientPlugin?.report,scrub:scrubWitness,rows:rows.map(r=>({profile:r.profileId,status:r.status,error:r.error}))})
+    let observedModels
+    if (!WORKING_FIXTURE) {
+      const require=createRequire(join(pkgRoot,'package.json'))
+      const sdk=await import(pathToFileURL(require.resolve('@anthropic-ai/claude-agent-sdk')).href)
+      const previousConfig=process.env.CLAUDE_CONFIG_DIR
+      const observed=new Set()
+      try {
+        process.env.CLAUDE_CONFIG_DIR=join(root,'config','profiles','working')
+        const ids=new Set(served.map(row=>row.sdkSessionId).filter(Boolean))
+        assert(ids.size,'Missing served SDK session identity')
+        for(const id of ids)for(const row of await sdk.getSessionMessages(id,{dir:root})) {
+          if(row.type==='assistant'&&typeof row.message?.model==='string')observed.add(row.message.model)
+        }
+      } finally {
+        if(previousConfig===undefined)delete process.env.CLAUDE_CONFIG_DIR
+        else process.env.CLAUDE_CONFIG_DIR=previousConfig
+      }
+      observedModels=[...observed]
+      assert(observed.size&&observedModels.every(model=>model===MODEL),'Actual SDK model differs; stop before another live case')
+    }
+    report.cases.push({mode,status:response.status,headerMs,refusedCalls:refusedCalls-callsBefore,clientPlugin:clientPlugin?.report,scrub:scrubWitness,observedModels,rows:rows.map(r=>({profile:r.profileId,status:r.status,error:r.error}))})
   }
   report.result = 'PASS'
   console.log(JSON.stringify({ result: 'PASS', pkgRoot, serverModule, refusedCalls, model: MODEL, refusalDelayMs: REFUSAL_DELAY_MS, workingLeg: WORKING_FIXTURE ? 'local-fixture' : 'real-claude-max' }))
