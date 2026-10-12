@@ -1,3 +1,41 @@
+## Core-fix delivery checkpoint — 2026-10-12
+
+Owner order remains core fixes, potential fixes, then features. Haiku delivery
+[#1337](https://github.com/rynfar/meridian/pull/1337) merged as
+`4dfdfe4e215de13ca71040dc3714d61ebeada384`; tested and merged trees match
+`075aabf0bbd333d83ae1241a5dcff19922c7015e`. The missing Darwin installed Nix
+qualification now passes all ten cases, six native execution witnesses, fifteen
+joined asynchronous actors and nine successful synchronous identity probes.
+[Durable CI artifact](https://github.com/rynfar/meridian/actions/runs/38274195603/artifacts/11758746098)
+contains the report (SHA256 `21029ed2bfb49894ad56b3aa2f022be9b5356aefae8ba92b54f5b7b81ac07ae4`).
+This scripted Nix qualification is distinct from actual Pi/Haiku inference.
+
+Release #1299 at `f907402b247b54f2773f979fad13ed71aa509b82` contains only
+1.81.0 version/changelog changes relative to current main. Local gates pass
+5615 tests, 35 skips, zero failures, typecheck and build. Independently installed
+1.81.0 npm-pack actual Pi 1.1.0 / Haiku 5.5 read-back passes on Darwin ARM64,
+Node 22.22.3, SDK 0.2.141 and native CLI 2.1.296; both requests are 200 and all
+original observed children/pipes join. Publication is not yet claimed; final
+Darwin Nix CI and release/publication/registry gates remain at this checkpoint.
+
+Polytoken source #1339 is accepted with correction in draft delivery
+[#1343](https://github.com/rynfar/meridian/pull/1343). Source authored commits
+`706de2c5` and `088e5c3c` map to `41cc0ca6` and `2f3e83d3`; contributor
+Author/AuthorDate are preserved. Separate maintainer correction `e5bac35d`
+isolates exact native title side calls from working conversation state.
+Two discriminating regressions fail contributor code; 41 focused tests pass
+with the correction. Before rebasing, full gates pass 5582/0/35, typecheck/build.
+Rebased final gates are running and acceptance remains draft until they finish.
+
+Actual Polytoken 0.8.21 / Haiku 4.5 / Darwin ARM64 completed two parents and
+four children, each with three read turns. Six independent conversations resume
+with disjoint SDK mappings. All 35 successful requests are 200; three other
+entries correlate to client-aborted native title requests. Title completion is
+not established. Durable sanitized [evidence](evidence/polytoken-1339/live-acceptance.json)
+and the committed Python/client + native-Node/server harness preserve the scope
+and earlier failures. Final harness assertions and current-main live run remain
+pending. Do not close source #1339 until delivery lands and its head is rechecked.
+
 ## Core-fix priority continuation — 2026-10-12
 
 The current owner order supersedes the older oldest-first instructions below:
