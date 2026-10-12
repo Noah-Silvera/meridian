@@ -1,3 +1,24 @@
+## Streaming verification checkpoint — 2026-10-12
+
+[#1344](https://github.com/rynfar/meridian/pull/1344) clean installed package
+`6974747fe` now passes actual Linux OpenCode 1.18.34 / Opus 5.5 long write,
+tool result and same-session continuation with both plugins. 39761 characters,
+1921 deltas over 96.3 seconds, max gap 700 ms vs 15-second deadline; all four
+HTTP requests 200, original actors/pipes joined and grant removed.
+
+Its independent source-tree E41 matrix passes sequential JSON but fails SSE:
+after one read the model says a safety classifier stopped it and declines the
+remaining benign fixture reads. Actual model, cache, history/fork/follow-up
+predicates pass; required tool shape fails. Both plugins were active with zero
+hook errors. Matrix stopped before parallel modes; all actors joined and grants
+removed. No model process remains active. Preserve this failure; do not merge
+#1344 or close #1294. See [evidence](evidence/stream-idle-1294-20261012.md).
+
+MCP #1349 at `fc3fe028` has completed local gates and all four qualified E41
+modes. Its final adjacent-flow applicability review is now in its PR body:
+no V2 API or checkpoint policy changes trigger E42/E66/E67. Final-head CI is
+its remaining gate; use the existing T3 watch rather than a polling loop.
+
 ## Final integrated streaming gate remains open — 2026-10-12
 
 Clean #1344 package at `6974747fe` passed actual long-input streaming (42,900
