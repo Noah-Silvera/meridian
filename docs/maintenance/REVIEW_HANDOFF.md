@@ -1,3 +1,14 @@
+## Detached CLI #1359 — implementation foundations
+
+Private bounded control/framing, one-shot graceful-stop state, real local socket
+transport and bounded cross-launch logs are implemented under src/cli. Sixteen
+focused tests (69 assertions) and typecheck pass; the actual Node22.22.3 bundle
+probe covers admission, private concurrent stop and rotation on Darwin ARM64.
+[Evidence and remaining lifecycle work](evidence/1302-detached-cli-20261012/README.md).
+Supervisor ownership/publication, child IPC, CLI dispatch and actual source/
+installed lifecycle acceptance are still pending. No new CLI command is exposed.
+The branch remains draft and #1302 stays open; no model or credential operations.
+
 ## Detached CLI feature #1302 — concrete implementation design
 
 [Lifecycle proposal](proposals/1302-detached-cli.md) on isolated branch

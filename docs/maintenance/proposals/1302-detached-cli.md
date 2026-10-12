@@ -1,7 +1,7 @@
 # Detached CLI lifecycle — implementation proposal for #1302
 
-Status: accepted for implementation in the authorized backlog; not shipped or
-live-verified. This proposal adds CLI lifecycle behavior and a private local
+Status: implementation foundations are in draft #1359; commands are not wired,
+shipped, or live-verified. See the [implementation evidence](../evidence/1302-detached-cli-20261012/README.md). This proposal adds CLI lifecycle behavior and a private local
 control protocol. It does not modify public plugin interfaces or introduce a
 public HTTP shutdown route. Implementation must preserve that boundary; a change
 to an existing public interface needs the approval described in AGENTS.md.
