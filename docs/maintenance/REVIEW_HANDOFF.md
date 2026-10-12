@@ -1,3 +1,22 @@
+## Current integration checkpoint — OpenCode landed
+
+#1354 merged fa90c9aaf1e99d5fbd69f6725ce8be0dcc3cfff3 after final-head CI.
+Exact merged tree equals4edfb46cb; Aleksey coauthor verified. Source#1301
+unchanged05e2381f was rechecked and closed. No new release.
+
+#1334 original full local91165 exited1 with three error-reporting tests reading
+transient conflict markers during the ancestry merge. This was an orchestration
+error; retain its failed result. The exact stderr identifies sdkProcessGate.ts
+with `Unexpected <<`. No actual-client proof was invalidated: both live arms
+finished before the merge and used the unchanged built package. Current main
+fa90c9aaf is now integrated; only this chronological handoff conflicted. Freeze
+the completed checkout throughout the replacement full local run. Both native
+platforms and actual source/installed Pi SDK proofs remain available below.
+
+#1355 npm-lock fix remains ready with clean install/typecheck/build; CI watched.
+Post-merge paginated rediscovery finds six managed repositories,33 open PRs and
+21 issues including source/delivery/release pairs. Ranked report updated.
+
 ## SDK #1334 current acceptance continuation — 2026-10-12
 
 Fresh branch codex/sdk-close-acceptance-1334-20261012 from main506a811d3
@@ -14,6 +33,88 @@ OpenCode #1354 head4edfb46cb passed actual required live matrix and full local
 5743pass/35skip/0fail,typecheck/build; ready, awaiting CI. Separate #1355
 dece601a fixes npm-lock drift below the existing Claude Code floor; clean npm
 install/typecheck/build pass, CI pending. Both linked and watched. No new release.
+
+## Current #1354 checkpoint — all live gates complete
+
+All three pinned beta extended live gates pass against independently installed
+b90324930: originals58550 (18314),15803 (18866),44041 (19271), all exit0.
+Each has two distinct proxy worker PIDs, PASS/joined reports, and removed grants.
+Actual Haiku5.5 and installed client/server plugins were verified. Stable2.0.16
+and2.0.21 live E42, six offline source/installed beta arms, actual instruction
+before/after and all four Opus5.5 E41 modes also pass. Durable evidence is under
+1301-opencode-instruction-update-20261012, with every causally diagnosed failure.
+
+Maintainer gate corrections: accept both supported effort wire fields; require
+completion of primary xhigh requests, retaining asynchronous title traces; wait
+for the warm host's actual /api/model catalog before selecting a newly discovered
+model. The distinct cold standalone gate remains unchanged. Beta19271's initial
+catalog race made zero model requests; credentialless readiness control and the
+full corrected actual run both confirm the cause. No unexplained rerun claimed.
+
+Full local npm test/typecheck/build original89187 was started before this
+checkpoint. Its terminal result must be recorded in #1354 before integration;
+poll the original handle until terminal. Final diff review, final-head CI and
+exact-head integration with Aleksey credit remain mandatory.
+#1301 unchanged05e2381f remains open; #1354 remains draft. No release authorized.
+
+## Latest #1354 checkpoint — broad gates passed, extended beta harness needs correction
+
+Clean0aab7d26 original28183 exited0:5743pass/35skip/0fail,typecheck/build.
+Original32660 all four qualified E41 modes pass (Opus5.5, joined grants removed).
+Original83785 all six offline E42 beta source/installed arms pass. Installed
+stable2.0.16 live E42 original57684 passes full flow with qualified external
+proxy/scrub, actual Haiku5.5, joined actors/grant removed. Durable receipts now
+under evidence/1301-opencode-instruction-update-20261012.
+
+Extended beta18314 original34036 failed missing external restart handle.
+Original61202 then failed stale Haiku4.5#xhigh catalog selection; its in-process
+proxy restart is also insufficient for the actual process-restart gate. Do not
+count either as acceptance. Both terminal/joined/grants removed. Next: update
+real subprocess e2e-opencode-proxy-host.mjs to require installed server scrub
+and explicit private access-only profiles, capture SDK original process joins,
+and keep the beta harness's genuine child-process restart. Use current live
+Haiku5.5 for xhigh, retaining controlled offline catalog. Then run each beta's
+extended live flow. Do not rerun completed local28183 absent material changes.
+OpenCode2.0.21 still rejected by setup; its actual manual-fixture instruction
+proof is retained without claiming qualified setup support. No merge/release.
+
+#1334 refreshed unchanged10f4132a, linked to thread; held draft. Quota blocker
+is now stale but actual SDK/client acceptance remains. Existing authored branch
+/Users/rynfar/repos/meridian-sdk-close-completion-1334-20261011 is a lead; inspect
+worktree state before using. Keep #1326 original hang issue open independently.
+
+## Latest OpenCode #1354 evidence
+
+Actual installed OpenCode2.0.21/Haiku5.5 now reproduces the trailing-system
+checkpoint failure on baseline and passes candidate (isResume false -> true).
+Candidate original36496exit0; actors/pipes joined and access grant removed.
+See evidence/1301-opencode-instruction-update-20261012/README.md for exact
+package identities, retained harness failures and setup qualification gap.
+No new release; #1354 remains draft pending E41/E42 and full final gates.
+
+## Current authoritative checkpoint — Nix merged, OpenCode instruction updates active
+
+#1353 merged `506a811d319184381164dab5995703cbcd5b9906`; exact tree versus
+`5498892b30c55f437fc690599328aae9583da22f` and Connor Grady coauthor verified.
+Original final local session56950 exited0:5730pass/35skip/0fail,typecheck/build.
+Final-head CI test succeeded; cancelled duplicate Nix run was superseded by
+same-head success. Source1352 unchangedde3c6fe5 rechecked and closed.
+Real systemd seven-case and actual installed Meridian profile proof retained.
+No new release. This supersedes historical Nix-pending statements below.
+
+Active draft #1354 in /Users/rynfar/repos/meridian-opencode-system-delta-1301-20261012
+incorporates #1301 authored05e2381f as e836a81a9 plus separate mandatoryV2/server
+scrub harness correction1da7bdf3. Nix main merged cleanly. Targeted202pass;
+only restoring the old opt-in gives132pass/5expectedfail; typecheck/build pass.
+No live calls yet. Actual @opencode/cli2.0.21 installation being prepared;
+legacy opencode-ai package/release lookup404 was a package-name lookup error,
+not evidence the target version is unavailable. Required actual-client,
+installed-package,E41/E42 and final combined local/CI gates remain.
+
+#1201 review branch /Users/rynfar/repos/meridian-checkpoint-pairs-1201-20261012
+contains authored0bd4ff218 and local evidencef6e9f5d4;75focusedtests/typecheck
+pass. Original Meowbert runtime/exact model remains unknown; existing evidence
+hold unchanged. No live call/source closure or extra PR for that held item.
 
 ## Current authoritative state — 2026-10-12
 

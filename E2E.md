@@ -1325,7 +1325,7 @@ curl -s -X PUT -H 'Content-Type: application/json' -d '{"checkForUpdates":false}
 | E39 | [OpenCode internal-agent session key (#845)](#e39-opencode-internal-agent-session-key-845) | **Manual**, real OpenCode: its `title` agent runs under the USER'S session id, so the user's first turn used to queue behind it and then get HTTP 400 `session_turn_conflict`. Asserts the first turn succeeds, waits ~0ms on the session lease, and every later request is `lineage=continuation`. **Run after any OpenCode upgrade and before releases touching session keys or the turn coordinator** | 2026-08-19 |
 | E40 | [Passthrough digest-turn cap](#e40-passthrough-digest-turn-cap) | **Automated**: `bun scripts/e2e-digest-turn-cap.mjs` — real SDK. Asserts the capped tool turn generates no digest text, costs materially less than uncapped on an identical prompt, still RESUMES at its captured checkpoint, leaves text-only turns returning `success`, and does not truncate parallel tool calls. **Run before any release touching the passthrough tool loop, `maxTurns`, or the early-stop checkpoint** | 2026-08-20 |
 | E41 | [Passthrough multi-turn: one call, one answer](#e41-passthrough-multi-turn-one-call-one-answer) | **Automated**: `bun scripts/e2e-passthrough-turns.mjs [--stream]` — real proxy + SDK + Claude Max. Chain and `PROBE_PARALLEL=1` modes assert exact tool-call batching, a distinct durable fork per result round, one real answer per delivered call in the active transcript, and full prompt-cache continuity. **Run all four chain/parallel × stream/non-stream combinations before releases touching passthrough resume or the deny hook** | 2026-08-26 |
-| E42 | [OpenCode V2 compatibility](#e42-opencode-v2-compatibility) | **Automated**, exact betas `18314`, `18866`, `19271` and release `2.0.16`. Run the beta package gate with each pinned beta; run `e2e-opencode-v2-stable-live.mjs` with the released binary. The stable gate covers setup, real model requests, title/generate isolation, signed primary turns, resumed session, model-discovery effort variant, tool result, fork isolation, and compaction. Test source and packed npm artifacts. **Run after any V2 plugin/API change; another host version is not a pass** | 2026-09-24 |
+| E42 | [OpenCode V2 compatibility](#e42-opencode-v2-compatibility) | **Automated**, exact betas `18314`, `18866`, `19271` and releases `2.0.16`, `2.0.21`. Run the beta package gate with each pinned beta; run `e2e-opencode-v2-stable-live.mjs` with the released binary. The stable gate covers setup, real model requests, title/generate isolation, signed primary turns, resumed session, model-discovery effort variant, tool result, fork isolation, and compaction. Test source and packed npm artifacts. **Run after any V2 plugin/API change; another host version is not a pass** | 2026-09-24 |
 | E43 | [Passthrough tools in a namespaced client](#e43-passthrough-tools-in-a-namespaced-client) | **Automated**: `bun scripts/e2e-passthrough-namespaced-tools.mjs [--stream]` — real proxy + SDK. A client tool declared `mcp__oc__read` collides with the namespace Meridian nests client tools under; asserts the call is still dispatched and captured, delivered under the name the client declared, and answered from the client's real result, with an ordinary and a foreign-namespace control alongside. **Run before any release touching passthrough tool registration, the deny hook, or tool-name delivery** | 2026-09-08 |
 | E44 | [Tier refusal failover](#e44-tier-refusal-failover) | **Automated**: `bun scripts/e2e-tier-refusal-failover.mjs [--stream]` — local refusal fixture, **real Claude Max fallback**. Asserts the credits-era per-tier banner is recorded 429 on the refusing profile and that a healthy profile actually answers. Catches what unit tests cannot: the shape that arrives carries the upstream status. **Run before releases touching error classification or priority failover** | 2026-09-08 |
 | E45 | [Codex auto-defer](#e45-codex-auto-defer) | **Automated**: `bun scripts/e2e-codex-auto-defer.mjs` — real proxy + SDK, 40 Codex-shaped tools. Asserts a Codex request reports no deferral and that `exec_command` is loaded rather than found via ToolSearch. The codex transform inherited OpenCode's core tool names, which match nothing Codex sends, so every tool was deferred. **Run before releases touching the codex transform, auto-defer, or `computePassthroughMaxTurns`** | 2026-09-08 |
@@ -4894,9 +4894,18 @@ changing request bodies. It also proves that durable primary lineage survives
 real V2 tools, a Meridian restart, undo, fork, and parallel subagents.
 
 Validate all supported beta hosts, `0.0.0-beta-18314`, `0.0.0-beta-18866`,
-and `0.0.0-beta-19271`, plus the released 2.0.16 host below.
+and `0.0.0-beta-19271`, plus the released 2.0.16 and 2.0.21 hosts below.
 The beta CLI can update itself, so the automated gate verifies its exact version
 before and after each run and disables automatic updates. Use isolated installs:
+
+Live beta runs now use `e2e-qualified-opencode-proxy-host.mjs`. Set
+`E2E_ALLOW_LIVE_MODEL=1`, `E2E_LIVE_PROFILE_FILE` to a private access-only
+OAuth profile array, `E2E_PLUGIN_PATH` to the installed server scrub,
+`E2E_NATIVE_BIN` to the qualified native CLI, and `E2E_PROXY_REPORT_DIR` to an
+owned artifact directory. Each actual proxy subprocess records its SDK child
+exit/close and pipe-close witnesses; preserve both distinct process reports
+across the restart before deleting the grant. Live effort discovery targets
+Haiku 5.5; the offline fixture retains its controlled Haiku 4.5 catalog.
 
 ```bash
 npm install --prefix /tmp/opencode-18314 @opencode-ai/cli@0.0.0-beta-18314
@@ -4908,7 +4917,7 @@ E2E_OPENCODE_BIN=/tmp/opencode-18866/node_modules/.bin/opencode2 bun scripts/e2e
 E2E_OPENCODE_BIN=/tmp/opencode-19271/node_modules/.bin/opencode2 bun scripts/e2e-opencode-v2-package.mjs --live --extended
 ```
 
-The released 2.0.16 host uses the `@opencode/cli` binary and a different plugin
+The released 2.0.16 and 2.0.21 hosts use the `@opencode/cli` binary and a different plugin
 domain API. Its committed headless gate launches an isolated OpenCode client,
 installs the bundled plugin through `meridian setup --v2`, and forwards its real
 Anthropic traffic to a real Meridian SDK/model through a local relay. It checks
@@ -4924,6 +4933,7 @@ npm install --prefix /tmp/opencode-2016 @opencode/cli@2.0.16
 npm run build
 E2E_OPENCODE_BIN=/tmp/opencode-2016/node_modules/.bin/opencode \
   bun scripts/e2e-opencode-v2-stable-live.mjs
+# Repeat with @opencode/cli@2.0.21 and E2E_OPENCODE_VERSION=2.0.21.
 # With E2E_MERIDIAN_ROOT pointing at an independently installed npm pack
 # consumer, repeat the same command before merging. Repeat after publication
 # with a fresh registry install before closing a release gate.
@@ -4960,12 +4970,14 @@ Discovery attempts the client abandons when a one-shot process exits are
 recorded and allowed; at least one must complete, and no attempt may fail for
 any other reason.
 
-In `--live --extended` the gate additionally selects
-`anthropic/claude-haiku-4-5#xhigh` and requires the run to succeed with
-`effort: "xhigh"` reaching the proxy. That variant is
-`provider.no-route — Variant unavailable` without discovery, so a pass can only
-come from the applied catalog. It needs the warm server that `--extended`
-starts: a one-shot client process outruns the catalog reload (#1008).
+In `--live --extended` the gate selects `anthropic/claude-haiku-5-5#xhigh`
+and requires the primary request to carry `xhigh` in either `effort` or
+`output_config.effort`, matching Meridian's accepted wire forms, and complete
+upstream. The live catalog advertises Haiku5.5 with a 1M window. Detached title
+requests remain in the trace but are not required to finish before the primary
+answer. The controlled offline Haiku4.5 fixture above retains the strict
+Meridian-only discovery and cache-invalidation assertions; live Haiku5.5 alone
+does not prove that the selected variant is absent from the client's own catalog.
 
 `--no-discovery` is the negative control. The fixture answers the catalog request
 with 404 and the whole gate must still pass, proving discovery fails closed
@@ -6415,7 +6427,7 @@ Run `bun scripts/e2e-duplicate-checkpoint.mjs` in both modes. The real model mus
 Run `bun scripts/e2e-settlement-proof.mjs` in both modes to verify revised history following a completed real tool checkpoint. Require the supplied decision in the SDK input and answer, unchanged source history, and a resumed ordinary follow-up. Keeping old completed checkpoints must not force future turns to replay.
 
 
-## Claude Code and Oh My Pi trailing system reminders
+## Claude Code, Oh My Pi and OpenCode trailing system reminders
 
 Run `bun scripts/e2e-claude-code-system-delta.mjs` in both modes (`--stream`); repeat with `E2E_MODEL=claude-sonnet-4-6` and the `--image` flag to validate a native image tool result followed by a reminder. Require the actual tool result, reminder identifier and optional image color in the answer, checkpoint resume, no reminder promoted into the SDK system prompt, and unchanged source history through supported `getSessionMessages`.
 
@@ -6424,6 +6436,8 @@ Repeat the direct gate with `--revise-history` and separately with `--insert-his
 Run the direct gate with `--blank-reminder` in both response modes, with and without `--image`. Whitespace-only text does not qualify for the narrow reminder exception: require fresh replay, the correct tool value/context and optional image color, and unchanged source history.
 
 Repeat every case above with `--agent pi`. Oh My Pi upgrades developer-origin notes (advisor, async results, todo nudges) to a mid-conversation `system` turn after tool results, producing the same tail. The gate sends `x-meridian-agent: pi` and additionally requires telemetry to record `adapter=pi`, so a pass cannot come from Claude Code detection.
+
+Repeat every case above with `--agent opencode`. This protocol gate requires `E2E_CLIENT_PLUGIN_PATH` pointing to an installed `dist/meridian-v2/index.js` and `E2E_PLUGIN_PATH` pointing to the installed OpenCode server scrub. It executes the real V2 HTTP hook in an owned host fixture and verifies server scrub loading before inference, then hook invocation/error counts afterward. This does not replace the actual OpenCode 2.0.21 client before/after gate or E41/E42 acceptance. OpenCode 2 sends instruction updates (a changed `AGENTS.md`, a date rollover, an MCP or skill catalog change) as a native mid-conversation `system` turn after tool results on models that accept system updates, producing the same tail. The gate sends `x-meridian-agent: opencode`, an OpenCode user agent and an `x-opencode-session` key, and requires telemetry to record `adapter=opencode`.
 
 Run `bun scripts/e2e-claude-code-client.mjs` for the full installed Claude Code 2.1.259 → Meridian → real SDK loop. `E2E_CLAUDE_CLIENT` can name that exact client binary. The fixture isolates the outer client's settings and enables its `CLAUDE_CODE_FORCE_MID_CONVERSATION_SYSTEM` flag; `--bare` suppresses the shape and is unsuitable. The real CLI reads a disposable fixture, sends its native `<total_tokens>` system reminder, then resumes for an ordinary follow-up. Require both proxy continuations to resume, delivery of both reminders to SDK user history, correct answers, and unchanged source history.
 
