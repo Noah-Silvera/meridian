@@ -84,3 +84,35 @@ none and no credentials were staged. Exact identity hashes are in the receipt.
 This qualifies baseline plugin routing/admission only. Candidate/package,
 supported SDK history, failure diagnostics and live lifecycle qualification
 remain required before the bounded live round.
+
+
+## Installed Linux candidate and current live availability
+
+Current source through f2e9aad2 has unchanged production/unit-test blobs from
+fully tested4950f621. An independently packed and npm-installed candidate
+uses the existing Linux/x64 Node24.20.0 container (no image build/pull),
+OpenCode2.0.16, SDK0.2.141, native CLI2.1.296 and scrub0.2.3. Package integrity
+is recorded in candidate-package.json. Public dependencies only; no install
+scripts were run.
+
+Final offline originals43568 baseline and50433 candidate both exit0. Baseline
+advertises200k and forwards7/14 fixture messages with omission; candidate
+advertises1M and forwards14/14 without omission. Each uses the actual client
+plugin attestation, one fenced SDK interception and verified server scrub;
+zero model entries, all original actors/readable EOFs joined. The harness now
+checks the exact profile config directory for supported getSessionMessages,
+retains structured error tags and response status/closure, records progress,
+and checks supported SDK history and its preserved prefix for the future live
+round. The committed scripts/e2e-sonnet-context-qualified.mjs is the exact
+qualified harness (renaming the file does not change its content hash).
+
+Read-only supported default-store readiness then returned no access token on
+two stable reads. Diagnosed repeat confirms available=false; each original
+Keychain child and pipes joined. No access grant was staged, no refresh/login,
+account switch or usage setting change occurred, and no model call was made.
+Do not treat the offline native-window proof as actual served-model acceptance.
+Resume the bounded baseline1/candidate3 SDK-entry live round only after a valid
+existing access-only grant is available and its same-account subscription-only
+readiness is established. Candidate source/package E41/E42 and final-head CI
+remain acceptance gates. Prior original Linux Sonnet large-query success followed
+by client400 remains unresolved.

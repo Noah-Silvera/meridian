@@ -1,0 +1,26 @@
+{
+  "scope": "Supported default store read twice; access-only projection, no refresh/store write/account switch",
+  "modelEntries": 0,
+  "available": false,
+  "stable": false,
+  "remainingSeconds": null,
+  "failureName": "AssertionError",
+  "failure": "Stable existing token required",
+  "staged": false,
+  "actors": [
+    {
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    }
+  ]
+}

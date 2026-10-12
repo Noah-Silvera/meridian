@@ -1,3 +1,14 @@
+## Latest Sonnet qualification checkpoint
+
+Baseline and independently installed candidate Linux/OpenCode offline arms pass:
+200k with7/14 history versus1M with14/14. Exact committed harness:
+`scripts/e2e-sonnet-context-qualified.mjs`. Both client/server plugins verified,
+zero model entries, original actors/pipes joined. Supported default credential
+store currently returns no access token (two reads, then diagnosed repeat).
+No grant staged or inference started. Current Sonnet live acceptance remains
+open; preserve the earlier client400. See
+[evidence](evidence/1213-current-main-20261012/README.md).
+
 ## Current Sonnet #1213 preparation — 2026-10-12
 
 Current-main authored reconciliation is isolated in

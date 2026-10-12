@@ -1,0 +1,156 @@
+{
+  "result": "OFFLINE_PASS",
+  "mode": "offline",
+  "identity": {
+    "harness": "f8c54f877fa6d5ea9880b2b91200fed5636cc11abaf43c26a8dd2918551cb6a5",
+    "server": "5408cc92c7238bda53c87eebb1d65e6f6415569110d6e78fe82a931c52566594",
+    "client": "0910f9e7c5b50eb460c9ae53b4348b781cb44220a18ff2bcce514c2427582848",
+    "native": "24972e3bc859fab2b46ed4c1e51f7d6130f06d3bd550811a114640de3370d0de",
+    "scrub": "4ab89412e6a59fad812a3f6e5500c84f3bdfc41863320bc794f5274a251da656",
+    "sdk": "0.2.141",
+    "sdkEntry": "48bde6aeabf7e71ad5528bf52c8feb1642c21f505ea2495c70f39db7df226d97",
+    "fixture": "2f3be87d311acda8dfc559fb8db035a8707aea8c7a92dec1f799fada3d9706b9",
+    "preflight": "d981812fc4ba442e24cb2c869ad363993d5c85ac6642bd6803a5f0890da71514"
+  },
+  "platform": "linux",
+  "arch": "x64",
+  "node": "v24.20.0",
+  "queries": [
+    {
+      "resumed": false,
+      "sdkModel": "sonnet",
+      "pin": "claude-sonnet-5-5",
+      "nativeMatched": true,
+      "configMatched": true,
+      "grantMatched": true,
+      "characters": 915234,
+      "historyMessagesRetained": 14,
+      "ancientRetained": true,
+      "omitted": false,
+      "models": [],
+      "inputTokens": 0,
+      "toolUseBlocks": 0,
+      "completed": false,
+      "fenced": true
+    }
+  ],
+  "wire": [
+    {
+      "attested": true,
+      "agent": "build",
+      "session": "ses_df3c882e616f4db6b5161ef1e2bdcaf3",
+      "events": [
+        {
+          "type": "error",
+          "errorType": "invalid_request_error",
+          "errorTags": [
+            "invalid_request_error"
+          ]
+        }
+      ],
+      "responseClose": true,
+      "model": "claude-sonnet-5-5",
+      "bodySha256": "33b04e9718640aa2684a148f21228ce740c2649c7e6a4990e038491b3b27ec48",
+      "characters": 955540,
+      "messageCount": 15,
+      "ancientRetained": true,
+      "errorTags": [],
+      "status": 200,
+      "finished": true
+    }
+  ],
+  "actors": [
+    {
+      "pid": 14,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "pid": 30,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "pid": 36,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "pid": 52,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "pid": 69,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 130,
+      "signal": null
+    },
+    {
+      "pid": 87,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": null,
+      "signal": "SIGTERM"
+    }
+  ],
+  "actualEntries": 0,
+  "joined": true,
+  "client": "opencode v2.0.16",
+  "native": "2.1.296 (Claude Code)",
+  "scrubLoaded": {
+    "path": "/work/deps/node_modules/@rynfar/meridian-plugin-opencode-scrub/dist/index.js",
+    "packageName": "@rynfar/meridian-plugin-opencode-scrub",
+    "packageVersion": "0.2.3",
+    "sha256": "4ab89412e6a59fad812a3f6e5500c84f3bdfc41863320bc794f5274a251da656",
+    "runtimeVersion": "0.2.3",
+    "invocations": 0,
+    "errors": 0
+  },
+  "proxyWindow": 1000000,
+  "clientPluginConfigured": true,
+  "clientWindow": 1000000,
+  "importedMessages": 15,
+  "clientResults": [
+    {
+      "finish": "error",
+      "error": true,
+      "model": "claude-sonnet-5-5"
+    },
+    {
+      "finish": "stop",
+      "error": false,
+      "model": "claude-sonnet-5-5"
+    },
+    {
+      "finish": "stop",
+      "error": false,
+      "model": "claude-sonnet-5-5"
+    }
+  ],
+  "scrubInvoked": {
+    "path": "/work/deps/node_modules/@rynfar/meridian-plugin-opencode-scrub/dist/index.js",
+    "packageName": "@rynfar/meridian-plugin-opencode-scrub",
+    "packageVersion": "0.2.3",
+    "sha256": "4ab89412e6a59fad812a3f6e5500c84f3bdfc41863320bc794f5274a251da656",
+    "runtimeVersion": "0.2.3",
+    "invocations": 1,
+    "errors": 0
+  },
+  "diagnostics": []
+}
