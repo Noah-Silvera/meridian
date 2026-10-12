@@ -87,10 +87,14 @@ Report your assigned marker and the file contents using exit_tool with success t
 
     def run(name):
         prefix = 'First read fixture.txt three times on separate turns. ' if args.title_first else ''
-        prompt = (prefix + f'Immediately launch two live-worker subagents in one batch, named {name}-alpha '
-                  f'and {name}-beta, assigned markers {name}-ALPHA and {name}-BETA. Each must read fixture.txt '
-                  'three times in separate turns. Wait for both, verify their results and report success '
-                  'or exact failures. Do not retry failed agents. Finish with exec_structured_output.')
+        prompt = (prefix + 'Call the subagent tool exactly twice in total, with count=1 on each call '
+                  '(not count=2). Both calls must use subagent_type="live-worker" and model_override="live-model". '
+                  f'Name the first {name}-alpha and the second {name}-beta. '
+                  'In each child prompt explicitly require exactly three file_read calls for fixture.txt '
+                  'in three separate assistant turns, followed by exit_tool with success=true. '
+                  'Launch both before waiting, then use job_block or job_result to collect those two existing jobs. '
+                  'Never call subagent again, even if a job is pending or failed. '
+                  'Finish with exec_structured_output after both existing jobs complete.')
         command = base + ['exec', '--accept-license-terms', '--facets-dir', str(config / 'facets'),
                           '--subagents-dir', str(config / 'subagents'), '--facet', 'live-probe',
                           '--model', 'live-model', '--max-tool-turns', '18', prompt]
@@ -148,7 +152,7 @@ Report your assigned marker and the file contents using exit_tool with success t
         c['outcome'] and c['outcome'].get('kind') == 'success' for c in children)
     result = {'runs': runs, 'children': children, 'passed': passed,
               'read_evidence': read_evidence,
-              'note': 'Three distinct read turns verified; server harness must verify SDK mappings.'}
+              'note': 'Read evidence is asserted above; server harness must additionally verify SDK mappings.'}
     (root / 'result.json').write_text(json.dumps(result, indent=2))
     print(json.dumps(result, indent=2))
     return 0 if passed else 1
