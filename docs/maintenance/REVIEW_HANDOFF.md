@@ -1,3 +1,26 @@
+## Current Nix runtime integration — #1342 → #1357
+
+Authored current-main incorporation26e2dd4a5/dd4bf666 preserves Connor Grady's
+commits/dates, current test isolation, npm native floor and Home Manager quoting.
+Native Linux ARM64 build, home check, dependency/package reproducibility and
+10 installed SDK/native HTTP controls pass. Package160→51MiB; closure763→578MiB;
+all application bundles unchanged except the Nix-pinned Node shebang. Original
+full local99164 exits0 (clean npm ci,5752 tests,35 skips,0 failures,typecheck/build).
+[Exact evidence](evidence/1342-nix-runtime-20261012/README.md).
+Final-head CI, macOS runtime artifact review and credited exact-head merge remain.
+Source#1342 stays open. No release.
+
+Sonnet #1213 has current-main preparation preserved at branch
+codex/sonnet-context-1213-20261012 (dab7630a3):5767 tests/typecheck/build and actual
+Linux/OpenCode offline source/package admission pass (200k7/14 vs1M14/14).
+Supported default credential store returned no access token, so no grant was
+staged or live call started. Native model/history/resume acceptance stays open.
+
+#1261 current b999654d retains byte-identical sweep/retention/query blobs from
+rejected7475d08c; ownership, concurrent deletion and join findings still apply.
+#1266 remains draft atd9594af with its original exact macOS/nono/client evidence
+hold. Neither item is accepted by this checkpoint.
+
 ## Current #1356 acceptance — full local and actual source/package pass
 
 Delivery [#1356](https://github.com/rynfar/meridian/pull/1356) incorporates
