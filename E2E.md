@@ -5143,10 +5143,18 @@ and a heartbeat before the first refusal, exactly one refused telemetry attempt
 and one answering profile, no leaked suppressed error, and non-stream parity.
 This exercises transport mechanics, not live subscription or actual-client behavior.
 
-Live execution is rejected before setup because this contributor harness lacks
-matching client-plugin and server-scrub qualification. Real affected-client/model
-acceptance and the applicable four-mode E41 matrix remain required; do not use
-fixtures as substitutes or enable paid usage to manufacture a refusal.
+For the bounded live answering leg, omit E2E_SSE_WORKING_FIXTURE and provide
+E2E_ALLOW_LIVE_MODEL=1, a mode-0600 E2E_LIVE_PROFILE_FILE with one access-only
+OAuth profile, E2E_CLIENT_PLUGIN_PATH pointing to the installed V1 plugin, and
+E2E_PLUGIN_PATH pointing to the installed server scrub (version assertions use
+E2E_CLIENT_VERSION / E2E_SCRUB_VERSION). Both plugins preflight before the grant
+is read; actual client hooks generate request headers and active server scrub
+is checked before and after requests. Original children/pipes must join before
+the final report succeeds. Use an isolated container for credential and SDK state.
+The refused leg always remains a local fixture. This is a protocol host, not the
+OpenCode executable or naturally exhausted-account evidence. Real affected-client
+acceptance, actual model identity and four-mode E41 remain separate gates. Do not
+use fixtures as substitutes or enable paid usage to manufacture a refusal.
 
 ## E45: Codex auto-defer
 

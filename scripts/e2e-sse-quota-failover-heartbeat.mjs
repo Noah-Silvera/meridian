@@ -3,9 +3,9 @@
 //
 // Assert headers/keepalive before a delayed local refusal, suppression of that
 // refusal, exactly one answering account in HTTP telemetry, and non-stream parity.
-// Requires E2E_SSE_WORKING_FIXTURE=1. Live execution is refused before setup
-// until both mandatory plugin preflights are implemented. Fixtures do not
-// establish live subscription or actual-client behavior.
+// Credentialless mode requires E2E_SSE_WORKING_FIXTURE=1. Live mode requires
+// explicit opt-in, access-only grant and BOTH installed plugin preflights.
+// The refused leg is always a local fixture, never a deliberately spent account.
 //
 // Run against the INSTALLED package with credentialless local fixtures:
 //
@@ -18,7 +18,12 @@
 //   E2E_SSE_REFUSAL_DELAY_MS         fixture refusal delay (default 16000; must exceed the 15s heartbeat)
 //   E2E_SSE_WORKING_FIXTURE=1        use a local Anthropic answer fixture
 import assert from 'node:assert/strict'
-import { mkdtempSync, realpathSync } from 'node:fs'
+import { mkdtempSync, realpathSync, readFileSync, statSync, writeFileSync } from 'node:fs'
+import childProcess from 'node:child_process'
+import {syncBuiltinESMExports} from 'node:module'
+import {observeChildClosure, stopAndJoinChild} from './lib/e2eProcessCustody.mjs'
+import {resolveOpenCodeScrub, configureOpenCodeScrub, verifyOpenCodeScrub} from './lib-opencode-scrub-preflight.mjs'
+import {resolveOpenCodeClient, loadOpenCodeClient} from './lib-opencode-client-preflight.mjs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -58,11 +63,32 @@ const REFUSAL_DELAY_MS = Number(process.env.E2E_SSE_REFUSAL_DELAY_MS ?? 16_000)
 assert(Number.isFinite(REFUSAL_DELAY_MS) && REFUSAL_DELAY_MS > 15_000, 'the fixture refusal must be delayed past the 15s heartbeat for this gate to mean anything')
 const MODEL = process.env.E2E_SSE_MODEL ?? 'claude-haiku-4-5-20251001'
 const WORKING_FIXTURE = process.env.E2E_SSE_WORKING_FIXTURE === '1'
-// The contributor's live branch has neither matching client-plugin nor server
-// scrub qualification. Fail before creating profiles, servers or SDK queries.
-// Retain the local transport gate; real-client acceptance is a separate gate.
-assert(WORKING_FIXTURE, 'This harness is fixture-only until matching client-plugin and server-scrub live preflights are implemented; set E2E_SSE_WORKING_FIXTURE=1 for credentialless transport verification')
-
+const grantPath = process.env.E2E_LIVE_PROFILE_FILE
+let scrub, clientInstallation
+if (!WORKING_FIXTURE) {
+  assert.equal(process.env.E2E_ALLOW_LIVE_MODEL, '1', 'Explicit live opt-in required')
+  assert(grantPath, 'An explicit access-only grant is required')
+  scrub = resolveOpenCodeScrub(process.env.E2E_PLUGIN_PATH, process.env.E2E_SCRUB_VERSION)
+  clientInstallation = resolveOpenCodeClient(process.env.E2E_CLIENT_PLUGIN_PATH, process.env.E2E_CLIENT_VERSION)
+  await loadOpenCodeClient(clientInstallation, 'owned-sse-plugin-preflight')
+}
+let liveProfile
+if (!WORKING_FIXTURE) {
+  assert.equal(statSync(grantPath).mode & 0o077, 0, 'Grant must be private')
+  const grant = JSON.parse(readFileSync(grantPath, 'utf8'))
+  assert(Array.isArray(grant) && grant.length === 1 && grant[0].type === 'oauth-token'
+    && typeof grant[0].oauthToken === 'string' && grant[0].oauthToken && !grant[0].refreshToken,
+    'Use one access-only OAuth grant without refresh credentials')
+  liveProfile = {id:'working',type:'oauth-token',oauthToken:grant[0].oauthToken}
+}
+const actors = []
+const originalSpawn = childProcess.spawn
+childProcess.spawn = function (...args) {
+  const child = Reflect.apply(originalSpawn, this, args)
+  actors.push({child, witness:observeChildClosure(child)})
+  return child
+}
+syncBuiltinESMExports()
 
 const root = realpathSync(mkdtempSync(join(tmpdir(), 'meridian-sse-quota-failover-')))
 for (const key of Object.keys(process.env)) {
@@ -117,11 +143,16 @@ const workingFixture = await serveFixture(async request => {
 
 const { startProxyServer } = await import(pathToFileURL(serverModule).href)
 
-const workingProfile = { id: 'working', type: 'api', apiKey: 'local-fixture-key', baseUrl: `http://127.0.0.1:${workingFixture.port}` }
+let workingProfile = { id: 'working', type: 'api', apiKey: 'local-fixture-key', baseUrl: `http://127.0.0.1:${workingFixture.port}` }
+if (liveProfile) workingProfile = liveProfile
+
+const scrubConfig = scrub ? configureOpenCodeScrub(root, scrub) : {}
+const report = {root, result:'RUNNING', model:MODEL, scope:WORKING_FIXTURE ? 'Credentialless SDK transport fixture' : 'Local refusal plus live SDK/model with actual installed client hook and server scrub; protocol host, not OpenCode executable', cases:[]}
+
 
 const start = async () => {
   const instance = await startProxyServer({
-  port: 0, host: '127.0.0.1', silent: true,
+  port: 0, host: '127.0.0.1', silent: true, ...scrubConfig,
   profiles: [
     { id: 'refused', type: 'api', apiKey: 'local-fixture-key', baseUrl: `http://127.0.0.1:${upstream.port}` },
     workingProfile,
@@ -129,6 +160,7 @@ const start = async () => {
   defaultProfile: 'refused',
   })
   if (!instance.server.listening) await once(instance.server, 'listening')
+  if (scrub) verifyOpenCodeScrub(await (await fetch(`http://127.0.0.1:${instance.server.address().port}/plugins/list`)).json(),scrub)
   return instance
 }
 
@@ -154,8 +186,9 @@ async function telemetryRows(port, requestId) {
 
 const receipt = `SSEOK${crypto.randomUUID().replace(/-/g, '').slice(0, 6).toUpperCase()}`
 const cases = ['failover', 'failover-stream']
-let proxy = await start()
+let proxy
 try {
+  proxy = await start()
   for (const mode of cases) {
     // A fresh proxy per case, so the previous case's expected account cooldown
     // cannot let this one skip straight to the fallback without a refusal.
@@ -165,11 +198,13 @@ try {
     const callsBefore = refusedCalls
     const requestId = crypto.randomUUID()
     const stream = mode.endsWith('-stream')
+    const clientPlugin = clientInstallation ? await loadOpenCodeClient(clientInstallation, requestId) : null
+    const headers = clientPlugin ? await clientPlugin.headers({id:requestId,sessionID:requestId}, {'content-type':'application/json','x-request-id':requestId}) : {'content-type':'application/json','x-request-id':requestId,'x-opencode-session':requestId}
 
     const startedAt = performance.now()
     const response = await fetch(`http://127.0.0.1:${port}/v1/messages`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-request-id': requestId, 'x-opencode-session': requestId },
+      headers,
       body: JSON.stringify({
         model: MODEL, max_tokens: 128, stream,
         messages: [{ role: 'user', content: `Reply with exactly this and nothing else: ${receipt}` }],
@@ -243,14 +278,27 @@ try {
     assert.equal(served.length, 1, 'exactly one healthy attempt may serve')
     assert.equal(served[0].profileId, 'working')
     assert.equal(response.status, 200)
-    assert(reply.trim().length > 0, 'the real Claude Max fallback must produce visible text')
+    assert(reply.trim().length > 0, 'The answering leg must produce visible text')
+    const scrubWitness = scrub ? verifyOpenCodeScrub(await (await fetch(`http://127.0.0.1:${port}/plugins/list`)).json(),scrub,true) : null
+    report.cases.push({mode,status:response.status,headerMs,refusedCalls:refusedCalls-callsBefore,clientPlugin:clientPlugin?.report,scrub:scrubWitness,rows:rows.map(r=>({profile:r.profileId,status:r.status,error:r.error}))})
   }
+  report.result = 'PASS'
   console.log(JSON.stringify({ result: 'PASS', pkgRoot, serverModule, refusedCalls, model: MODEL, refusalDelayMs: REFUSAL_DELAY_MS, workingLeg: WORKING_FIXTURE ? 'local-fixture' : 'real-claude-max' }))
 } catch (error) {
+  report.result = 'FAIL'
+  report.failure = error instanceof Error ? error.message : String(error)
   console.error('[e2e-sse-quota-failover] assertion/runtime failure:', error)
   throw error
 } finally {
-  await proxy.close()
+  await proxy?.close()
   await upstream.stop()
   await workingFixture.stop()
+  report.actors = []
+  for (const actor of actors) report.actors.push(await stopAndJoinChild(actor.child, actor.witness))
+  report.joined = report.actors.every(actor=>actor.joined)
+  if (!report.joined) { report.result = 'FAIL'; process.exitCode = 1 }
+  childProcess.spawn = originalSpawn
+  syncBuiltinESMExports()
+  writeFileSync(join(root,'report.json'),JSON.stringify(report,null,2),{mode:0o600})
+  console.log(JSON.stringify({root,result:report.result,joined:report.joined}))
 }

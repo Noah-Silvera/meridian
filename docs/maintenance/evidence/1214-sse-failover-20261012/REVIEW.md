@@ -45,3 +45,14 @@ adversarial review, source/base/head recheck and CI before merge. Streaming #134
 is still a separate integration; revalidate if it lands. No release authorization
 is implied. Sanitized failing/passing verdicts are adjacent; executable regressions
 are committed in src/__tests__ and the fixture harness in scripts/.
+
+## Qualified probe implementation (not yet executed live)
+
+The installed-package probe now has opt-in live answering-leg support with
+mandatory installed V1 client-hook and server-scrub preflights before reading
+an access-only grant. It verifies request hooks and joins original children/pipes,
+writing a durable-ready report in its owned directory. Three credentialless
+negative preflight controls reject missing opt-in, grant and plugins before setup.
+This implementation has not established live acceptance yet. The refused leg
+remains local; the host is explicitly a protocol fixture, not OpenCode itself.
+No account spending or model call occurred in implementing these checks.
