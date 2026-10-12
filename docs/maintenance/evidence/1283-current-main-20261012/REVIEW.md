@@ -66,3 +66,20 @@ running again. An attempted npm ci correctly refused main's stale npm lock
 (native package 2.1.284 versus declared 2.1.296); it made no source/lock change.
 CI uses the Bun lock. Preserve the first failure and do not claim a full green
 gate until the independent-install full run terminates successfully.
+
+
+## Short actual-client gate escrow
+
+`scripts/e2e-mcp-client-opencode.mjs` prepares a bounded actual OpenCode V1
+read/result/same-session continuation gate, derived from the scrub-qualified
+streaming harness. It requires an independently installed Meridian package,
+matching client-plugin setup, active server scrub identity before inference and
+successful hook witnesses after both turns. The read receipt is present only in
+an owned file, never in the initial user prompt; the returned client tool result
+must reach Meridian before the follow-up can be accepted. It records original
+child/pipe joins and stops the client on its first SSE/provider error.
+
+Syntax validation passes. Missing E2E_PLUGIN_PATH rejects before grant access or
+client launch (actual negative invocation exits 1 with the preflight assertion).
+The actual run is not yet claimed. This short flow supplements, not replaces,
+the causal overlap transport matrix, E41 modes or relevant V2/E42 checks.
