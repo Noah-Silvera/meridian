@@ -75,9 +75,16 @@ polytoken:
   tools: [file_read]
   undeferred_tools: [file_read]
   allow_subagent_spawn: false
+  exit_tool_schema:
+    type: object
+    additionalProperties: false
+    required: [summary]
+    properties:
+      summary:
+        type: string
 ---
 Read fixture-1.txt, fixture-2.txt, and fixture-3.txt in that order in three separate assistant tool-call turns, not a batch.
-Report your assigned marker and the file contents using exit_tool with success true.
+After each result immediately call the next file_read; never end with a text-only readiness message or wait for another user turn. After all three results, call exit_tool with a summary containing the three file contents.
 {{ prompt }}
 ''')
     base = [binary, '--working-dir', str(root / 'work'), '--config-dir', str(config)]
@@ -93,7 +100,7 @@ Report your assigned marker and the file contents using exit_tool with success t
                   '(not count=2). Both calls must use subagent_type="live-worker" and model_override="live-model". '
                   f'Name the first {name}-alpha and the second {name}-beta. '
                   'In each child prompt explicitly require one file_read for each of fixture-1.txt, fixture-2.txt, fixture-3.txt in order '
-                  'in three separate assistant turns, followed by exit_tool with success=true. '
+                  'in three separate tool-call rounds without waiting for another user message. Never stop with text-only readiness; after all three results call exit_tool with summary. '
                   'Launch both before waiting, then use job_block or job_result to collect those two existing jobs. '
                   'Never call subagent again, even if a job is pending or failed. '
                   'Finish with exec_structured_output after both existing jobs complete.')
