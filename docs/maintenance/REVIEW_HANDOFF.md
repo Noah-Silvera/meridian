@@ -1,3 +1,12 @@
+## Latest OpenCode #1354 evidence
+
+Actual installed OpenCode2.0.21/Haiku5.5 now reproduces the trailing-system
+checkpoint failure on baseline and passes candidate (isResume false -> true).
+Candidate original36496exit0; actors/pipes joined and access grant removed.
+See evidence/1301-opencode-instruction-update-20261012/README.md for exact
+package identities, retained harness failures and setup qualification gap.
+No new release; #1354 remains draft pending E41/E42 and full final gates.
+
 ## Current authoritative checkpoint — Nix merged, OpenCode instruction updates active
 
 #1353 merged `506a811d319184381164dab5995703cbcd5b9906`; exact tree versus
