@@ -73,7 +73,9 @@ pkgs.runCommand "meridian-home-module"
   }
   ''
     grep -Fxq '[Service]' "$defaultUnit"
-    ! grep -q '^UnsetEnvironment=' "$defaultUnit"
+    if grep -q '^UnsetEnvironment=' "$defaultUnit"; then
+      exit 1
+    fi
     for name in ${lib.escapeShellArgs isolated.services.meridian.unsetEnvironment}; do
       grep -Fxq "UnsetEnvironment=$name" "$isolatedUnit"
     done
