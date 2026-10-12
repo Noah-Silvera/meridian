@@ -4750,20 +4750,30 @@ entry. Through the live proxy (E17 shape): output 306 → 144 and cache_read
 *"I attempted to read that file, but the tool call w…"* — content the client
 never sees and the account is billed for.
 
-## OpenCode E41 qualification status
+## OpenCode E41 plugin qualification
 
-`scripts/e2e-qualified-passthrough-turns.mjs` is disabled before grant access
-or server startup: it loads the server scrub but lacks the matching client
-plugin execution path. Both plugins are required for live harness use. Do not
-use the older direct protocol script as a workaround. Integrate and verify the
-client plugin before re-enabling this matrix; retain all original batching,
-history, exact-model, cache and process-join assertions.
+`scripts/e2e-qualified-passthrough-turns.mjs` requires **both** installed plugins:
+`E2E_CLIENT_PLUGIN_PATH` points to the matching package's bundled
+`dist/meridian/index.js`, and `E2E_PLUGIN_PATH` to the installed server scrub.
+Missing, wrong-package, changed or inert client plugins fail before grant access.
+The protocol host executes the real client `config` and `chat.headers` hooks,
+checks their session/request/agent outputs, and uses those outputs on every
+request; it does not manufacture replacement headers. Reports retain package
+identity, hashes, hook counts and errors. Server scrub activation and invocation
+are checked independently. Do not use the older plugin-less direct script.
 
-The separate `scripts/e2e-mcp-client-opencode.mjs` runs the actual OpenCode client
-with its matching installed Meridian plugin and server scrub. Its single-read
-acceptance does not replace E41's four-mode gate. Recorded sequential JSON passed;
-sequential SSE failed cache continuity and exact-model identity, and the matrix
-stopped before parallel arms. See the [durable evidence](docs/maintenance/evidence/1283-current-main-20261012/REVIEW.md).
+This remains a protocol host, not the OpenCode executable. Separately qualify
+the actual client with `scripts/e2e-mcp-client-opencode.mjs`; its short read and
+continuation check does not replace E41's four-mode gate. Use explicit live
+opt-in, an owned access-only grant, exact model and isolated runtime as described
+by the harness. The required matrix remains `PROBE_PARALLEL=0|1` ×
+`--stream`/no flag with all batching, history, model, cache and join assertions.
+
+The earlier plugin-incomplete sequential JSON run passed protocol predicates;
+SSE failed cache continuity and exact-model identity. Neither is qualified
+acceptance under the plugin requirement. The matrix stopped before parallel
+arms; no new live success follows from the credentialless plugin-host checks.
+See [durable evidence](docs/maintenance/evidence/1283-current-main-20261012/REVIEW.md).
 
 ## E41: Passthrough multi-turn: one call, one answer
 

@@ -188,3 +188,32 @@ launch verified exit 1 at that guard. E2E.md documents the restriction and forbi
 fallback to the older unqualified direct script. The prior JSON pass remains
 a protocol observation, not qualified live acceptance under the owner's plugin
 requirement. No additional live inference was performed during this diagnosis.
+
+
+## Installed client-hook integration and full-test correction
+
+The temporary unconditional E41 stop is replaced by mandatory installed-client
+resolution and actual hook execution. The protocol host loads the bundled V1
+plugin, calls config, then executes chat.headers on every request. Empty-output
+preflight rejects a missing/inert hook before grant access; each real request
+checks session, request and agent headers. Package identity and immutable file
+hash are retained. The owner fixture supplies one root session via the plugin's
+host API. This is explicitly not evidence of the OpenCode executable; that
+separate real-client receipt remains required. Both plugin paths are mandatory.
+
+Credentialless controls reject missing/relative/wrong-package versions, absent
+or inert hooks and changed plugin bytes. The real source hook replaces spoofed
+headers. The actual worktree build's bundled hook passed preflight, then the
+nonexistent grant stopped the harness before any process/model call: zero
+actors, zero inference requests, joined true. This is worktree-build preflight,
+not independent-installed-package or live acceptance. The earlier E41 cache and
+model failures remain unresolved; no assertions were removed or relaxed.
+
+Full run session 85278 terminated exit 1: 5229 pass / 35 skip / 1 fail in the
+primary suite. It exposed a distinct crash-reporter test race: the wait counted
+only pending .json files, while final assertion checked all files. A claimed
+.json.sending-71409 still existed after delivery began. The wait now requires
+the exact same whole-directory emptiness as the unchanged final assertion.
+Production reporter behavior and deadline are unchanged. The focused reporter
+suite passes 16 tests / 108 assertions. This explains this failure, not the
+earlier unrelated cross-process 500; that limitation remains recorded.

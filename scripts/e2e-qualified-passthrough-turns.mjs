@@ -10,7 +10,7 @@
  * the active fork's supported SDK message history. It never reads or mutates
  * Claude's private transcript files.
  *
- * Live execution is disabled until matching client-plugin execution is wired.
+ * Requires installed client and server plugins before access-only grant loading.
  */
 import assert from "node:assert/strict"
 import * as cp from "node:child_process"
@@ -18,11 +18,12 @@ import { spyOn } from "bun:test"
 import { mkdirSync } from "node:fs"
 import { observeChildClosure, stopAndJoinChild } from "./lib/e2eProcessCustody.mjs"
 import { resolveOpenCodeScrub, configureOpenCodeScrub, verifyOpenCodeScrub } from "./lib-opencode-scrub-preflight.mjs"
-throw new Error("Live E41 protocol execution disabled: this fixture lacks the matching client plugin. Use the actual OpenCode client harness with both client plugin and server scrub; integrate a client-plugin execution witness here before enabling live E41.")
+import { resolveOpenCodeClient, loadOpenCodeClient } from "./lib-opencode-client-preflight.mjs"
 assert.equal(process.env.E2E_ALLOW_LIVE_MODEL, "1", "Explicit live opt-in required")
 assert(process.env.E2E_LIVE_PROFILE_FILE, "Explicit access-only grant required")
 assert(!process.env.PROBE_ADAPTER || process.env.PROBE_ADAPTER === "opencode", "This qualified E41 gate is the OpenCode protocol fixture")
 const scrub = resolveOpenCodeScrub(process.env.E2E_PLUGIN_PATH, process.env.E2E_SCRUB_VERSION)
+const clientInstallation = resolveOpenCodeClient(process.env.E2E_CLIENT_PLUGIN_PATH, process.env.E2E_CLIENT_VERSION)
 const actors = [], spies = []
 for (const name of ["spawn", "execFile"]) {
   const original = cp[name]
@@ -47,7 +48,6 @@ process.env.MERIDIAN_TELEMETRY_PERSIST = "0"
 const { startProxyServer } = await import("../src/proxy/server.ts")
 
 const STREAM = process.argv.includes("--stream")
-const PI = false
 const PORT = Number(process.env.PROBE_PORT ?? 3522)
 const MODEL = process.env.PROBE_MODEL ?? "claude-sonnet-5"
 const MAX_TURNS = Number(process.env.PROBE_TURNS ?? 6)
@@ -61,7 +61,9 @@ setSessionStoreDir(join(WORKDIR, "meridian-store"))
 process.env.MERIDIAN_CONFIG_DIR = join(WORKDIR, "meridian-config")
 mkdirSync(process.env.MERIDIAN_CONFIG_DIR)
 const scrubConfig = configureOpenCodeScrub(WORKDIR, scrub)
-const report = {scope:"Real SDK/model OpenCode-shaped E41 protocol fixture, not an actual client",model:MODEL,stream:STREAM,root:WORKDIR,result:"RUNNING"}
+const sessionId = `probe-turns-${STREAM ? "stream" : "nonstream"}-${process.pid}`
+const clientPlugin = await loadOpenCodeClient(clientInstallation, sessionId)
+const report = {clientPlugin:clientPlugin.report,scope:"Real SDK/model E41 with installed client hook and server scrub; protocol host, not OpenCode executable",model:MODEL,stream:STREAM,root:WORKDIR,result:"RUNNING"}
 let inst
 let failure
 try {
@@ -71,6 +73,7 @@ for (const f of FILES) writeFileSync(f, CONTENT[f.slice(-5)] + "\n")
 
 // Programmatic servers do not discover disk profiles automatically. Make a
 // selected read-only live fixture explicit rather than falling back to login.
+report.phase = "access-only grant"
 const profileFile = process.env.E2E_LIVE_PROFILE_FILE
 let profiles
 if (profileFile) {
@@ -99,6 +102,7 @@ const say = console.log.bind(console)
 const proxyLog = []
 // claudeLog events use console.debug and request lines use console.error.
 for (const k of ["log", "error", "debug"]) console[k] = (...args) => { proxyLog.push(args.map(String).join(" ")) }
+report.phase = "server scrub preflight"
 inst = await startProxyServer({ port: PORT, host: "127.0.0.1", profiles, ...scrubConfig,
   defaultProfile: profiles?.[0].id })
 report.scrubPreflight = verifyOpenCodeScrub(await (await fetch(`http://127.0.0.1:${PORT}/plugins/list`)).json(),scrub)
@@ -135,18 +139,18 @@ function checkCache(label, usage, lineage) {
   priorCached = read + (usage.cache_creation_input_tokens ?? 0)
 }
 
+let humanMessage = {id:"owned-human-1",sessionID:sessionId,time:{created:Date.now()}}
 async function send(messages) {
+  const headers = await clientPlugin.headers(humanMessage, {
+    "Content-Type":"application/json", "x-api-key":"dummy",
+    "user-agent":"opencode/e41-plugin-host",
+  })
   return fetch(`http://127.0.0.1:${PORT}/v1/messages`, {
-    signal: AbortSignal.timeout(120000),
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-api-key": "dummy",
-      ...(PI ? { "x-meridian-agent": "pi", "x-session-affinity": sessionId, "user-agent": "pi/0.85.0" }
-        : { "x-opencode-session": sessionId, "user-agent": "opencode/1.0.0" }) },
+    signal: AbortSignal.timeout(120000), method:"POST", headers,
     body: JSON.stringify({ model: MODEL, max_tokens: 2048, stream: STREAM, tools: [READ_TOOL], messages }),
   })
 }
 
-const sessionId = `probe-turns-${STREAM ? "stream" : "nonstream"}-${process.pid}`
 // PROBE_PARALLEL=1 asks for all three reads in one turn, so the hook's denies
 // arrive while the turn is still generating and are HELD. Pair it with
 // DENY_HOLD_TIMEOUT_MS=1 to make the hold expire, which refuses the checkpoint
@@ -197,6 +201,7 @@ async function captureSource() {
   else sourceSnapshots.set(source.claudeSessionId, { source, messages: JSON.stringify(sourceMessages) })
 }
 
+report.phase = "model requests"
 for (let turn = 1; turn <= MAX_TURNS; turn++) {
   const logFrom = proxyLog.length
   const res = await send(messages)
@@ -240,6 +245,7 @@ for (let turn = 1; turn <= MAX_TURNS; turn++) {
 // One more turn after the answer. This resumes the final live fork through all
 // delivered results and proves both the active transcript and its cache prefix.
 if (finalText) {
+  humanMessage = {id:"owned-human-2",sessionID:sessionId,time:{created:Date.now()}}
   await captureSource()
   const logFrom = proxyLog.length
   const res = await send([...messages, { role: "user", content: "Reply with the single word OK." }])
@@ -330,13 +336,16 @@ if (!pass) {
 }
 
 report.scrubFinal = verifyOpenCodeScrub(await (await fetch(`http://127.0.0.1:${PORT}/plugins/list`)).json(),scrub,true)
-Object.assign(report,{parallel:PARALLEL,toolCallBatchSizes,delivered:delivered.size,sourceHistoryOk,modelOk,followUpOk,cacheMisses,activeAnswerProblems,forkShapeOk,toolShapeOk})
+assert.equal(clientPlugin.report.errors,0,"Client plugin execution failed")
+assert(clientPlugin.report.invocations > 0,"Client plugin never processed a request")
+Object.assign(report,{observedModels,parallel:PARALLEL,toolCallBatchSizes,delivered:delivered.size,sourceHistoryOk,modelOk,followUpOk,cacheMisses,activeAnswerProblems,forkShapeOk,toolShapeOk})
 assert(pass,"E41 original assertions failed")
 report.result="PASS"
 } catch(error) {
  failure=error
  report.result="FAIL"
  report.failure=error instanceof assert.AssertionError ? error.message : error?.name ?? "UnknownError"
+ if(typeof error?.code === "string")report.failureCode=error.code
 } finally {
  try { await inst?.close() } catch(error) { report.closeFailure=error?.name??"UnknownError";report.result="FAIL" }
  report.children=[]
