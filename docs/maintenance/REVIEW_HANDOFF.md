@@ -15,9 +15,10 @@ model. The distinct cold standalone gate remains unchanged. Beta19271's initial
 catalog race made zero model requests; credentialless readiness control and the
 full corrected actual run both confirm the cause. No unexplained rerun claimed.
 
-Full local npm test/typecheck/build original89187 remains running. Poll that
-original handle. Next: capture terminal local result, final diff review, push
-final head, require final CI, then exact-head integration with Aleksey credit.
+Full local npm test/typecheck/build original89187 was started before this
+checkpoint. Its terminal result must be recorded in #1354 before integration;
+poll the original handle until terminal. Final diff review, final-head CI and
+exact-head integration with Aleksey credit remain mandatory.
 #1301 unchanged05e2381f remains open; #1354 remains draft. No release authorized.
 
 ## Latest #1354 checkpoint — broad gates passed, extended beta harness needs correction
