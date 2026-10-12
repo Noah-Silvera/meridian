@@ -7755,7 +7755,14 @@ new success does not clear their historical custody. Do not retry a blocked
 account, change accounts, refresh owner credentials or enable paid usage without
 authorization. Repeat the successful flow from the published registry artifact
 before claiming a completed release. Nix Linux installed-native credentialless
-qualification is separate; Nix macOS installed-native execution remains missing.
+qualification is separate. The macOS Nix build now runs the same installed HTTP,
+SDK/native, thinking/pin and cleanup assertions through
+`scripts/e2e-haiku55-nix-darwin.sh`, under an inherited localhost-only network
+sandbox. CI uploads `haiku55-nix-darwin-runtime`; require its actual passing
+report before claiming the macOS runtime gap is closed. This scripted API gate
+proves installed compatibility, not real provider inference. To reproduce after
+`nix build .#meridian`, set `E2E_NIX_OUT` to the resolved `result` path and
+`E2E_OUTPUT_DIR` to a fresh absolute directory, then run the shell harness.
 
 ## Credentialless telemetry contention (#1328)
 

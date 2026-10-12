@@ -1,3 +1,25 @@
+## Core-fix priority continuation — 2026-10-12
+
+The current owner order supersedes the older oldest-first instructions below:
+**core fixes, then potential fixes, then features**, with Haiku 5.5 explicitly
+prioritized. Fresh discovery finds the same six managed repositories. Preserve
+specific owner deferrals and contributor no-review requests.
+
+Haiku #1337 was not deployed because the delivery remained draft over missing
+macOS Nix installed-native/SDK proof; no release was started. npm latest is
+1.80.0. Contrary to the old PR checkpoint, final-head test and platform builds
+at `34156cfb` passed. The missing runtime proof can run in the existing macOS Nix
+CI runner without installing Nix on the owner's host. The added launcher runs
+the existing ten-case installed HTTP/SDK/native harness with localhost-only
+sandboxing, original process/pipe joins, and Darwin executable observation.
+The negative external-network control returns EPERM locally. CI must still
+execute this exact installed tuple; no passing runtime result is claimed yet.
+Product code is unchanged. Existing real Pi/source and independent-pack evidence
+retains its original scope and failures. No release or community message has
+been sent. Current isolated worktree is
+`/Users/rynfar/repos/meridian-core-fixes-20261012`; owner's dirty checkout and
+other agents' worktrees remain untouched.
+
 ## Owner-priority Haiku 5.5 release — 2026-10-11
 
 The owner subsequently requested Haiku 5.5 support ASAP and a release. That

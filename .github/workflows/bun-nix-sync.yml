@@ -74,3 +74,20 @@ jobs:
       - name: Built binary runs
         run: |
           ./result/bin/meridian --version
+      - name: Installed macOS SDK and native HTTP compatibility
+        if: runner.os == 'macOS'
+        env:
+          E2E_OUTPUT_DIR: ${{ runner.temp }}/haiku55-nix-runtime
+        run: |
+          export E2E_NIX_OUT="$(realpath result)"
+          bash scripts/e2e-haiku55-nix-darwin.sh
+      - name: Upload installed macOS runtime evidence
+        if: always() && runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: haiku55-nix-darwin-runtime
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            ${{ runner.temp }}/haiku55-nix-runtime/report.json
+            ${{ runner.temp }}/haiku55-nix-runtime/harness.mjs

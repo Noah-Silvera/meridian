@@ -5,6 +5,7 @@
  * owned Docker container from ALL networks. Run with the installed wrapper's Node:
  * E2E_NIX_OUT=/nix/store/...-meridian-... E2E_OUTPUT_DIR=/artifacts/fresh-run \
  *   /nix/store/...-nodejs-.../bin/node /artifacts/e2e-haiku55-nix-compat.mjs
+ * On macOS use e2e-haiku55-nix-darwin.sh (inherited localhost-only sandbox).
  * No npm-native override, SDK patch, source-helper bundle or credential input.
  */
 import assert from 'node:assert/strict'
@@ -13,21 +14,22 @@ import { createRequire, syncBuiltinESMExports } from 'node:module'
 import { once } from 'node:events'
 import { createServer } from 'node:http'
 import { networkInterfaces } from 'node:os'
+import { connect } from 'node:net'
 import { mkdirSync, readFileSync, writeFileSync, realpathSync, readdirSync, existsSync } from 'node:fs'
 import { join, resolve, dirname } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { createHash, randomUUID } from 'node:crypto'
 assert(!process.versions.bun, 'Original-child observation requires native Node')
-assert.equal(process.platform, 'linux')
-assert.equal(process.arch, 'arm64')
+assert(['linux', 'darwin'].includes(process.platform))
+assert(['arm64', 'x64'].includes(process.arch))
 const out = realpathSync(process.env.E2E_NIX_OUT ?? '')
 assert(out.startsWith('/nix/store/') && out.includes('-meridian-'))
 const output = resolve(process.env.E2E_OUTPUT_DIR ?? '')
-assert(output.startsWith('/artifacts/'), 'Use an owned fresh artifacts directory')
+assert(process.env.E2E_OUTPUT_DIR && output !== resolve('.'), 'Use an explicit owned fresh artifacts directory')
 mkdirSync(output, { mode: 0o700 }) // Existing receipts must never be overwritten.
 const hash = bytes => createHash('sha256').update(bytes).digest('hex')
 const report = { schema: 1, result: 'RUNNING', acceptance: false,
-  scope: 'Exact-archive built/installed Nix Linux ARM64 wrapper-selected native CLI + actual installed public SDK + production HTTP/process gate; credentialless scripted loopback, NOT real provider/Pi/model/macOS or registry acceptance',
+  scope: 'Built/installed Nix wrapper-selected native CLI + actual installed public SDK + production HTTP/process gate; credentialless scripted loopback, NOT real provider/Pi/model or registry acceptance',
   outPath: out, platform: `${process.platform}/${process.arch}`, node: process.version, nodeExecutable: process.execPath,
   harnessSha256: hash(readFileSync(new URL(import.meta.url))), network: {}, versions: {}, identities: {}, wrapperWitness: null,
   cases: [], requests: [], actors: [], synchronousSubprocesses: [], failures: [], cleanup: { fixtureRetained: true, joined: false } }
@@ -89,7 +91,7 @@ for (const method of Object.keys(synchronousOriginals)) childProcess[method] = f
   return synchronousOriginals[method].apply(this, args)
 }
 syncBuiltinESMExports()
-function witnessGate(actor) {
+async function witnessGate(actor) {
   if (!actor.gatePath || actor.state.close) return
   try {
     const gate = readFileSync(actor.gatePath, 'utf8')
@@ -102,7 +104,18 @@ function witnessGate(actor) {
     assert(gate.includes("'ANTHROPIC_BASE_URL=http://127.0.0.1:"))
     actor.state.gatePublished = true
     actor.state.gateSha256 = hash(gate)
-    const executable = realpathSync(`/proc/${actor.child.pid}/exe`)
+    let executable
+    if (process.platform === 'linux') executable = realpathSync(`/proc/${actor.child.pid}/exe`)
+    else {
+      // Darwin has no /proc. Inspect the original gate PID while its native
+      // process is blocked awaiting this fixture response; join the probe too.
+      const probe = childProcess.spawn('/bin/ps', ['-p', String(actor.child.pid), '-o', 'comm='], { env: safeEnv, stdio: ['ignore', 'pipe', 'pipe'] })
+      let command = ''
+      probe.stdout.on('data', chunk => { command += chunk })
+      await joinOwned(actors.filter(item => item.child === probe), 'Darwin native executable probe')
+      assert.equal(probe.exitCode, 0)
+      executable = realpathSync(command.trim())
+    }
     if (executable.startsWith(dirname(selectedNative).replace(/\/bin$/, '')) && executable !== '/bin/sh') {
       actor.state.nativeExecObserved = true
       actor.state.actualExecutable = executable
@@ -144,12 +157,25 @@ async function joinOwned(owned, label) {
 }
 try {
   const interfaces = Object.entries(networkInterfaces()).flatMap(([name, values]) => values.map(value => ({ name, address: value.address, internal: value.internal })))
-  report.network = { fence: 'Docker owned container disconnected from all networks before execution', interfaces, routeTable: readFileSync('/proc/net/route', 'utf8'), generation: 'owned 127.0.0.1 fake Anthropic only', sandboxExec: false }
-  assert(interfaces.length > 0 && interfaces.every(value => value.internal), 'Refuse non-loopback interface')
-  assert.equal(report.network.routeTable.trim().split('\n').length, 1, 'Refuse external IPv4 route')
-  const machineId = readFileSync('/etc/machine-id', 'utf8').trim()
-  assert.match(machineId, /^[0-9a-f]{32}$/, 'Owned minimal container needs a real task-owned machine identity, never a boot-identity bypass')
-  report.identities.ownedMachineIdSha256 = hash(machineId)
+  if (process.platform === 'linux') {
+    report.network = { fence: 'Docker owned container disconnected from all networks before execution', interfaces, routeTable: readFileSync('/proc/net/route', 'utf8'), generation: 'owned 127.0.0.1 fake Anthropic only', sandboxExec: false }
+    assert(interfaces.length > 0 && interfaces.every(value => value.internal), 'Refuse non-loopback interface')
+    assert.equal(report.network.routeTable.trim().split('\n').length, 1, 'Refuse external IPv4 route')
+    const machineId = readFileSync('/etc/machine-id', 'utf8').trim()
+    assert.match(machineId, /^[0-9a-f]{32}$/, 'Owned minimal container needs a real task-owned machine identity')
+    report.identities.ownedMachineIdSha256 = hash(machineId)
+  } else {
+    // The CI launcher wraps this entire process in sandbox-exec. A numeric
+    // documentation-only address needs no DNS; EPERM proves outbound denial.
+    const denial = await bounded(new Promise(resolveDenial => {
+      const socket = connect({ host: '192.0.2.1', port: 443 })
+      socket.on('error', error => resolveDenial(error.code))
+      socket.on('connect', () => { socket.destroy(); resolveDenial('CONNECTED') })
+      socket.setTimeout(2000, () => { socket.destroy(); resolveDenial('TIMEOUT') })
+    }), 3000, 'Darwin network sandbox check')
+    assert.equal(denial, 'EPERM', 'Run under the committed localhost-only sandbox profile')
+    report.network = { fence: 'sandbox-exec inherited localhost-only network policy', outboundDenial: denial, generation: 'owned 127.0.0.1 fake Anthropic only', sandboxExec: true }
+  }
   report.identities.coreutilsBin = dirname(realpathSync('/usr/bin/env'))
   assert(existsSync(join(report.identities.coreutilsBin, 'sleep')), 'Production POSIX gate needs real coreutils sleep on sanitized PATH')
   const target = join(out, 'lib/meridian'), wrapper = join(out, 'bin/meridian')
@@ -207,7 +233,7 @@ try {
       assert([...route.searchParams].every(([key, value]) => key === 'beta' && value === 'true'), 'Unexpected fixture query parameter')
       const rejected = body.model === 'claude-haiku-5-5' && body.thinking?.type === 'enabled'
       const gates = actors.filter(actor => actor.state.sdkGate && actor.state.label === activeCase)
-      for (const actor of gates) witnessGate(actor)
+      for (const actor of gates) await witnessGate(actor)
       report.requests.push({ case: activeCase, path: request.url, bodySha256: hash(bodyBytes), bodyBytes: bytes,
         model: body.model, thinking: body.thinking ?? null, outputConfig: body.output_config ?? null, stream: body.stream ?? false, rejected,
         headers: Object.fromEntries(['anthropic-version', 'anthropic-beta', 'user-agent'].filter(name => request.headers[name]).map(name => [name, request.headers[name]])) })
