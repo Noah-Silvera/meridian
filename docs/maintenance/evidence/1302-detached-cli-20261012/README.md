@@ -1,3 +1,41 @@
+# Supervisor and CLI implementation — current checkpoint
+
+The CLI now dispatches `start --detach [--json]` and `stop [--json]` through
+an endpoint-specific supervisor. Its original child uses private IPC for
+readiness and graceful shutdown; the launcher commits ownership before exiting.
+An uncommitted launcher disconnect cancels startup. Cleanup joins the child,
+its log sink and private listener before releasing ownership. Existing foreground
+shutdown behavior retains its second-signal force exit; repeated private stop
+requests do not force exit.
+
+`src/__tests__/detached-supervisor-process.test.ts` bundles the production
+supervisor, command, child control and store into a Node fixture, then uses real
+separate processes. On Darwin ARM64 / Node 22.22.3, its 19 assertions pass:
+concurrent launchers produce exactly one created and one existing result with
+matching identity; both launchers exit while the listener remains ready; foreign
+ports are neither adopted nor stopped; fresh stop drains the child and preserves
+stdout/stderr/shutdown logs; repeated stop is idempotent; pre-commit launcher
+disconnection closes the original child and supervisor and removes owned state.
+This fixture replaces the server only; it is not installed-package or live SDK
+acceptance.
+
+The initial concurrent-start run failed with Node exit 13 and “unsettled top-level
+await”: the reused server coordinator has unreferenced lock retry timers, so a
+standalone waiting command could exit before returning JSON. The command now owns
+a referenced, bounded deadline timer and clears it in finally. The same process
+regression passes after that correction. Other corrections place early ownership
+acquisition inside supervisor cleanup, detach cancelled launcher IPC immediately,
+and remove abort listeners on cancellation as well as normal completion.
+
+The final focused suite passed 25 tests / 121 assertions plus standalone
+typecheck; this includes the process test with 19 assertions.
+Full current implementation gates are pending. Source CLI, independently installed
+package, multiple managed endpoint matrix, claimed-platform acceptance and
+plugin-qualified actual active-turn drain remain required. #1359 remains draft;
+#1302 remains open. No model calls, credential operations or Docker changes.
+
+The following checkpoints are historical and qualify only their named revisions.
+
 # Detached CLI implementation checkpoint
 
 Issue #1302, draft delivery #1359. Base e0f9feab. This is a new maintainer

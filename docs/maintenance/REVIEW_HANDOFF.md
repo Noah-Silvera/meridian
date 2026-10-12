@@ -1,3 +1,17 @@
+## Detached CLI #1359 — supervisor and CLI checkpoint
+
+CLI dispatch, original-child IPC, launcher commitment and supervisor cleanup are
+implemented. Real Node process regression verifies concurrent launcher exit with
+one persistent child, private graceful stop, preserved logs, foreign-listener
+protection and pre-commit disconnect cleanup (19 assertions). The initial run
+exposed Node exit 13 while waiting on the coordinator's unreferenced retry timer;
+a command-owned bounded deadline now keeps that standalone wait alive.
+[Evidence and remaining gates](evidence/1302-detached-cli-20261012/README.md).
+This is production lifecycle code with a fixture server, not actual Meridian or
+installed package acceptance. Full current-head gates and actual application/
+platform/active-turn verification remain pending; draft #1359 and issue #1302 stay
+open. No model calls or credential changes. Older checkpoints below are historical.
+
 ## Detached CLI #1359 — ownership checkpoint
 
 Original full process67248 exited0 on frozen d8d393a715908d4af25f76e20e4e705065cd754e:
