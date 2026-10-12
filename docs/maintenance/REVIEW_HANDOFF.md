@@ -1,3 +1,22 @@
+## Active prepared deliveries — 2026-10-12
+
+- MCP #1283 → [draft #1349](https://github.com/rynfar/meridian/pull/1349),
+  source `571a671676d6b8604cde932199d77c34bc6a46f3`, authored mapping below.
+  Seven credentialless transport controls complete; current-main full npm test
+  remains active (owned session 96749, `/tmp/meridian-1283-current-full.log`).
+- OpenCode scrub #22/#23 → [draft #24](https://github.com/rynfar/meridian-plugin-opencode-scrub/pull/24)
+  at `c3ec923`, in `/Users/rynfar/repos/meridian-plugin-opencode-scrub`, branch
+  `codex/cwd-preservation-22-23-20261012`. Both authors preserved. Main reproduces
+  23 new path failures; an additional two label/protection interaction failures
+  were fixed separately. All 57 tests/build pass. Source PR Windows fixture
+  claims lack an escrowed executable/artifact, and actual-client/model/installed
+  package verification remains open; do not merge/close source or release yet.
+- Priority overage #1338 → draft #1347 remains ahead of features, followed by
+  MCP loss, streaming #1294/#1344, cwd corruption, failover #1214 and image #1310.
+  Preserve existing owner deferrals. Authenticated live work must qualify both
+  plugins; no refresh/account switch is inferred from the last revoked-token
+  observation. No new live model call was made during this continuation.
+
 ## MCP current-main delivery — 2026-10-12
 
 #1283 source `571a671676d6b8604cde932199d77c34bc6a46f3` is preserved as
