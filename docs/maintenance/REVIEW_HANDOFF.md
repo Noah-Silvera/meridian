@@ -5,8 +5,9 @@ Source #1214 at `1c8f17099` incorporated from current main `3f5f4f81` in isolate
 `codex/sse-failover-1214-20261012`. Actual authored mappings and review are in
 [evidence](evidence/1214-sse-failover-20261012/REVIEW.md). Clean main reproduces
 heartbeat preventing failover; candidate passes the same HTTP test. Corrected
-unbounded non-SSE inspection; 37 relay controls and typecheck pass. Live harness
-execution is refused until both mandatory plugin preflights exist. No model calls.
+unbounded non-SSE inspection; 37 relay controls and typecheck pass. Live harness now requires explicit opt-in, an access-only grant and both installed
+plugin preflights, with original process/pipe join receipts. Three credentialless
+negative preflights pass; installed fixture/live execution is still pending. No model calls.
 
 Full local gates running in owned exec session 54534; log
 `/tmp/meridian-1214-full-gates.log`. Observe the same handle, do not restart on a
