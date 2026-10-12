@@ -93,3 +93,37 @@ fixture now includes its synthetic response in the failing assertion so a future
 failure preserves the diagnostic that the old assertion discarded. Expected
 status and all original assertions remain unchanged. Full-suite acceptance is
 still open; do not replace either failed full result with the targeted pass.
+
+
+## Actual installed-package Linux/OpenCode/Opus read gate: PASS
+
+Clean source `51c37b71af046ee187d8be250187527679eb4337` was built, packed
+(SHA-1 `38dd436d82c1847cc63aef79b07f9b309a3f6baf`), and independently installed
+in the Linux x64 image. Actual OpenCode 1.18.34, SDK 0.2.141, native 2.1.296 and
+Opus 5.5 completed the owned file read, delivered its exact tool result and
+continued the same client session with the receipt intact. All four observed
+requests are HTTP 200 with no captured SSE error. This is Linux Docker emulation
+on Darwin ARM64, not native Windows evidence.
+
+Matching V1 plugin configuration plus session/agent witnesses passed. Explicit
+independently installed server scrub 0.2.3 was active before inference and invoked
+four times with zero errors. Every original observed child and stdout/stderr
+pipe joined; the staged access-only grant was removed after joining. Read-only
+readiness beforehand showed included usage and Extra Usage disabled; no refresh,
+account switch or Extra Usage setting change occurred. No claim that the earlier
+streaming token-revoked failure is causally resolved follows from this success.
+
+The committed short harness SHA-256 is
+`54ade18276837e07d4f26cc17e71cd11a0aeabfc4181e9cd1478b570e21c869e`.
+Adjacent live report, installed identity, package integrity and readiness record
+qualify this exact flow. The frozen-install cross-process suite also passes on
+its own (11 tests / 67 assertions); the complete npm run remains failed as
+recorded above. Remaining acceptance: diagnostic resolution/full npm gate,
+four E41 modes, relevant V2/E42 and interrupted retry/history checks, final-head CI.
+Do not merge or close #1283 yet.
+
+After removing the grant, a metadata-only docker cp failed because Docker tried
+to recreate the missing bind source as a directory. No grant was recreated. The
+empty directory was removed; package metadata was instead read from a new
+credentialless invocation of the same immutable test image, with no volumes or
+client/model launch. This does not change the live run's retained report.
