@@ -2,8 +2,10 @@
 // Actual OpenCode V1 -> installed Meridian/plugin -> real provider refusal.
 // Stops the client at its first billing refusal; never enables paid usage.
 // E2E_ALLOW_LIVE_MODEL=1 E2E_LIVE_PROFILE_FILE=<private access-only grant>
+// E2E_PLUGIN_PATH=<absolute installed OpenCode scrub entrypoint>
 // E2E_OPENCODE_BIN=<absolute binary> E2E_MERIDIAN_ROOT=<installed package>
 import assert from 'node:assert/strict'
+import {resolveOpenCodeScrub,configureOpenCodeScrub,verifyOpenCodeScrub} from './lib-opencode-scrub-preflight.mjs'
 import childProcess from 'node:child_process'
 import {syncBuiltinESMExports} from 'node:module'
 import {once} from 'node:events'
@@ -16,6 +18,7 @@ assert(!process.versions.bun, 'Use native Node for original subprocess observati
 assert.equal(process.env.E2E_ALLOW_LIVE_MODEL,'1')
 const repo=resolve(process.env.E2E_MERIDIAN_ROOT??'.'),client=process.env.E2E_OPENCODE_BIN
 assert(client?.startsWith('/'))
+const scrub=resolveOpenCodeScrub(process.env.E2E_PLUGIN_PATH,process.env.E2E_SCRUB_VERSION)
 const grant=process.env.E2E_LIVE_PROFILE_FILE
 assert.equal(statSync(grant).mode & 0o077,0)
 const profiles=JSON.parse(readFileSync(grant,'utf8'))
@@ -25,6 +28,7 @@ assert(['candidate','baseline'].includes(expected))
 const root=mkdtempSync(join(tmpdir(),'meridian-extra-usage-opencode-'))
 for(const name of ['home','project','client','meridian','sessions','config','data','cache','state'])mkdirSync(join(root,name))
 const project=join(root,'project'),config=join(root,'client')
+const scrubConfig=configureOpenCodeScrub(root,scrub)
 for(const key of Object.keys(process.env))if(/^(MERIDIAN_|CLAUDE_|CLAUDE_PROXY_|ANTHROPIC_|OPENCODE_)/.test(key))delete process.env[key]
 Object.assign(process.env,{HOME:join(root,'home'),MERIDIAN_CONFIG_DIR:join(root,'meridian'),MERIDIAN_SESSION_DIR:join(root,'sessions'),MERIDIAN_WORKDIR:project,MERIDIAN_PASSTHROUGH:'1',MERIDIAN_CREDENTIALS_READONLY:'1',MERIDIAN_TELEMETRY_PERSIST:'0',MERIDIAN_NO_UPDATE_CHECK:'1',MERIDIAN_UPSTREAM_IDLE_MS:String(idleMs),MERIDIAN_CLAUDE_PATH:join(repo,'node_modules/@anthropic-ai/claude-code/bin/claude.exe')})
 // npm normally hoists the native dependency beside the installed package.
@@ -47,9 +51,10 @@ async function run(label,command,args,env=clientEnv){
 try{
  const version=await run('version',client,['--version']);assert.equal(version.code,0);report.client=version.stdout.trim()
  const {startProxyServer}=await import(pathToFileURL(join(repo,'dist/server.js')))
- proxy=await startProxyServer({port:0,host:'127.0.0.1',silent:true,profiles,defaultProfile:profiles[0].id})
+ proxy=await startProxyServer({port:0,host:'127.0.0.1',silent:true,profiles,defaultProfile:profiles[0].id,...scrubConfig})
  if(!proxy.server.listening)await once(proxy.server,'listening')
  const url=`http://127.0.0.1:${proxy.server.address().port}`
+ report.scrubPreflight=verifyOpenCodeScrub(await(await fetch(`${url}/plugins/list`)).json(),scrub)
  proxy.server.prependListener('request',(request,response)=>{
   if(!request.url?.endsWith('/messages'))return
   const row={session:request.headers['x-opencode-session'],agent:request.headers['x-opencode-agent-name'],source:request.headers['x-meridian-source']};report.requests.push(row)
@@ -87,6 +92,7 @@ try{
  const marker=`OWNED_LONG_WRITE_${randomUUID()}`
  const first=await run('write',client,['run','--format','json',`Call write exactly once to create ${join(project,'inventory.py')}. Its content must be a complete Python inventory module of at least 600 lines, with dataclasses, validation, docstrings, and a unittest suite. Include ${marker} in a comment. Generate the entire file in one write call, without bash or other tools. After the tool succeeds, reply DONE.`])
  report.clientExit=first.code
+ report.scrubRequest=verifyOpenCodeScrub(await(await fetch(`${url}/plugins/list`)).json(),scrub,true)
  const rows=await(await fetch(`${url}/telemetry/requests?limit=200`)).json();writeFileSync(join(root,'telemetry.json'),JSON.stringify(rows,null,2))
  const diagnostics=await(await fetch(`${url}/telemetry/logs?category=error&limit=100`)).json();writeFileSync(join(root,'errors.json'),JSON.stringify(diagnostics,null,2))
  assert(report.requests.some(r=>r.session&&r.agent==='build'),'Missing plugin-generated primary session/agent witness')

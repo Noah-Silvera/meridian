@@ -1,3 +1,21 @@
+## OpenCode live-harness qualification correction — 2026-10-12
+
+Owner reaffirmed required plugins. Inspection found BOTH
+`scripts/e2e-extra-usage-opencode.mjs` on main and
+`scripts/e2e-tool-input-opencode.mjs` in draft #1344 configure only the client
+plugin. Neither loads server scrub in its isolated HOME. Withdraw the prior
+interpretation of their Extra Usage refusal as an account-quota blocker. Keep
+raw refusal/client-message evidence as an unqualified configuration observation.
+PR #1344/#1346 bodies are corrected. The merged error-text correction remains
+merged; correctly configured affected-flow acceptance is still unproven.
+
+Shared preflight resolves an independently installed official scrub entrypoint,
+records package version/hash, writes owned plugin configuration, verifies active
+loaded path/hook before inference, and requires successful real request-hook
+invocations afterward. No new live access, refresh, account change or paid usage
+occurred in this correction. The current #1338 delivery is draft #1347 with final
+local gates in progress; do not inherit the old quota-blocker assumption there.
+
 ## Haiku release completed — 2026-10-12
 
 **1.81.0 is published and fresh-registry-install live verified.** Release merge
