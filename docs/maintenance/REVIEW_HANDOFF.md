@@ -1,3 +1,69 @@
+## Current authoritative state — 2026-10-12
+
+Nix source #1352 is incorporated in draft #1353. Current SSE main `736e9fd61`
+is now integrated; only this chronological handoff conflicted. Product files
+merged cleanly. Before this integration, the original local gate completed:
+5,682 pass, 35 skip, zero failures, typecheck and build. A fresh combined gate
+is next. Do not restart completed session 24351.
+
+Live Nix qualification is complete for the changed configuration behavior:
+seven actual systemd unit-file cases pass, and installed Meridian starts with the
+configured profile. The unchanged module corrupts JSON and loses that profile.
+All proof and the retained harness limitations are in the #1353 evidence record.
+This is credentialless configuration testing, not model inference.
+
+SSE #1350 and image #1351 are merged and their originals are closed. No new
+release has been authorized. Historical “active” and “pending” entries below
+record earlier stages and are superseded by this section and final PR bodies.
+
+The owner's Docker cleanup is complete: 29 Meridian image tags and 33 stopped
+test containers removed; targeted build cache reduced from 30.65 GB to 14.58 GB.
+All 25 running containers and volumes were preserved. Old Docker image/container
+references are evidence identities, not available runtime fixtures. Rebuild only
+what is needed, and clean up completed test artifacts promptly.
+
+## Latest local gate and owner storage request — 2026-10-12
+
+Nix draft #1353 original local session24351 finished exit0:5682pass/35skip/
+zero failures, typecheck/build, clean583797d8 source. Do not restart. This is
+still based on image maina8a214bfc; next integrate SSE main736e9fd61, refresh
+combined gates/CI and finish authored integration. Actual Nix/systemd seven-case
+proof and real installed Meridian startup comparison are preserved in1352evidence.
+Startup candidate session83370 passed; baseline22315 reproduced JSONloss/empty
+profiles but exited1 on an over-specific default-profile assertion (retained).
+Nixfmt session36354 passed. Owned isolated VMmeridian-nix-1352 remains available;
+no services/model actors or credentials remain active there.
+
+Owner requested Docker storage cleanup. All29Meridian image tags and33stopped
+Meridian test containers removed; targeted Meridian build-cache cleanup follows.
+No running container was removed. Old Docker images/container IDs in historical
+receipts no longer exist; rebuild from preserved source/package versions if needed.
+Reports and runnable harnesses remain escrowed. Thread model selection was changed
+through T3 configuration to codex/gpt-6.1-sol at the owner's request, verified by
+configuration readback. Backlog goal remains active.
+
+## Current checkpoint: SSE merged; Nix environment fix active — 2026-10-12
+
+SSE #1350 merged736e9fd6162ebd8cadbfbcd687dfec2c7acdc129. Verified exact
+merged tree versus76038fb7 and Aleksey Proshutinskiy co-author credit. Source
+#1214 rechecked unchanged1c8f17099 and closed without comment. Final gates5730
+pass/35skip/zero failures,typecheck/build; exact-head CI all passes. Actual
+installed OpenCode1.18.34/SDK0.2.141/native2.1.296/Opus5.5 realread/result/
+continuation passes in session62951 exit0. Bothplugins verified; alloriginal
+actors/pipes join and grant removed. Final receipts escrowed here; full final
+acceptance and packageintegrity in #1350 body. No new release.
+
+Nix source #1352 → draft #1353, worktree meridian-nix-systemd-env-1352-20261012.
+Both Connor Grady commits cherry-picked with Author/Date preserved. Actual
+NixOS25.11 ARM64/systemd258.7 user-unit before/after passes all7candidatecases;
+main reproduces JSON/pathcorruption. Committed credentialless harness and receipts
+under1352-nix-systemd-env-20261012. Full local gates currently original session
+24351 at /tmp/meridian-1352-local-gates.log; do not restart on timeout. This gate
+started on image maina8a214bfc; integrate SSE main only AFTER it finishes, not
+while tests mutate/read files. Actual Meridian service startup qualification is
+being prepared in owned isolated OrbStack VMmeridian-nix-1352; no credentials
+or model call. Node22 installation original session51300. Source remains open.
+
 ## Current authoritative checkpoint — 2026-10-12
 
 Image #1351 merged as a8a214bfc53784c3e87456447ae9a327be6a70b2, exact tree
