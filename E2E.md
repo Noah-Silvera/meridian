@@ -1,5 +1,36 @@
 # End-to-End Testing
 
+## Overlapping passthrough queries
+
+```sh
+bun scripts/e2e-passthrough-mcp-overlap.mjs
+```
+
+Credential-free: the installed Claude executable runs through the Agent SDK
+with the options `buildQueryOptions` produces, against a loopback Anthropic API
+fixture, so no model is called. One passthrough tool set is built once and
+handed to two queries, as Meridian hands a conversation's cached tool set to
+each of its queries. The fixture holds the first query's model request open
+while the second query runs. Both queries must report the `oc` server
+connected, reach the model with identical tool definitions, and leave no
+`Failed to connect SDK MCP server` entry in the CLI's MCP logs: that entry is
+the signature of a turn that ran without the client's tools.
+
+**Verified 2026-10-05:** Linux, Claude Code 2.1.284, Agent SDK 0.2.141: passes
+with each query building its own MCP server. On main 74d0a499, which hands both
+queries one server instance, the second query reports `oc` failed, its model
+request carries no tools, and the CLI logs `SDK MCP server not found: oc`.
+
+The maintained harness additionally accepts `--source-root=/absolute/checkout`,
+`--evidence-dir=/absolute/owned/output`, `--shared-instance`, and
+`--case=overlap|cancel|pre-request-failure|init-timeout|uncooperative`.
+Baseline/shared-instance must fail catalog/connection assertions; failure and
+timeout controls intentionally exit nonzero while proving joined cleanup.
+Read the JSON outcome and cleanup separately. Missing MCP logs remain an explicit
+limitation rather than a verified zero. The current-main before/after receipts
+are in `docs/maintenance/evidence/1283-current-main-20261012/`.
+These credentialless tests do not replace affected-client/model/platform gates.
+
 ## Shared header separator hover (#1262)
 
 Run `E2E_HEADER_PORT=42231 bun scripts/e2e-build-header-fixture.ts` and use the
@@ -4743,6 +4774,31 @@ entry. Through the live proxy (E17 shape): output 306 → 144 and cache_read
 12k → 4k on the tool turn. The discarded digest text was captured verbatim —
 *"I attempted to read that file, but the tool call w…"* — content the client
 never sees and the account is billed for.
+
+## OpenCode E41 plugin qualification
+
+`scripts/e2e-qualified-passthrough-turns.mjs` requires **both** installed plugins:
+`E2E_CLIENT_PLUGIN_PATH` points to the matching package's bundled
+`dist/meridian/index.js`, and `E2E_PLUGIN_PATH` to the installed server scrub.
+Missing, wrong-package, changed or inert client plugins fail before grant access.
+The protocol host executes the real client `config` and `chat.headers` hooks,
+checks their session/request/agent outputs, and uses those outputs on every
+request; it does not manufacture replacement headers. Reports retain package
+identity, hashes, hook counts and errors. Server scrub activation and invocation
+are checked independently. Do not use the older plugin-less direct script.
+
+This remains a protocol host, not the OpenCode executable. Separately qualify
+the actual client with `scripts/e2e-mcp-client-opencode.mjs`; its short read and
+continuation check does not replace E41's four-mode gate. Use explicit live
+opt-in, an owned access-only grant, exact model and isolated runtime as described
+by the harness. The required matrix remains `PROBE_PARALLEL=0|1` ×
+`--stream`/no flag with all batching, history, model, cache and join assertions.
+
+The earlier plugin-incomplete sequential JSON run passed protocol predicates;
+SSE failed cache continuity and exact-model identity. Neither is qualified
+acceptance under the plugin requirement. The matrix stopped before parallel
+arms; no new live success follows from the credentialless plugin-host checks.
+See [durable evidence](docs/maintenance/evidence/1283-current-main-20261012/REVIEW.md).
 
 ## E41: Passthrough multi-turn: one call, one answer
 

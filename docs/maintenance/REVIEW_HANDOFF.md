@@ -1,3 +1,19 @@
+## MCP merged; streaming updated to current main — 2026-10-12
+
+MCP [#1349](https://github.com/rynfar/meridian/pull/1349) merged as
+`3f5f4f81cd2205ebd62381d8c574d6a6f9ded2d9`. Its tree exactly matches validated
+`fc3fe028`, final-head CI passes (test, Windows, Docker, Linux/macOS desktop,
+Nix), and the squash preserves `Co-authored-by: Nowaker <spam@nowaker.net>`.
+Source #1283 was rechecked at `571a6716` and closed as incorporated, without
+posting a comment. No release was published. Earlier pending-MCP text below
+is historical and superseded by this entry.
+
+Current main is being merged into streaming #1344. All product files merge
+without conflicts; this handoff combines both evidence histories. The prior
+streaming E41 SSE refusal remains unresolved. Validate the integrated tree
+rather than reusing either branch's separate results. No model process remains
+active, and all previously staged grants were removed.
+
 ## Streaming verification checkpoint — 2026-10-12
 
 [#1344](https://github.com/rynfar/meridian/pull/1344) clean installed package
@@ -45,6 +61,74 @@ entrypoint launch is retained as rejected evidence. See
 The installed candidate's dirty build provenance is recorded, not hidden; final
 integrated package equivalence and final-head CI remain before #1344 can land.
 Main `ab615ca70` is being incorporated; contributor cherry-picks remain intact.
+
+## Current MCP/plugin checkpoint — 2026-10-12
+
+This entry supersedes stale running-session and draft descriptions below.
+MCP delivery [#1349](https://github.com/rynfar/meridian/pull/1349) preserves
+source #1283 as authored cherry-pick `158e6c18d` from fresh main `ab615ca70`.
+Actual independently installed Linux OpenCode 1.18.34 / Opus 5.5 read and
+same-session continuation passed with both matching client plugin and scrub
+0.2.3, all four requests 200 and original processes/pipes joined.
+
+All four corrected E41 modes now pass with real Opus 5.5, SDK 0.2.141/native
+2.1.296, Linux amd64, actual installed client hook and scrub 0.2.3. Both hooks
+run 16 times with zero errors; all histories/cache predicates pass and actors
+join. Every grant is removed. Earlier plugin-incomplete cache/model failures
+and their supported-API audit remain preserved, not explained away.
+See [evidence](evidence/1283-current-main-20261012/REVIEW.md).
+
+Owned local gate session **4259 is terminal exit 0**: 5659 pass / 35 skip /
+zero failures, then typecheck/build pass, with CI Bun 1.3.11. Do not restart or
+poll that completed process. Earlier full-run fixture races were corrected
+without changing final assertions; the unrelated cross-process 500 remains
+unexplained. Final-head CI and adjacent V2/interrupted-flow applicability and
+qualification review remain before merge/source closure. No model process is
+currently running. Product code is unchanged from authored source incorporation.
+
+Priority remains #1338 paid-overage routing, #1283 lost tools, #1294 stalled
+streaming, scrub #22/#23 cwd corruption, #1214 SSE failover and #1310 image
+amplification, before feature work. Haiku 5.5 is already published in 1.81.0.
+
+## Active prepared deliveries — 2026-10-12
+
+- MCP #1283 → [draft #1349](https://github.com/rynfar/meridian/pull/1349),
+  source `571a671676d6b8604cde932199d77c34bc6a46f3`, authored mapping below.
+  Seven credentialless transport controls complete; current-main full npm test
+  remains active (owned session 96749, `/tmp/meridian-1283-current-full.log`).
+- OpenCode scrub #22/#23 → [draft #24](https://github.com/rynfar/meridian-plugin-opencode-scrub/pull/24)
+  at `c3ec923`, in `/Users/rynfar/repos/meridian-plugin-opencode-scrub`, branch
+  `codex/cwd-preservation-22-23-20261012`. Both authors preserved. Main reproduces
+  23 new path failures; an additional two label/protection interaction failures
+  were fixed separately. All 57 tests/build pass. Source PR Windows fixture
+  claims lack an escrowed executable/artifact, and actual-client/model/installed
+  package verification remains open; do not merge/close source or release yet.
+- Priority overage #1338 → draft #1347 remains ahead of features, followed by
+  MCP loss, streaming #1294/#1344, cwd corruption, failover #1214 and image #1310.
+  Preserve existing owner deferrals. Authenticated live work must qualify both
+  plugins; no refresh/account switch is inferred from the last revoked-token
+  observation. No new live model call was made during this continuation.
+
+## MCP current-main delivery — 2026-10-12
+
+#1283 source `571a671676d6b8604cde932199d77c34bc6a46f3` is preserved as
+Nowaker-authored cherry-pick `158e6c18d` on fresh main `ab615ca70` in
+`codex/mcp-tools-1283-20261012`. Narrow source incorporation plus recovered
+maintainer transport-harness corrections replaces blindly replaying the old
+97-file preparation. That historical branch remains intact.
+
+Real credentialless SDK/native transport on Darwin reproduces lost tools on
+main, preserves both overlapping catalogs after the fix, and restores the
+failure when server sharing is deliberately reintroduced. All seven transport/
+fault/cancellation cases join owned resources; expected failures remain failures.
+Focused 103 tests and 17 harness/SDK controls pass; typecheck/build pass; full
+npm test is running. Actual Linux/OpenCode/Opus, E41/E42 and package/CI gates
+remain open. See [review and receipts](evidence/1283-current-main-20261012/REVIEW.md).
+No new credential access, refresh or model call occurred for this item.
+
+#1344 final integrated local gates now pass 5,652 / 35 skip / zero failures,
+typecheck/build. Its final actual continuation failed token-revoked; E41 modes
+are also still required. #1348 merged as `ab615ca70`. Do not infer a release.
 
 ## OpenCode live-harness qualification correction — 2026-10-12
 
