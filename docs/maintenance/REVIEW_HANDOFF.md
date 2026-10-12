@@ -1,3 +1,39 @@
+## Core-fix completion checkpoint — 2026-10-12 16:40 UTC
+
+Haiku #1337 merged as `4dfdfe4e`; release #1299 merged exact verified candidate
+`f907402b` as `d4d60c406362750b8e96e3d1507f83b96a839125`. All final candidate
+checks passed; local 5615/0/35, typecheck/build and independent installed-package
+actual Pi/Haiku 5.5 read-back passed. Existing owner authorization for the bounded
+Haiku release is recorded in the October 11 entry below. Release workflow
+[38277901722](https://github.com/rynfar/meridian/actions/runs/38277901722) succeeded
+for npm, Docker and signed macOS assets. Tag `meridian-v1.81.0` points at the
+release merge. GHCR 1.81.0 has linux/amd64 and linux/arm64 manifests.
+**Registry reads still returned 404 at this checkpoint despite the successful
+publish log; registry integrity/provenance and fresh installed live validation
+remain open. Do not call the publication fully verified yet.**
+
+Polytoken delivery #1343 merged as `a48a84982453d3b4748ddbdf566455597e13c836`
+after final local 5622/0/35, typecheck/build, actual Polytoken 0.8.21 / Haiku 4.5
+Darwin ARM64 acceptance and all final-head CI. Merged tree
+`691f6ca554caa2b70edb90d410b85f0a4a00e9c5` equals the expected integration tree
+with release main. GitHub signature and David Bishop's explicit coauthor trailer
+verified. Source #1339 remained `088e5c3cdf0c3126d951eaf5883ef7f67d5b17c9` and
+was closed as incorporated without a comment. See delivery PR and committed
+`docs/maintenance/evidence/polytoken-1339/live-acceptance.json` for final proof.
+This fix is on main after 1.81.0; it is not part of that release.
+
+Antigravity #1340 at `ab836ac7` is deferred. Exact-source negative control shows
+legitimate status polling receives stale `running` from completedToolTail because
+name+arguments are treated as operation identity. Its PR body preserves the
+review and observable revisit gates: delivery identity, fresh identical reads,
+and affected Pi/macOS acceptance. No product correction or model call performed.
+
+Next core delivery #1344 cherry-picks #1294 into isolated branch
+`codex/stream-idle-1294-20261012`. Three regressions fail current release main and
+pass the correction; 107 focused checks pass. Full local checks are running;
+actual OpenCode/plugin + Opus 5.5 Linux and final CI remain acceptance gates.
+See `evidence/stream-idle-1294-20261012.md`. Preserve owner's dirty checkout.
+
 ## Core-fix priority continuation — 2026-10-12
 
 The current owner order supersedes the older oldest-first instructions below:
