@@ -1,3 +1,20 @@
+## Current integration checkpoint — SDK close landed; idle window in review
+
+#1334 merged as 0d12f6a11f52f78bdb8760a5b16f29acea4bb8a7 from final
+cb6950476c55c7227058c9531a05bd2b31483783. Original69316 exited0: 5746 pass,
+35 skip, zero failures across23 isolated groups; typecheck/build pass. Required
+final-head test CI38313634366 and all relevant checks pass. Merged tree
+927be89a62ef57dbf19b48c3d8847210de819167 matches the reviewed prospective tree
+exactly, including separately verified npm-lock repair #1355 (fb5854be5).
+#1326 remains open: its original Linux/OpenCode/Opus hang is not established fixed.
+No release. Earlier pending SDK/lock statements below are historical.
+
+#1341 source8e7b40cb is incorporated as authored d4590e9b3 with separate
+compatibility correction3140ccbd. 78 focused tests/typecheck pass; old timer
+negative control fails two tests. Official isolated agy1.2.7 read-only settings
+pass with paid credits disabled and stable binary identity. Live client gate
+and full local/CI remain. See [review evidence](evidence/1341-idle-window-20261012.md).
+
 ## Current integration checkpoint — OpenCode landed
 
 #1354 merged fa90c9aaf1e99d5fbd69f6725ce8be0dcc3cfff3 after final-head CI.
