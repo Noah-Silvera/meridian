@@ -6,8 +6,12 @@ Six before failures become134 passing unit/HTTP checks; typecheck passes.
 [Evidence and outstanding actual Pro/Codex gate](evidence/1315-native-opus-catalog-20261012/README.md).
 No real credentials or model calls. Sonnet #1213 remains separately prepared;
 its catalog/SDK-disable changes overlap and must be reconciled if either lands.
-Nix #1357 is ready atdd38f42e3 with all local/native gates complete; final CI and
-macOS artifact review are watched. No release.
+Delivery #1358 is draft. Original full run82223 exited1: 5310 pass/35 skip/1 fail
+in the first group; Node worker bundling reported EISDIR for a shared-worktree
+zod path. The same test alone passes4/4 with that tree, so the cause remains
+unproven. A dedicated npm dependency tree replaces the symlink; current main
+e0f9feab is integrated before revalidation. No application change is attributed
+to this test failure. No release.
 
 ## Current Nix runtime integration — #1342 → #1357
 
@@ -18,8 +22,10 @@ Native Linux ARM64 build, home check, dependency/package reproducibility and
 all application bundles unchanged except the Nix-pinned Node shebang. Original
 full local99164 exits0 (clean npm ci,5752 tests,35 skips,0 failures,typecheck/build).
 [Exact evidence](evidence/1342-nix-runtime-20261012/README.md).
-Final-head CI, macOS runtime artifact review and credited exact-head merge remain.
-Source#1342 stays open. No release.
+Final-head test38319466896 and Nix38319466900 passed; the macOS artifact
+passed10/10 installed native cases with matching harness hash. Merged as
+e0f9feabf6fcef99a056141031f221da535d5391, exact tree948a5a6d and Connor credit
+verified. Source#1342 was rechecked unchanged atdd561af45 and closed. No release.
 
 Sonnet #1213 has current-main preparation preserved at branch
 codex/sonnet-context-1213-20261012 (dab7630a3):5767 tests/typecheck/build and actual
@@ -53,9 +59,10 @@ Initial53395/30143 failures are retained: the initial harness inserted blocking
 native readiness checks into an unmeasured pause. The corrected harness measures
 the complete interval without those calls. No product change or unexplained
 rerun. [Durable evidence](evidence/1341-idle-window-20261012.md) and runnable
-`scripts/e2e-antigravity-idle-conversation.mjs` are committed. Final-head CI and
-exact-head merge with verified Cd1s coauthor credit remain. Recheck source head
-before closing #1341; #1073/#1325 remain open. No release authorized.
+`scripts/e2e-antigravity-idle-conversation.mjs` are committed. Final-head CI
+passed; merged as b68710f057a3bbdb4e01d650c0bd94b62247eea7 with exact tree
+and Cd1s coauthor credit verified. Source#1341 was unchanged and closed.
+The broader #1073/#1325 reports were not established fixed. No release authorized.
 
 Post-SDK queue refresh:32 PRs/21 issues across six managed repositories, including
 source/delivery pairs and deferred releases. Ranked report now explicitly includes

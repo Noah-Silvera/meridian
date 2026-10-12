@@ -1,7 +1,14 @@
+Latest paginated discovery: 30 open PRs and 21 issues across six managed
+repositories. [Snapshot](evidence/post-1357-queue-20261012.json). Earlier counts
+below are historical. Native Opus/Fable delivery [#1358](https://github.com/rynfar/meridian/pull/1358)
+is draft: 134 catalog regression checks pass; full local validation has an unresolved
+worker-bundling failure, and actual Pro/Codex acceptance remains missing.
+
 Current independent delivery: [#1342](https://github.com/rynfar/meridian/pull/1342)
 through [#1357](https://github.com/rynfar/meridian/pull/1357) reduces Nix package
 160→51MiB while preserving application bundle bytes (only Node shebang changes).
-Linux native/reproducibility/runtime and full local gates pass; final CI pending.
+Merged as e0f9feab after Linux/macOS native, reproducibility, runtime, full local
+and final CI gates passed. Exact tree and Connor credit verified; source closed.
 It proceeds while the higher-priority account/platform-specific gates remain open.
 Sonnet live testing is specifically held by the default store returning no access
 token; no auth refresh, account switch or model call was attempted.

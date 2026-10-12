@@ -43,3 +43,14 @@ history evidence. The supported default store presently has no access token;
 no refresh, account switch, paid usage, or model inference is authorized as a
 workaround. Issue#1315 stays open and this remains preparation until the actual
 client/model acceptance is established.
+
+## Full-suite failure retained
+
+Original process82223 exited1 on9229c1359f7105466eca44337e0d205206d7a9e2.
+The first group reported5310 pass/35 skip/1 fail: Node bundled worker resolves
+alongside the bundled observer. Bun reported EISDIR reading zod/index.js through
+a node_modules symlink into the Sonnet worktree. The same4-test file passes alone
+with that unchanged dependency tree, so the symlink is not proven causal.
+No application fix or flaky-success claim is made. Dedicated npm dependencies
+and current main are prepared for revalidation; further full-suite evidence is
+required. Standalone typecheck/build were not reached by that chained run.
