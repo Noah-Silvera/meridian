@@ -1,0 +1,148 @@
+{
+  "result": "OFFLINE_PASS",
+  "mode": "offline",
+  "identity": {
+    "harness": "be7ba494efbd64a1735b719e437a4c11676fc3255ac2e9b53b4b2fb6ef712999",
+    "server": "a6b97a648f3e8dd2e0c91b28b8b083715596ce1664979ddf60e24793b98ef394",
+    "client": "0910f9e7c5b50eb460c9ae53b4348b781cb44220a18ff2bcce514c2427582848",
+    "native": "24972e3bc859fab2b46ed4c1e51f7d6130f06d3bd550811a114640de3370d0de",
+    "scrub": "4ab89412e6a59fad812a3f6e5500c84f3bdfc41863320bc794f5274a251da656",
+    "sdk": "0.2.141"
+  },
+  "platform": "linux",
+  "arch": "x64",
+  "node": "v24.20.0",
+  "queries": [
+    {
+      "resumed": false,
+      "sdkModel": "sonnet",
+      "pin": "claude-sonnet-5-5",
+      "nativeMatched": true,
+      "grantMatched": true,
+      "characters": 458019,
+      "historyMessagesRetained": 7,
+      "ancientRetained": false,
+      "omitted": true,
+      "models": [],
+      "inputTokens": 0,
+      "toolUseBlocks": 0,
+      "completed": false,
+      "fenced": true
+    }
+  ],
+  "wire": [
+    {
+      "attested": true,
+      "agent": "build",
+      "session": "ses_3293cff06a9e40df86e5c76077f70361",
+      "events": [
+        {
+          "type": "error",
+          "errorType": "invalid_request_error"
+        }
+      ],
+      "responseClose": true,
+      "model": "claude-sonnet-5-5",
+      "bodySha256": "09b0fee99aa1757c91a26573afab4e81dfd36a2857a88d182cb157d860eaa711",
+      "characters": 955540,
+      "messageCount": 15,
+      "ancientRetained": true,
+      "status": 200,
+      "finished": true
+    }
+  ],
+  "actors": [
+    {
+      "pid": 14,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "pid": 23,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "pid": 29,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "pid": 38,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "pid": 55,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": 130,
+      "signal": null
+    },
+    {
+      "pid": 73,
+      "close": true,
+      "stdoutClose": true,
+      "stderrClose": true,
+      "code": null,
+      "signal": "SIGTERM"
+    }
+  ],
+  "actualEntries": 0,
+  "joined": true,
+  "client": "opencode v2.0.16",
+  "native": "2.1.296 (Claude Code)",
+  "scrubLoaded": {
+    "path": "/work/deps/node_modules/@rynfar/meridian-plugin-opencode-scrub/dist/index.js",
+    "packageName": "@rynfar/meridian-plugin-opencode-scrub",
+    "packageVersion": "0.2.3",
+    "sha256": "4ab89412e6a59fad812a3f6e5500c84f3bdfc41863320bc794f5274a251da656",
+    "runtimeVersion": "0.2.3",
+    "invocations": 0,
+    "errors": 0
+  },
+  "proxyWindow": 200000,
+  "clientPluginConfigured": true,
+  "clientWindow": 200000,
+  "importedMessages": 15,
+  "clientResults": [
+    {
+      "finish": "error",
+      "error": true,
+      "model": "claude-sonnet-5-5"
+    },
+    {
+      "finish": "stop",
+      "error": false,
+      "model": "claude-sonnet-5-5"
+    },
+    {
+      "finish": "stop",
+      "error": false,
+      "model": "claude-sonnet-5-5"
+    }
+  ],
+  "scrubInvoked": {
+    "path": "/work/deps/node_modules/@rynfar/meridian-plugin-opencode-scrub/dist/index.js",
+    "packageName": "@rynfar/meridian-plugin-opencode-scrub",
+    "packageVersion": "0.2.3",
+    "sha256": "4ab89412e6a59fad812a3f6e5500c84f3bdfc41863320bc794f5274a251da656",
+    "runtimeVersion": "0.2.3",
+    "invocations": 1,
+    "errors": 0
+  },
+  "diagnostics": []
+}

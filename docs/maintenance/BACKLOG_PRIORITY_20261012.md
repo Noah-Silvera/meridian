@@ -1,11 +1,18 @@
+Latest integration: Antigravity [#1356](https://github.com/rynfar/meridian/pull/1356)
+merged as `b68710f057a3bbdb4e01d650c0bd94b62247eea7`; exact tested tree and Cd1s
+credit verified, unchanged source #1341 closed. Final CI and actual Pi/agy source
+and installed-package proofs pass. No new release. Refreshed six-repository queue now has30 open PRs and21 issues:
+Meridian24/20, OpenCode scrub5/1, Pi scrub1/0, others0/0.
+[Current snapshot](evidence/post-1356-queue-20261012.json).
+The earlier counts below are historical.
+
 # Backlog priorities — 2026-10-12
 
-Refreshed after OpenCode #1354 merged and source #1301 closed. Paginated
-repository rediscovery and queue refresh found six managed repositories:
-Meridian27 PRs/20 issues, OpenCode scrub5 PRs/1 issue, Pi scrub1 PR/0 issues,
-and no open items in HUD/Hermes/OpenClaw scrub. Total33 PRs/21 issues, including
-source/delivery pairs and separately held releases. Snapshot:
-[evidence/post-1354-queue-20261012.json](evidence/post-1354-queue-20261012.json).
+Refreshed after #1334 and #1355 merged and Antigravity delivery #1356 opened.
+The six managed repositories now have 32 open PRs and 21 issues: Meridian
+26 PRs/20 issues, OpenCode scrub5 PRs/1 issue, Pi scrub1 PR/0 issues, and no
+open items in HUD/Hermes/OpenClaw scrub. Counts include source/delivery pairs
+and separately held releases. [Current snapshot](evidence/post-1334-queue-20261012.json).
 
 This is the working priority report, not a claim that every remaining diff has
 passed review. Fixes with direct user cost, lost work or broken requests lead.
@@ -19,9 +26,10 @@ passed review. Fixes with direct user cost, lost work or broken requests lead.
 | Done | [#1310](https://github.com/rynfar/meridian/issues/1310) | Byte-identical historical images can multiply across fresh replay/read-back cycles, increasing attachments and usage. | Reproduced 1,2,4 amplification and duplicate SDK inputs; [#1351](https://github.com/rynfar/meridian/pull/1351) yields 1,1,1 with provenance/current media retained. Actual Pi 1.1.0 / Opus 5.5 reproduces growth on published 1.81.0 and holds at 1,1,1 on the installed candidate; current images and all four E41 modes pass. Final corrected package passed the same actual Pi flow; 5682 tests/typecheck/build and final CI pass. Merged #1351 as a8a214bfc; #1310 closed. No new release. |
 | Done | [#1352](https://github.com/rynfar/meridian/pull/1352), delivery [#1353](https://github.com/rynfar/meridian/pull/1353) | Bare systemd assignments corrupted JSON and paths. | Merged `506a811d3`; exact tested tree and Connor Grady credit verified, unchanged source closed. Seven real systemd cases and installed Meridian profile startup pass; 5730 local tests, typecheck/build and final CI pass. Credentialless configuration proof; no model inference required for unit parsing. |
 | 3 | [#1301](https://github.com/rynfar/meridian/pull/1301), delivery [#1354](https://github.com/rynfar/meridian/pull/1354); [#1201](https://github.com/rynfar/meridian/pull/1201) | Valid settled checkpoints can replay whole histories and increase cache writes. | OpenCode #1354 mergedfa90c9aaf after actual before/after, full E41/E42,5743 local tests/typecheck/build and final CI. Exact tree and Aleksey credit verified; source#1301 closed. #1201 retains original Meowbert runtime/model evidence hold; 75 focused tests and typecheck pass on current main. |
-| 4 | [#1334](https://github.com/rynfar/meridian/pull/1334), [#1303](https://github.com/rynfar/meridian/issues/1303) | Process cleanup and broad store rewrites can hold up or destabilize concurrent work. | #1334 now has current native before/after proof on Darwin/Linux and actual source/installed Pi/SDK/Opus acceptance. Final clean-checkout local run and CI remain. #1303 identical-locator no-op already landed in #1336; broader persistence redesign retains its existing hold. |
+| 4 | [#1212](https://github.com/rynfar/meridian/issues/1212), [#1213](https://github.com/rynfar/meridian/pull/1213), [#1315](https://github.com/rynfar/meridian/issues/1315) | Model catalogs and replay budgets can trigger premature compaction at 200k for native 1M models. | Recover preserved Sonnet correction fe93ce447; actual original Linux/OpenCode/Sonnet 5.5 large-history before/after/resume remains missing. Review model-specific Pro/legacy Opus gates for #1315; adding Pro to every extended-context tier would over-advertise legacy Opus. |
+| 5 | [#1334](https://github.com/rynfar/meridian/pull/1334), [#1303](https://github.com/rynfar/meridian/issues/1303) | Process cleanup and broad store rewrites can hold up or destabilize concurrent work. | #1334 merged as 0d12f6a11 after native before/after Darwin/Linux proof, actual source/installed Pi/SDK/Opus acceptance, 5746 local tests/typecheck/build and final CI. Exact merged tree verified; original #1326 hang remains independently open. #1303 identical-locator no-op already landed in #1336; broader persistence redesign retains its existing hold. |
 
-Fresh-checkout blocker [#1355](https://github.com/rynfar/meridian/pull/1355) fixes npm-lock drift below the declared Claude Code floor. Clean npm install, typecheck and build pass; final CI pending. This bounded installation fix can integrate while environment-dependent routing/Windows gates remain open.
+Fresh-checkout blocker [#1355](https://github.com/rynfar/meridian/pull/1355) fixes npm-lock drift below the declared Claude Code floor. Merged as fb5854be5 after clean npm install, typecheck/build and final CI; exact merged tree verified.
 
 MCP tool loss [#1283](https://github.com/rynfar/meridian/pull/1283) is now resolved
 by merged [#1349](https://github.com/rynfar/meridian/pull/1349), commit
@@ -32,7 +40,7 @@ four plugin-qualified E41 modes pass. This merge is not a new npm release.
 
 After consequential fixes, the strongest feature candidates for further review
 are [#1341](https://github.com/rynfar/meridian/pull/1341) (separate Antigravity
-conversation idle time from tool deadlines), [#1302](https://github.com/rynfar/meridian/issues/1302)
+conversation idle time from tool deadlines; corrected draft [#1356](https://github.com/rynfar/meridian/pull/1356), full local 5752 tests/typecheck/build and actual source/installed Pi/agy continuation proof pass; final CI remains), [#1302](https://github.com/rynfar/meridian/issues/1302)
 (detached start/stop), and [#1311](https://github.com/rynfar/meridian/issues/1311)
 (client-neutral agent identity). Public lifecycle/header interface changes still
 need their issue-backed owner contract and appropriate client tests. These are

@@ -11,7 +11,19 @@ image download/build. No actual model call, new/reopened PR or source closure.
 [Exact source mappings, regression receipts and remaining live gate](evidence/1213-current-main-20261012/README.md).
 The legacy live script now refuses execution because its credential copy and
 cleanup/diagnostic gaps are unqualified. Prepare a replacement before inference.
-#1356 Antigravity final-head CI is watched separately; do not modify its tree.
+#1356 merged as b68710f057a3bbdb4e01d650c0bd94b62247eea7 after final-head CI.
+Exact tested tree 69df1fc0aefe6393361661e13e18a3922a600b04 and Cd1s credit
+verified; source #1341 unchanged8e7b40cb was rechecked and closed. No release.
+
+Sonnet full local original64052 exited0 on frozen4950f621:5767 pass,35 skip,
+zero failures; standalone typecheck/build also pass. Offline replacement harness
+reached actual OpenCode2.0.16 and both plugins with zero model entries. The
+first valid-identity attempt saw11 retries of its synthetic generic SDK error,
+so the single-entry assertion failed; all original actors/pipes joined. A synthetic overflow fence then activated two internal replay recoveries; that
+failed receipt is retained. Corrected unsupported-CLI-model fence original29829
+exited0/OFFLINE_PASS: one request/interception,0 inference, verified plugins, all
+original actors/pipes joined. Candidate/package and remaining live qualification
+are still open. No credentials were staged. See the linked evidence record.
 
 ## Current integration checkpoint — OpenCode landed
 
