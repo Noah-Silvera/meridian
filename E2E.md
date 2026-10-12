@@ -7862,3 +7862,22 @@ proves installed compatibility, not real provider inference. To reproduce after
 `scripts/e2e-telemetry-busy.mjs` runs the actual CLI/SDK denial path with isolated state in a Linux namespace containing only loopback. Supply a valid task-owned machine-id, locked dependencies, Node 22.22.3 and Bun 1.3.11. It refuses non-loopback networking. Run `bun scripts/e2e-telemetry-busy.mjs "$PWD" /evidence`; retain its JSON and child logs. Both ordinary requests must yield 401 and produce two rows. During six further 401 requests a real second process holds SQLite writes for 400 ms with 100 ms gaps. Require six new rows after holder release and joined server shutdown. The unchanged main baseline loses rows; the correction preserves six. Source and escrow hashes, failed controls and scope are in [the durable review](docs/maintenance/evidence/1328-telemetry-busy.md).
 
 This verifies transient contention for error-request storage without outbound model access. It does not assert successful-model or actual OpenCode-client behavior, physical-host latency, or lossless writes during held/starving locks. The 1,000 ms synchronous wait applies to each write, including diagnostic logs, and can add across writes while blocking the event loop.
+
+## Historical image read-back amplification (#1310)
+
+`node scripts/e2e-pi-historical-image-dedup.mjs` runs actual Pi sessions against
+an installed package. It requires `E2E_ALLOW_LIVE_MODEL=1`, a private access-only
+`E2E_LIVE_PROFILE_FILE`, absolute `E2E_PI_PACKAGE`, `E2E_NATIVE_BIN`,
+`E2E_MERIDIAN_ROOT`, and the independently installed Pi scrub `E2E_PLUGIN_PATH`
+(with optional `E2E_SCRUB_VERSION`). Missing prerequisites fail before inference.
+Use the same gate with `E2E_EXPECT=baseline` to require duplication on the second
+fresh replay, and the default candidate mode for three cycles plus current media.
+
+The actual Pi read tool returns an owned same-byte image; client history from that
+real read is loaded through Pi's public SessionManager into a fresh session.
+Supported SDK history must contain one historical image per replay, unchanged
+current-image media, and exact Opus 5.5 model metadata. This qualifies read-back
+feedback without exploring private SDK attachment files. The model's prose is not
+an assertion. Retain before/after reports and join original processes/pipes before
+deleting temporary grants. This gate supplements E41 and E65; it does not claim
+the reporter's unspecified Pi/model/OS environment or a release is verified.

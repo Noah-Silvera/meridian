@@ -1,3 +1,14 @@
+## Combined image local gate passed; live harness prepared — 2026-10-12
+
+#1351 original session 32853 is terminal exit 0: 5681 pass /35 skip /zero failures,
+typecheck and build. New actual-Pi image read-back harness and Pi scrub preflight
+are now escrowed. Credentialless actual-client constructor and actual generated
+prompt scrub controls pass; no model call or grant was used. The full-gate build
+was dirty only from this new harness work, so commit and rebuild clean before
+independent package qualification. Actual Pi/SDK and E41/E65 remain open.
+SSE #1350 combined session 8226 also terminated exit 0: 5722 pass /35 skip /zero
+failures, typecheck/build, clean package source a41e1998. Do not restart either.
+
 ## Image fix current-main integration and dependency correction — 2026-10-12
 
 #1351 now incorporates streaming main `8edccd790`. Product files merged cleanly;
