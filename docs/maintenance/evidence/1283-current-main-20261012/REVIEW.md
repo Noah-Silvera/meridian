@@ -52,3 +52,17 @@ Required gates remain actual Linux/OpenCode/Opus history/tool/retry/followup,
 four E41 modes, relevant V2 E42, independently installed package and final-head CI.
 The final streaming run on #1344 returned OAuth-token-revoked; no further model
 attempt or credential refresh is part of this incorporation. Source stays open.
+
+
+## Full-suite first-run failure retained
+
+The first full npm test stopped after its primary process: 5,229 pass, 35 skip,
+one failure in the unchanged build-observer Node bundle test. Bun reported
+EISDIR while reading zod/index.js in the shared dependency directory. A focused
+rerun passed 4/4; that alone does not establish causality or a fixed regression.
+The worktree's dependency symlink was removed and replaced with its own
+`bun install --frozen-lockfile` using CI Bun 1.3.11, and a complete npm test is
+running again. An attempted npm ci correctly refused main's stale npm lock
+(native package 2.1.284 versus declared 2.1.296); it made no source/lock change.
+CI uses the Bun lock. Preserve the first failure and do not claim a full green
+gate until the independent-install full run terminates successfully.
