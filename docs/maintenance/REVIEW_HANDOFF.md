@@ -8,15 +8,22 @@ same-session continuation passed with both matching client plugin and scrub
 0.2.3, all four requests 200 and original processes/pipes joined.
 
 E41 sequential JSON passed protocol predicates; SSE failed cache continuity
-and exact model identity (recorded both Opus 4.8 and 5.5). No cause established.
-Parallel arms were not run. The protocol fixture lacked client-plugin execution,
-so its live entry point is now disabled before grant/server access. Both plugins
-are required before live use; do not substitute the old direct script. Full
-receipts, local test failures, fixture correction and remaining gates are in
-[evidence](evidence/1283-current-main-20261012/REVIEW.md). No more model calls
-were made while diagnosing these failures. Latest full local gate remains
-owned session 85278, `/tmp/meridian-1283-final-local.log`; poll that process,
-not a replacement. Do not merge or close #1283 yet.
+and exact model identity (recorded both Opus 4.8 and 5.5). No cause established;
+parallel arms were not run. Those runs lacked client-plugin execution and are
+not qualified acceptance. The temporary live stop has now been replaced with
+mandatory actual installed-client config/header hook execution before grant
+access and on every request. Missing/inert/wrong/changed plugins fail closed.
+Credentialless controls pass; no new live run or resolution of E41 is claimed.
+See [evidence](evidence/1283-current-main-20261012/REVIEW.md).
+
+Full local session 85278 terminated exit 1 (5229 pass / 35 skip / 1 fail),
+revealing the crash-reporter test's pending-versus-claimed-file wait race.
+`4d84388a` corrects its wait without relaxing the final assertion or deadline.
+Plugin/reporter focused checks pass 19 tests / 121 assertions on Bun 1.3.11;
+typecheck passes. Latest full local gate for `659d98ee` is owned session **4259**,
+`/tmp/meridian-1283-plugin-final-gates.log`, with npm test then typecheck/build.
+Poll that process, not a replacement. Earlier cross-process 500 remains
+unexplained; no full-green claim. Do not merge or close #1283 yet.
 
 Priority remains #1338 paid-overage routing, #1283 lost tools, #1294 stalled
 streaming, scrub #22/#23 cwd corruption, #1214 SSE failover and #1310 image
