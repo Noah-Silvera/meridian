@@ -1,3 +1,14 @@
+## Image fix current-main integration and dependency correction — 2026-10-12
+
+#1351 now incorporates streaming main `8edccd790`. Product files merged cleanly;
+this handoff preserves both histories. Original image full-suite session 73954
+terminated exit 1: 5239 pass, 35 skip, one build-observer failure, EISDIR reading
+zod/index.js through the shared SSE-worktree node_modules link. The target was a
+regular file; do not claim it was a corrupt directory. Removed only this owned
+symlink and installed frozen dependencies locally. Revalidate the same build-worker
+control, then full combined-tree checks. Pure/image HTTP controls already pass.
+No actual Pi/SDK or E41/E65 live acceptance is established.
+
 ## Historical image amplification preparation — 2026-10-12
 
 #1310 reproduced on current main `3f5f4f81`: fresh replay/read-back cycles emit
@@ -14,6 +25,86 @@ session 54534 remains active, `/tmp/meridian-1214-full-gates.log`. Its plugin-qu
 probe is implemented but not yet fixture/live verified. Streaming #1344 at
 `5f26a29b` has complete combined-tree local/live evidence and is watched for CI.
 Last direct readiness check still had required jobs running; no merge was performed.
+## Combined streaming package verified — 2026-10-12
+
+#1344 incorporates landed MCP main `3f5f4f81`. Clean package/source `6ef677ce`
+passes all four plugin-qualified E41 modes and actual Linux OpenCode 1.18.34 /
+Opus 5.5 long write, tool result and same-session continuation: 49,037 characters
+over 123 seconds, max gap 511 ms below 15-second deadline. All four requests 200,
+all actors/pipes joined and temporary grants removed. Local suite records 5674
+pass /35 skip /zero failures, typecheck and certified build. Only documentation
+and evidence change afterward. Required final-head CI is still a merge gate.
+
+Earlier SSE refusal remains preserved: supported SDK inspection found ordinary
+end_turn refusal text, not a proven classifier event; no causal explanation or
+transport fault established. New-tree success does not erase it. See the
+[current evidence](evidence/stream-idle-1294-20261012.md) for the applicability
+review, package identity, baseline reproduction and retained failures. No release.
+Source #1294 last refreshed unchanged at `7f0a0235`; recheck before closure.
+
+## MCP merged; streaming updated to current main — 2026-10-12
+
+MCP [#1349](https://github.com/rynfar/meridian/pull/1349) merged as
+`3f5f4f81cd2205ebd62381d8c574d6a6f9ded2d9`. Its tree exactly matches validated
+`fc3fe028`, final-head CI passes (test, Windows, Docker, Linux/macOS desktop,
+Nix), and the squash preserves `Co-authored-by: Nowaker <spam@nowaker.net>`.
+Source #1283 was rechecked at `571a6716` and closed as incorporated, without
+posting a comment. No release was published. Earlier pending-MCP text below
+is historical and superseded by this entry.
+
+Current main is being merged into streaming #1344. All product files merge
+without conflicts; this handoff combines both evidence histories. The prior
+streaming E41 SSE refusal remains unresolved. Validate the integrated tree
+rather than reusing either branch's separate results. No model process remains
+active, and all previously staged grants were removed.
+
+## Streaming verification checkpoint — 2026-10-12
+
+[#1344](https://github.com/rynfar/meridian/pull/1344) clean installed package
+`6974747fe` now passes actual Linux OpenCode 1.18.34 / Opus 5.5 long write,
+tool result and same-session continuation with both plugins. 39761 characters,
+1921 deltas over 96.3 seconds, max gap 700 ms vs 15-second deadline; all four
+HTTP requests 200, original actors/pipes joined and grant removed.
+
+Its independent source-tree E41 matrix passes sequential JSON but fails SSE:
+after one read the model says a safety classifier stopped it and declines the
+remaining benign fixture reads. Actual model, cache, history/fork/follow-up
+predicates pass; required tool shape fails. Both plugins were active with zero
+hook errors. Matrix stopped before parallel modes; all actors joined and grants
+removed. No model process remains active. Preserve this failure; do not merge
+#1344 or close #1294. See [evidence](evidence/stream-idle-1294-20261012.md).
+
+MCP #1349 at `fc3fe028` has completed local gates and all four qualified E41
+modes. Its final adjacent-flow applicability review is now in its PR body:
+no V2 API or checkpoint policy changes trigger E42/E66/E67. Final-head CI is
+its remaining gate; use the existing T3 watch rather than a polling loop.
+
+## Final integrated streaming gate remains open — 2026-10-12
+
+Clean #1344 package at `6974747fe` passed actual long-input streaming (42,900
+characters over 106 seconds, no idle timeout), both plugin witnesses and joins.
+Its following tool-result request received an explicit OAuth-token-revoked error.
+This final run is FAIL; do not merge until final-tree continuation is verified.
+The earlier qualified artifact's full successful continuation remains valid only
+for that artifact. Staged grant removed; no refresh, account change or retry.
+See the durable integrated report and identity under
+`evidence/stream-idle-qualified-20261012/`. The refusal is authentication evidence,
+not a new billing/quota explanation. Continue independent #1338/#1283 work.
+
+## Scrub-qualified streaming progress — 2026-10-12
+
+Mandatory OpenCode server-scrub preflight merged as #1348, `ab615ca70`:
+5,637 local tests pass, 35 skip, zero failures; typecheck/build and required CI
+pass. The same preflight in #1344 qualified actual Linux/OpenCode 1.18.34/Opus
+5.5 baseline failure (15.4-second timeout) and candidate success (43,040 input
+characters over 108.7 seconds, real tool result and same-session continuation).
+Both matching client plugin and active server scrub 0.2.3 were verified; child/
+pipe joins passed and staged grant removed. An invalid inherited Docker
+entrypoint launch is retained as rejected evidence. See
+[evidence](evidence/stream-idle-1294-20261012.md) and adjacent sanitized receipts.
+The installed candidate's dirty build provenance is recorded, not hidden; final
+integrated package equivalence and final-head CI remain before #1344 can land.
+Main `ab615ca70` is being incorporated; contributor cherry-picks remain intact.
 
 ## Current MCP/plugin checkpoint — 2026-10-12
 
@@ -161,6 +252,42 @@ not established. Durable sanitized [evidence](evidence/polytoken-1339/live-accep
 and the committed Python/client + native-Node/server harness preserve the scope
 and earlier failures. Final harness assertions and current-main live run remain
 pending. Do not close source #1339 until delivery lands and its head is rechecked.
+
+## Core-fix completion checkpoint — 2026-10-12 16:40 UTC
+
+Haiku #1337 merged as `4dfdfe4e`; release #1299 merged exact verified candidate
+`f907402b` as `d4d60c406362750b8e96e3d1507f83b96a839125`. All final candidate
+checks passed; local 5615/0/35, typecheck/build and independent installed-package
+actual Pi/Haiku 5.5 read-back passed. Existing owner authorization for the bounded
+Haiku release is recorded in the October 11 entry below. Release workflow
+[38277901722](https://github.com/rynfar/meridian/actions/runs/38277901722) succeeded
+for npm, Docker and signed macOS assets. Tag `meridian-v1.81.0` points at the
+release merge. GHCR 1.81.0 has linux/amd64 and linux/arm64 manifests.
+**Registry reads still returned 404 at this checkpoint despite the successful
+publish log; registry integrity/provenance and fresh installed live validation
+remain open. Do not call the publication fully verified yet.**
+
+Polytoken delivery #1343 merged as `a48a84982453d3b4748ddbdf566455597e13c836`
+after final local 5622/0/35, typecheck/build, actual Polytoken 0.8.21 / Haiku 4.5
+Darwin ARM64 acceptance and all final-head CI. Merged tree
+`691f6ca554caa2b70edb90d410b85f0a4a00e9c5` equals the expected integration tree
+with release main. GitHub signature and David Bishop's explicit coauthor trailer
+verified. Source #1339 remained `088e5c3cdf0c3126d951eaf5883ef7f67d5b17c9` and
+was closed as incorporated without a comment. See delivery PR and committed
+`docs/maintenance/evidence/polytoken-1339/live-acceptance.json` for final proof.
+This fix is on main after 1.81.0; it is not part of that release.
+
+Antigravity #1340 at `ab836ac7` is deferred. Exact-source negative control shows
+legitimate status polling receives stale `running` from completedToolTail because
+name+arguments are treated as operation identity. Its PR body preserves the
+review and observable revisit gates: delivery identity, fresh identical reads,
+and affected Pi/macOS acceptance. No product correction or model call performed.
+
+Next core delivery #1344 cherry-picks #1294 into isolated branch
+`codex/stream-idle-1294-20261012`. Three regressions fail current release main and
+pass the correction; 107 focused checks pass. Full local checks are running;
+actual OpenCode/plugin + Opus 5.5 Linux and final CI remain acceptance gates.
+See `evidence/stream-idle-1294-20261012.md`. Preserve owner's dirty checkout.
 
 ## Core-fix priority continuation — 2026-10-12
 
