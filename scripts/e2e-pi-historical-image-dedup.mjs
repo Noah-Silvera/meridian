@@ -58,6 +58,11 @@ function solidImage(red, green, blue) {
     chunk("IDAT", deflateSync(Buffer.concat(Array.from({ length: 48 }, () => row)))), chunk("IEND", Buffer.alloc(0))]).toString("base64")
 }
 try{
+  const probe=cp.spawn(native,['--version'],{env:{PATH:process.env.PATH,HOME:process.env.HOME,CLAUDE_CONFIG_DIR:config,CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC:'1'},stdio:['ignore','pipe','pipe']})
+  let nativeVersion='';probe.stdout.on('data',chunk=>nativeVersion+=chunk);probe.stderr.resume()
+  const [versionExit]=await bounded(once(probe,'close'),12000,'Native version probe deadline')
+  assert.equal(versionExit,0);report.nativeVersion=nativeVersion.trim()
+  assert(/^2\.1\.296\b/.test(report.nativeVersion),'Use the qualified 2.1.296 native CLI')
   const pi=await import(pathToFileURL(join(piDir,metadata.exports['.'].import)).href)
   const require=createRequire(join(repo,'package.json')),sdkEntry=require.resolve('@anthropic-ai/claude-agent-sdk')
   const sdk=await import(pathToFileURL(sdkEntry).href)
