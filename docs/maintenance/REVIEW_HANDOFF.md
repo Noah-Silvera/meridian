@@ -1,3 +1,21 @@
+## Current authoritative checkpoint — 2026-10-12
+
+Image #1351 merged as a8a214bfc53784c3e87456447ae9a327be6a70b2, exact tree
+match against validated 5b58b1b9. #1310 closed. Final local gates original session
+3276 exit 0:5682 pass/35 skip/zero failures, typecheck/build, clean source.
+Final installed actual Pi session 26537 exit 0: historical image counts1,1,1,
+current control1old+1new, actualOpus5.5, scrub0.2.2 zeroerrors, allactors/pipes
+joined and grant removed. Full final-head CI passes. Final tarball integrity,
+review findings and acceptance are durable in #1351 body; prior records below
+are chronological history, not current pending gates. No new release.
+
+SSE #1350: combined installed local-refusal/live-working probe23810 exit0,
+headers25.1ms, actualOpus5.5 confirmed, bothplugins zeroerrors, joined and grant
+removed. Four-mode E41 session78225 exit0 allPASS on cbb340eba. Evidence is
+escrowed under1214-sse-failover-20261012. Newly merged image main is now being
+incorporated. Actual OpenCode executable qualification, combined final gates
+and final-head CI remain; source #1214 stays open. Do not rerun finished sessions.
+
 ## SSE combined local gate complete — 2026-10-12
 
 Original session 8226 terminated exit 0: 5722 pass /35 skip /zero failures,
@@ -92,6 +110,61 @@ wait timeout. Installed package fixture and qualified actual-client/account E2E,
 four-mode E41 and final CI still required. No merge/source closure/release.
 Streaming #1344 at `5f26a29b` remains watched for final CI with combined-package
 and four-mode live evidence published; do not rerun those without a changed gate.
+## Image actual Pi and E41 pass; malformed-padding correction — 2026-10-12
+
+#1351 has actual independently installed Pi before/after evidence: published
+1.81.0 grows historical SDK image copies 1,2; clean b6624d9f keeps 1,1,1 and retains
+a genuine current-image control. Pi1.1.0 /SDK0.2.141 /CLI2.1.296 /Opus5.5 /Darwin
+ARM64, scrub0.2.2 active; all actors/pipes joined and grants removed. Four E41
+modes also pass on b92cc66f with both OpenCode plugins in Linux Docker; original
+matrix session 27386 is terminal exit 0. No model process or grant remains.
+See [durable review](evidence/1310-historical-images-20261012/REVIEW.md).
+
+Final review found malformed padded base64 could be hidden by deduplication.
+A discriminating negative control now passes after strict padded-canonical checking.
+Valid-image live behavior is unchanged; 20 pure tests/typecheck pass. Final full
+local gate and clean final artifact qualification follow this correction; do not
+merge on the older tree alone. Original Pi metadata assertion failure is retained
+and explained (resolvedModel is Haiku-only, actual Opus is checked through SDK).
+
+## Combined image local gate passed; live harness prepared — 2026-10-12
+
+#1351 original session 32853 is terminal exit 0: 5681 pass /35 skip /zero failures,
+typecheck and build. New actual-Pi image read-back harness and Pi scrub preflight
+are now escrowed. Credentialless actual-client constructor and actual generated
+prompt scrub controls pass; no model call or grant was used. The full-gate build
+was dirty only from this new harness work, so commit and rebuild clean before
+independent package qualification. Actual Pi/SDK and E41/E65 remain open.
+SSE #1350 combined session 8226 also terminated exit 0: 5722 pass /35 skip /zero
+failures, typecheck/build, clean package source a41e1998. Do not restart either.
+
+## Image fix current-main integration and dependency correction — 2026-10-12
+
+#1351 now incorporates streaming main `8edccd790`. Product files merged cleanly;
+this handoff preserves both histories. Original image full-suite session 73954
+terminated exit 1: 5239 pass, 35 skip, one build-observer failure, EISDIR reading
+zod/index.js through the shared SSE-worktree node_modules link. The target was a
+regular file; do not claim it was a corrupt directory. Removed only this owned
+symlink and installed frozen dependencies locally. Revalidate the same build-worker
+control, then full combined-tree checks. Pure/image HTTP controls already pass.
+No actual Pi/SDK or E41/E65 live acceptance is established.
+
+## Historical image amplification preparation — 2026-10-12
+
+#1310 reproduced on current main `3f5f4f81`: fresh replay/read-back cycles emit
+1,2,4 identical images; both HTTP stream modes send duplicate SDK input blocks.
+Isolated `codex/historical-images-1310-20261012` now retains one historical visual
+copy with occurrence references, preserving current media and resume behavior.
+19 pure and 44 HTTP tests pass. Full local gates are running in original session
+73954, `/tmp/meridian-1310-full-gates.log`; actual Pi/SDK, E41/E65 and final CI
+remain. See [review/evidence](evidence/1310-historical-images-20261012/REVIEW.md).
+No live call or issue closure. Keep #1310 open until acceptance is established.
+
+SSE delivery #1350 is separately prepared at `a9fece93`; owned full local gate
+session 54534 remains active, `/tmp/meridian-1214-full-gates.log`. Its plugin-qualified
+probe is implemented but not yet fixture/live verified. Streaming #1344 at
+`5f26a29b` has complete combined-tree local/live evidence and is watched for CI.
+Last direct readiness check still had required jobs running; no merge was performed.
 ## Combined streaming package verified — 2026-10-12
 
 #1344 incorporates landed MCP main `3f5f4f81`. Clean package/source `6ef677ce`
