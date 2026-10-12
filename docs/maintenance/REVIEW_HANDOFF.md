@@ -1,3 +1,20 @@
+## SDK #1334 current acceptance continuation — 2026-10-12
+
+Fresh branch codex/sdk-close-acceptance-1334-20261012 from main506a811d3
+preserves original source commits and prepared TERM cap separately. Both native
+before/after platforms and actual source/installed Pi/SDK/Opus5.5 gates pass;
+all original handles joined and grants removed. See
+[evidence/sdk1334-current-acceptance-20261012.md](evidence/sdk1334-current-acceptance-20261012.md).
+Remote original10f4132a is an ancestor of tree-identical merge8e778b99, allowing
+same-PR fast-forward delivery. Full local original91165 is running. Do not
+restart it on timeout. No actual #1326 Linux-x64/OpenCode/Opus hang resolution.
+Older preparation worktree95cc52ea3 remains preserved and unchanged.
+
+OpenCode #1354 head4edfb46cb passed actual required live matrix and full local
+5743pass/35skip/0fail,typecheck/build; ready, awaiting CI. Separate #1355
+dece601a fixes npm-lock drift below the existing Claude Code floor; clean npm
+install/typecheck/build pass, CI pending. Both linked and watched. No new release.
+
 ## Current authoritative state — 2026-10-12
 
 Nix source #1352 is incorporated in draft #1353. Current SSE main `736e9fd61`

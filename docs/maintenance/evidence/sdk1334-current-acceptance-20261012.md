@@ -1,3 +1,38 @@
+## Actual acceptance completed; final local/CI still required
+
+Current-main506a811d3 native gate fails both defect assertions; candidate35784e08
+passes. Same exact controlled-child assertions run on Darwin ARM64 Node22.22.3
+and Linux ARM64 Node22.23.3 (existing owned NixOS VM). Both baseline runs exit1,
+both candidates exit0. Every original child, pipe and gate publication joins;
+fixtures are removed. Exact before/after bundles and JSON receipts are retained
+in the adjacent directory. No new Docker image was created.
+
+Source original88240 and independent-installed original72942 both exit0/PASS:
+actual Pi1.1.0 -> Meridian -> SDK0.2.141 -> genuine Claude2.1.296 -> Opus5.5,
+Darwin ARM64. Each uses the existing committed e2e-pi-historical-image-dedup.mjs
+and installed Pi scrub0.2.2, verified before requests and invoked without error.
+All four rounds pass with source/history/current media preserved. Supported
+SDK session APIs establish actual served model. All eight observed original
+processes and pipes join in each arm; access-only grants were removed afterward.
+Fresh same-account usage readiness precedes each arm, Extra Usage disabled,
+no refresh token or auth mutation. This proves a healthy actual SDK/client path,
+not natural fault reproduction or the unrelated original #1326 OAuth hang.
+
+To update the existing #1334 without rewriting its remote history, original
+head10f4132a was merged into the refreshed authored branch as8e778b99. Conflicts
+retain current-main docs and the separately corrected gate/tests. `git diff
+--exit-code 35784e08 8e778b99` is empty, and10f4132a is an ancestor. The tested
+runtime/tree is preserved; no new PR or force push is needed.
+
+Final adversarial inspection rechecked original-close authority, short/default
+budget partitioning, exact-child-only signals, Windows wrapper preservation,
+publication settlement, late sensitive-file cleanup, idempotence and fail-closed
+lease ownership. No descendant-kill or early lease-release authority is added.
+The native fault proof is POSIX-only; CI Windows adjacency remains a gate.
+No material finding survives. Full npm test/typecheck/build original91165 is
+running; record its original terminal result, require final-head CI and refresh
+head/base before merge. No merge or release is claimed.
+
 # SDK close acceptance refresh — 2026-10-12
 
 Current main506a811d3 was used for a new isolated branch
