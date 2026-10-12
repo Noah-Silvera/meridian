@@ -1,3 +1,16 @@
+## Detached CLI #1359 — ownership checkpoint
+
+Original full process67248 exited0 on frozen d8d393a715908d4af25f76e20e4e705065cd754e:
+5768 pass/35 skips/0 fail across23 groups; standalone typecheck/build pass.
+After that terminal result, endpoint ownership records and supervisor lifetime
+lease code were added. New focused suite:24 pass/102 assertions; typecheck passes.
+Release now joins an in-flight record publication before releasing ownership,
+and duplicate publication is refused. Records never confer numeric-PID signaling
+authority. [Evidence](evidence/1302-detached-cli-20261012/README.md).
+Supervisor event loop, parent/child IPC and actual CLI dispatch remain the next
+implementation step; #1359 is draft and #1302 remains open. Full gates above
+qualify only the earlier control/logging revision. No live model or auth work.
+
 ## Detached CLI #1359 — implementation foundations
 
 Private bounded control/framing, one-shot graceful-stop state, real local socket

@@ -45,3 +45,37 @@ lifecycle matrix, claimed-platform proof, active-turn drain with matching plugin
 full local npm test/typecheck/build and final-head CI. The new commands are not
 wired or exposed yet. Do not mark #1302 resolved or merge this draft based on these
 foundational tests. No credentials, auth refresh, inference, or Docker changes.
+
+## Foundation full gates and ownership checkpoint
+
+Original67248 completed with exit0 on frozen
+d8d393a715908d4af25f76e20e4e705065cd754e:5768 pass/35 skips/0 fail across23
+isolated groups, standalone typecheck and build. See foundation-local-gates.json.
+
+Subsequent ownership changes are separately qualified:24 focused tests/102
+assertions and typecheck pass. They were prepared outside the checkout while
+the original full run remained live, then copied in only after it exited. The
+full result above does not cover these newer files.
+
+`detachedStore.ts` adds endpoint-scoped, bounded, private ownership records and
+short private control paths. A supervisor lifetime lease reuses the existing
+CrossProcessTurnCoordinator and OS process-incarnation semantics, rather than
+PID-only locking. Unknown/dead identity remains distinct; only confirmed dead
+owners can be replaced. Stop inspection does not create missing state.
+
+Adversarial checks reject endpoint mismatches, extra/malformed fields, symlinks,
+multiple hard links, broad Unix permissions, oversized bodies and a changed
+record. Removal moves the checked record aside and verifies its identity before
+unlinking; an unexpected moved file is retained for explicit recovery. A real
+lease test excludes a second acquirer, then admits a replacement after release.
+That is same-process filesystem coordination proof, not yet two real supervisors.
+
+A new regression covers release during publication: cleanup joins the original
+publication before retiring its record/releasing the lease; a second concurrent
+publication is rejected. Published record identity is privately copied so a
+caller mutation cannot change which record cleanup owns.
+
+The supervisor event loop, parent commit handshake, child IPC, CLI commands and
+actual source/installed/platform lifecycle acceptance remain pending. No PID is
+signaled by these components. No feature-completion or current-head full-suite
+claim follows from the earlier foundation run.

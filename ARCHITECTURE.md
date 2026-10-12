@@ -639,3 +639,17 @@ snapshot and revalidate the saved mode/path after asynchronous path vetting,
 returning 409 instead of committing against a concurrent selection change.
 The settings boundary is limited to 32 pending requests per instance and 16
 shared live probe slots; the completed version cache holds at most 128 files.
+
+### Detached CLI components (draft implementation, #1302)
+
+`src/cli/detachedProtocol.ts` owns bounded private framing and lifecycle state;
+`detachedControl.ts` owns the private socket transport, never a public HTTP route.
+`detachedLog.ts` owns bounded log output under a caller-owned private directory.
+`detachedStore.ts` owns endpoint records and a supervisor lifetime lease, reusing
+`session/crossProcessTurnCoordinator.ts` and `session/processIncarnation.ts`
+without changing their recovery rules. Dependencies flow from CLI management into
+existing coordination primitives; no session module imports CLI management.
+These components are not yet wired to CLI commands. Supervisor integration must
+join its original child before releasing the lifetime lease and must use private
+child IPC for graceful stop, not a recorded PID. See the
+[implementation proposal](docs/maintenance/proposals/1302-detached-cli.md).
