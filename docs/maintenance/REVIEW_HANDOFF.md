@@ -1,3 +1,23 @@
+## Latest local gate and owner storage request — 2026-10-12
+
+Nix draft #1353 original local session24351 finished exit0:5682pass/35skip/
+zero failures, typecheck/build, clean583797d8 source. Do not restart. This is
+still based on image maina8a214bfc; next integrate SSE main736e9fd61, refresh
+combined gates/CI and finish authored integration. Actual Nix/systemd seven-case
+proof and real installed Meridian startup comparison are preserved in1352evidence.
+Startup candidate session83370 passed; baseline22315 reproduced JSONloss/empty
+profiles but exited1 on an over-specific default-profile assertion (retained).
+Nixfmt session36354 passed. Owned isolated VMmeridian-nix-1352 remains available;
+no services/model actors or credentials remain active there.
+
+Owner requested Docker storage cleanup. All29Meridian image tags and33stopped
+Meridian test containers removed; targeted Meridian build-cache cleanup follows.
+No running container was removed. Old Docker images/container IDs in historical
+receipts no longer exist; rebuild from preserved source/package versions if needed.
+Reports and runnable harnesses remain escrowed. Thread model selection was changed
+through T3 configuration to codex/gpt-6.1-sol at the owner's request, verified by
+configuration readback. Backlog goal remains active.
+
 ## Current checkpoint: SSE merged; Nix environment fix active — 2026-10-12
 
 SSE #1350 merged736e9fd6162ebd8cadbfbcd687dfec2c7acdc129. Verified exact
