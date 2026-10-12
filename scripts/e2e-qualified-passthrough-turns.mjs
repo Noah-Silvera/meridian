@@ -131,10 +131,12 @@ const usageLine = u => {
 const CACHE_FLOOR = 0.95
 let priorCached = 0
 const cacheMisses = []
+report.cacheMisses = cacheMisses
 function checkCache(label, usage, lineage) {
   const read = usage.cache_read_input_tokens ?? 0
   if (lineage.includes("continuation") && priorCached > 0 && read < CACHE_FLOOR * priorCached) {
     cacheMisses.push(`${label}: cache_read=${read} < ${CACHE_FLOOR} x prior cached ${priorCached}`)
+    assert.fail(cacheMisses.at(-1))
   }
   priorCached = read + (usage.cache_creation_input_tokens ?? 0)
 }
@@ -196,6 +198,11 @@ async function captureSource() {
   await new Promise(r => setTimeout(r, 1500))
   const source = storedSession()
   const sourceMessages = await supportedMessages(source)
+  const models = [...new Set(sourceMessages.filter(row => row.type === "assistant")
+    .map(row => row.message?.model).filter(value => typeof value === "string"))]
+  report.observedModels = models
+  report.modelOk = models.length > 0 && models.every(value => value === MODEL)
+  assert(report.modelOk, "Supported SDK source history does not match the required model; stop before another model request")
   if (!source?.claudeSessionId || sourceMessages.length === 0) sourceHistoryProblems.push("missing source snapshot")
   else if (sourceSnapshots.has(source.claudeSessionId)) sourceHistoryProblems.push("reused source before fork")
   else sourceSnapshots.set(source.claudeSessionId, { source, messages: JSON.stringify(sourceMessages) })

@@ -217,3 +217,32 @@ the exact same whole-directory emptiness as the unchanged final assertion.
 Production reporter behavior and deadline are unchanged. The focused reporter
 suite passes 16 tests / 108 assertions. This explains this failure, not the
 earlier unrelated cross-process 500; that limitation remains recorded.
+
+
+## Read-only model provenance audit
+
+The original stopped SSE fixture was inspected only through SDK
+`getSessionMessages` and Meridian's public store snapshot API. The owned
+container's entry script was replaced with the adjacent audit script; fetch and
+all child-process launch APIs were disabled. A literal `{}` file satisfied the
+old bind mount, contained no credentials, and was removed after audit exit 0.
+The supported API returned 12 rows: the first three assistant fragments share
+one response id, model `claude-opus-4-8`, and the first delivered tool id. Later
+assistant rows use `claude-opus-5-5`. The first saved usage also differs from
+the original wire usage. This is a recorded discrepancy, not proof of its cause.
+
+A separate credentialless Linux/amd64 control used the same SDK 0.2.141/native
+2.1.296 image with Docker `--network none`, no credential mount and isolated
+loopback-only upstream. Alias `opus[1m]` plus the explicit 5.5 env pin reached
+the loopback as 5.5; both overlapping queries returned 5.5 in SDK stream-start
+and assistant events. All original children, iterators and listener joined and
+sandbox removal completed. No real inference occurred. This rules out a
+universal alias-pin/SDK metadata failure in that control; it does not explain
+the earlier live mismatch or cache miss. Exact audit scripts and sanitized
+receipts are adjacent; run the native probe from `scripts/` beside its helper.
+
+The qualified E41 harness now stops after its first failed cache predicate or
+wrong-model supported source snapshot, before another model request. The final
+assertions remain unchanged. A further live run must use both actual installed
+plugins and records the changed qualification as such, not an unexplained
+green rerun of the old incomplete fixture.
