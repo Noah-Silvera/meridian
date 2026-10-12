@@ -1,3 +1,24 @@
+## MCP current-main delivery — 2026-10-12
+
+#1283 source `571a671676d6b8604cde932199d77c34bc6a46f3` is preserved as
+Nowaker-authored cherry-pick `158e6c18d` on fresh main `ab615ca70` in
+`codex/mcp-tools-1283-20261012`. Narrow source incorporation plus recovered
+maintainer transport-harness corrections replaces blindly replaying the old
+97-file preparation. That historical branch remains intact.
+
+Real credentialless SDK/native transport on Darwin reproduces lost tools on
+main, preserves both overlapping catalogs after the fix, and restores the
+failure when server sharing is deliberately reintroduced. All seven transport/
+fault/cancellation cases join owned resources; expected failures remain failures.
+Focused 103 tests and 17 harness/SDK controls pass; typecheck/build pass; full
+npm test is running. Actual Linux/OpenCode/Opus, E41/E42 and package/CI gates
+remain open. See [review and receipts](evidence/1283-current-main-20261012/REVIEW.md).
+No new credential access, refresh or model call occurred for this item.
+
+#1344 final integrated local gates now pass 5,652 / 35 skip / zero failures,
+typecheck/build. Its final actual continuation failed token-revoked; E41 modes
+are also still required. #1348 merged as `ab615ca70`. Do not infer a release.
+
 ## OpenCode live-harness qualification correction — 2026-10-12
 
 Owner reaffirmed required plugins. Inspection found BOTH

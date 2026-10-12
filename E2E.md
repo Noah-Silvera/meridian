@@ -21,6 +21,16 @@ with each query building its own MCP server. On main 74d0a499, which hands both
 queries one server instance, the second query reports `oc` failed, its model
 request carries no tools, and the CLI logs `SDK MCP server not found: oc`.
 
+The maintained harness additionally accepts `--source-root=/absolute/checkout`,
+`--evidence-dir=/absolute/owned/output`, `--shared-instance`, and
+`--case=overlap|cancel|pre-request-failure|init-timeout|uncooperative`.
+Baseline/shared-instance must fail catalog/connection assertions; failure and
+timeout controls intentionally exit nonzero while proving joined cleanup.
+Read the JSON outcome and cleanup separately. Missing MCP logs remain an explicit
+limitation rather than a verified zero. The current-main before/after receipts
+are in `docs/maintenance/evidence/1283-current-main-20261012/`.
+These credentialless tests do not replace affected-client/model/platform gates.
+
 ## Shared header separator hover (#1262)
 
 Run `E2E_HEADER_PORT=42231 bun scripts/e2e-build-header-fixture.ts` and use the
