@@ -1,3 +1,25 @@
+## Current #1354 checkpoint — all live gates complete
+
+All three pinned beta extended live gates pass against independently installed
+b90324930: originals58550 (18314),15803 (18866),44041 (19271), all exit0.
+Each has two distinct proxy worker PIDs, PASS/joined reports, and removed grants.
+Actual Haiku5.5 and installed client/server plugins were verified. Stable2.0.16
+and2.0.21 live E42, six offline source/installed beta arms, actual instruction
+before/after and all four Opus5.5 E41 modes also pass. Durable evidence is under
+1301-opencode-instruction-update-20261012, with every causally diagnosed failure.
+
+Maintainer gate corrections: accept both supported effort wire fields; require
+completion of primary xhigh requests, retaining asynchronous title traces; wait
+for the warm host's actual /api/model catalog before selecting a newly discovered
+model. The distinct cold standalone gate remains unchanged. Beta19271's initial
+catalog race made zero model requests; credentialless readiness control and the
+full corrected actual run both confirm the cause. No unexplained rerun claimed.
+
+Full local npm test/typecheck/build original89187 remains running. Poll that
+original handle. Next: capture terminal local result, final diff review, push
+final head, require final CI, then exact-head integration with Aleksey credit.
+#1301 unchanged05e2381f remains open; #1354 remains draft. No release authorized.
+
 ## Latest #1354 checkpoint — broad gates passed, extended beta harness needs correction
 
 Clean0aab7d26 original28183 exited0:5743pass/35skip/0fail,typecheck/build.

@@ -1,3 +1,89 @@
+## Current verdict: all required live client gates pass
+
+Beta18314/18866/19271 extended installed gates all exit0 (originals58550,
+15803,44041). Each proves two distinct proxy processes, both PASS/joined, and
+access-only grants removed. Sanitized receipts are e42-beta*-qualified.json.
+Stable2.0.16/2.0.21, six offline beta source/installed arms, actual instruction
+before/after and all four E41 modes also pass. Final local and CI remain gates.
+
+Beta19271's first attempt failed before inference because HTTP readiness preceded
+asynchronous catalog reload. The warm gate now polls the supported /api/model
+endpoint for the selected model; its separate cold standalone test remains.
+The retained credentialless control proves readiness and successful selection,
+with the later offline completion assertion still failing as documented.
+The corrected full live run passes; no earlier failure was relabeled.
+
+Final adversarial pass inspected runtime changes, strict prefix/exact-ID/result
+invariants, armed Crush negative control, default OpenCode adapter scope, user-level
+reminder delivery, setup allowlist, installed plugin qualification, real process
+restart/custody, catalog/effort semantics and historical evidence limitations.
+No public interface or dependency change. Diagnostic wording that overstated
+live Haiku as a Meridian-only variant was corrected: that stronger discovery
+claim belongs to the controlled offline fixture, which retains its negative
+and invalidation controls. No material runtime finding remains; local/CI gates
+and exact source/head refresh still precede integration.
+
+## Beta18314 complete
+
+Original58550 exited0/PASS on independently installed b90324930, actual
+Haiku5.5 and scrub0.2.3. Two distinct proxy worker PIDs establish a real process
+restart. Ordinary/restart resume, warm and cold xhigh, tool results, separate
+client/proxy directories, fork/original and undo isolation, concurrent children
+and compaction pass. Both workers report PASS with original actors joined;
+access-only grant removed. Sanitized full gate receipt is
+`e42-beta18314-qualified.json`. This supersedes only the beta18314 acceptance
+hold; beta18866/19271 and final local/CI/adversarial gates remain open.
+
+## Primary completion assertion correction
+
+Original99036 exits1 after confirming actual primary xhigh and completed response.
+Its second xhigh request was a detached title call still in flight when the
+primary CLI returned. The prior assertion incorrectly required that auxiliary
+request to have already closed. Sanitized identity/timing evidence is retained
+in `18314-wire-qualified-failure.json`; workers joined and grant was removed.
+The assertion now requires at least one primary xhigh request and completion of
+all primary xhigh requests, excluding source-tagged auxiliary calls. All request
+fields remain recorded. Original58550 is the causally corrected live attempt;
+no passing result is claimed until its entire original process completes.
+
+## Beta recorder cause established
+
+Credentialless actual beta18314 warm-host controls vary the catalog while keeping
+the installed plugin and host fixed. Minimal Haiku5.5 catalog sends top-level
+`effort: xhigh`; the real catalog sends `output_config.effort: xhigh` with adaptive
+thinking. Both controls deliberately remain full-gate exit1 (the original
+completion or top-level-only assertion); neither is relabeled as acceptance.
+Exact scripts and sanitized wire fields are escrowed adjacent. Meridian already
+accepts both fields in server.ts. The E42 recorder now uses the same top-level,
+then output_config precedence and retains both raw field shapes. The real live
+beta gate is rerunning with unchanged effort and subprocess-restart requirements.
+
+## Current qualification — OpenCode 2.0.21 passes; beta effort gate remains open
+
+On candidate `b90324930`, original process57372 exited0/PASS. The independently
+installed package now passes normal setup and the entire stable OpenCode2.0.21
+E42 gate: signed primary, same-session resume, title/generate isolation, xhigh
+on the wire, real tool results, fork/original isolation and compaction. Actual
+Haiku5.5 is verified via supported SDK session APIs. Installed server scrub0.2.3
+was verified before inference and after; all original subprocesses and pipes
+joined, and the access-only grant was removed. See `e42-stable-2021-report.json`
+and its adjacent exact qualified wrapper. This supersedes the setup rejection
+as a current candidate limitation; the historical manual baseline remains valid.
+
+The corrected beta18314 gate now restarts two actual proxy subprocesses and
+passes ordinary/restart resume. Original43258 exited1 at warm-server xhigh:
+selection succeeded, but all three observed request efforts were absent.
+All workers joined and the grant was removed. This is not an acceptance pass.
+A credentialless warm-host control with a known initial model and minimal
+Haiku5.5 catalog sends top-level xhigh, ruling out a universal recorder-field
+error. Its full-gate exit1 is retained: offline responses lack the live upstream
+completion timestamp. Testing the actual catalog is the next discriminating
+control. Do not weaken the effort or real-process-restart assertion.
+
+Material setup/harness changes since the earlier full local gate require new
+final local gates and CI. All three extended beta gates and final adversarial
+review remain open; #1354 stays draft. Source#1301 is unchanged05e2381f and open.
+
 # Actual OpenCode instruction update — 2026-10-12
 
 Actual OpenCode 2.0.21 on Darwin ARM64, Node host, independently installed
