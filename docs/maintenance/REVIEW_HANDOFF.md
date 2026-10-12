@@ -1,3 +1,22 @@
+## Current #1358 validation and consumer compatibility finding
+
+Frozen c61fbbe058b76495121b370c44dc868b468b3e8d passes full original99093:
+5754 tests/35 skips/0 failures across23 groups, standalone typecheck and build.
+Independent npm dependencies were installed after initial82223 failed bundling
+zod via a cross-worktree symlink; the same worker test passed alone beforehand,
+so its root cause remains unresolved and the earlier failure is retained.
+
+Actual public reporter-fork opencodex6d881db2 (2.12.0) source HTTP discovery drops
+Meridian's context_window. A context_length positive control imports1M. The exact
+reporter-installed revision is unconfirmed; no new response field was added.
+[Reproducible probe and qualification](evidence/1315-native-opus-catalog-20261012/opencodex-discovery/README.md).
+#1358 stays draft: client adoption, actual Pro/model evidence and final CI remain.
+No credentials, model calls or real configuration changes were used.
+
+Refreshed #1329 is still contributor draft4efd82e8; defer incorporation until ready.
+Source behavior fits missing Team-seat backfill, but contributor live results are
+not independent current-main acceptance. Do not refresh owner credentials to test it.
+
 ## Native Opus/Fable catalog preparation — #1315
 
 New branch codex/native-opus-catalog-1315-20261012 from mainb68710f05 corrects

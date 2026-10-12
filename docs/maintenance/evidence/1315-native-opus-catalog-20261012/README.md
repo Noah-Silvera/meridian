@@ -36,7 +36,7 @@ intact; keep the catalog builder pure and pass the effective SDK override from
 the route. Existing default Haiku5.5 stays1M and its explicit SDK opt-out now
 advertises200k. Missing proof is not replaced by the mocked Pro auth result.
 
-Remaining gates: full npm test/typecheck/build, final-head CI, independently
+Remaining gates: final-head CI, independently
 installed actual macOS Codex/opencodex client catalog adoption and affected
 Opus/Pro flow with required plugin qualification, plus supported served-model
 history evidence. The supported default store presently has no access token;
@@ -54,3 +54,17 @@ with that unchanged dependency tree, so the symlink is not proven causal.
 No application fix or flaky-success claim is made. Dedicated npm dependencies
 and current main are prepared for revalidation; further full-suite evidence is
 required. Standalone typecheck/build were not reached by that chained run.
+
+## Current local validation and client finding
+
+Original99093 exited0 on frozen c61fbbe058b76495121b370c44dc868b468b3e8d:
+5754 pass/35 skip/0 fail across23 isolated groups; standalone typecheck and build
+pass. The previous bundling failure remains unresolved, not retrospectively fixed.
+See local-gates.json for exact identity.
+
+[Actual opencodex source discovery](opencodex-discovery/README.md) identifies an
+additional compatibility gap: the reporter's current public fork ignores
+context_window; a context_length control is imported as1M. Exact installed
+client revision remains unconfirmed. This is a real source/HTTP catalog probe,
+not actual Pro entitlement, installed Codex adoption or a compaction test. Keep
+#1358 draft; numeric catalog correction alone does not establish issue resolution.

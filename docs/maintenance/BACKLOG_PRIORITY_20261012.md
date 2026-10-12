@@ -1,8 +1,11 @@
 Latest paginated discovery: 30 open PRs and 21 issues across six managed
 repositories. [Snapshot](evidence/post-1357-queue-20261012.json). Earlier counts
 below are historical. Native Opus/Fable delivery [#1358](https://github.com/rynfar/meridian/pull/1358)
-is draft: 134 catalog regression checks pass; full local validation has an unresolved
-worker-bundling failure, and actual Pro/Codex acceptance remains missing.
+is draft: 5754 local tests/typecheck/build pass. The earlier worker-bundling
+failure remains unexplained. Actual source HTTP discovery found that the reporter's
+current opencodex fork ignores context_window; confirm the installed revision and
+resolve catalog compatibility before claiming downstream compaction is fixed.
+Actual Pro/Codex acceptance remains missing.
 
 Current independent delivery: [#1342](https://github.com/rynfar/meridian/pull/1342)
 through [#1357](https://github.com/rynfar/meridian/pull/1357) reduces Nix package
