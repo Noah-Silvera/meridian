@@ -1,3 +1,27 @@
+## Current authoritative checkpoint — Nix merged, OpenCode instruction updates active
+
+#1353 merged `506a811d319184381164dab5995703cbcd5b9906`; exact tree versus
+`5498892b30c55f437fc690599328aae9583da22f` and Connor Grady coauthor verified.
+Original final local session56950 exited0:5730pass/35skip/0fail,typecheck/build.
+Final-head CI test succeeded; cancelled duplicate Nix run was superseded by
+same-head success. Source1352 unchangedde3c6fe5 rechecked and closed.
+Real systemd seven-case and actual installed Meridian profile proof retained.
+No new release. This supersedes historical Nix-pending statements below.
+
+Active draft #1354 in /Users/rynfar/repos/meridian-opencode-system-delta-1301-20261012
+incorporates #1301 authored05e2381f as e836a81a9 plus separate mandatoryV2/server
+scrub harness correction1da7bdf3. Nix main merged cleanly. Targeted202pass;
+only restoring the old opt-in gives132pass/5expectedfail; typecheck/build pass.
+No live calls yet. Actual @opencode/cli2.0.21 installation being prepared;
+legacy opencode-ai package/release lookup404 was a package-name lookup error,
+not evidence the target version is unavailable. Required actual-client,
+installed-package,E41/E42 and final combined local/CI gates remain.
+
+#1201 review branch /Users/rynfar/repos/meridian-checkpoint-pairs-1201-20261012
+contains authored0bd4ff218 and local evidencef6e9f5d4;75focusedtests/typecheck
+pass. Original Meowbert runtime/exact model remains unknown; existing evidence
+hold unchanged. No live call/source closure or extra PR for that held item.
+
 ## Current authoritative state — 2026-10-12
 
 Nix source #1352 is incorporated in draft #1353. Current SSE main `736e9fd61`
