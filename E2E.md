@@ -31,6 +31,21 @@ limitation rather than a verified zero. The current-main before/after receipts
 are in `docs/maintenance/evidence/1283-current-main-20261012/`.
 These credentialless tests do not replace affected-client/model/platform gates.
 
+## SDK process-gate native close barrier
+
+Run `bun scripts/e2e-sdk-process-join.mjs`, or bundle the same file with
+`bun build scripts/e2e-sdk-process-join.mjs --target=node --outfile=/tmp/sdk-join-proof.mjs`
+and run it with stock Node. Identical original-handle assertions fail unchanged
+source and pass the correction on Darwin/Linux arm64: ordinary exit, exited
+parent with explicitly held inherited pipes, and an armed TERM-resistant child.
+The resistant arm must close with SIGKILL; every original close and publication
+must join before owned fixture removal. Unknown cleanup retains state and fails.
+This exercises the production gate with actual controlled subprocesses, **not**
+SDK `query()`, Claude/model inference or the reported #1326 affected client.
+Windows uses a separate wrapper/cancellation contract; these POSIX fixtures
+explicitly skip it. See [durable proof, receipts, baseline reproduction and
+limits](docs/maintenance/evidence/sdk-process-close-join.md).
+
 ## Shared header separator hover (#1262)
 
 Run `E2E_HEADER_PORT=42231 bun scripts/e2e-build-header-fixture.ts` and use the

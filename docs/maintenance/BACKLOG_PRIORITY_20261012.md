@@ -1,11 +1,11 @@
 # Backlog priorities — 2026-10-12
 
-Refreshed after Nix #1353 merged and OpenCode delivery #1354 opened. Paginated
-refresh of all six previously discovered owner-managed repositories: Meridian
-28 PRs / 20 issues; OpenCode scrub 5 PRs / 1 issue; Pi scrub 1 PR / 0 issues;
-HUD, Hermes and OpenClaw scrub have no open items. Total: 34 PRs and 21 issues,
-including source/delivery pairs and release PRs. Snapshot:
-[evidence/post-nix-queue-20261012.json](evidence/post-nix-queue-20261012.json).
+Refreshed after OpenCode #1354 merged and source #1301 closed. Paginated
+repository rediscovery and queue refresh found six managed repositories:
+Meridian27 PRs/20 issues, OpenCode scrub5 PRs/1 issue, Pi scrub1 PR/0 issues,
+and no open items in HUD/Hermes/OpenClaw scrub. Total33 PRs/21 issues, including
+source/delivery pairs and separately held releases. Snapshot:
+[evidence/post-1354-queue-20261012.json](evidence/post-1354-queue-20261012.json).
 
 This is the working priority report, not a claim that every remaining diff has
 passed review. Fixes with direct user cost, lost work or broken requests lead.
@@ -18,8 +18,10 @@ passed review. Fixes with direct user cost, lost work or broken requests lead.
 | Done | [#1214](https://github.com/rynfar/meridian/pull/1214), delivery [#1350](https://github.com/rynfar/meridian/pull/1350) | Keepalives previously defeated account failover. | Merged `736e9fd61`; source closed, exact tree and credit verified. 5730 local tests, typecheck/build, final CI, installed actual OpenCode/Opus flow and all four E41 modes pass. |
 | Done | [#1310](https://github.com/rynfar/meridian/issues/1310) | Byte-identical historical images can multiply across fresh replay/read-back cycles, increasing attachments and usage. | Reproduced 1,2,4 amplification and duplicate SDK inputs; [#1351](https://github.com/rynfar/meridian/pull/1351) yields 1,1,1 with provenance/current media retained. Actual Pi 1.1.0 / Opus 5.5 reproduces growth on published 1.81.0 and holds at 1,1,1 on the installed candidate; current images and all four E41 modes pass. Final corrected package passed the same actual Pi flow; 5682 tests/typecheck/build and final CI pass. Merged #1351 as a8a214bfc; #1310 closed. No new release. |
 | Done | [#1352](https://github.com/rynfar/meridian/pull/1352), delivery [#1353](https://github.com/rynfar/meridian/pull/1353) | Bare systemd assignments corrupted JSON and paths. | Merged `506a811d3`; exact tested tree and Connor Grady credit verified, unchanged source closed. Seven real systemd cases and installed Meridian profile startup pass; 5730 local tests, typecheck/build and final CI pass. Credentialless configuration proof; no model inference required for unit parsing. |
-| 3 | [#1301](https://github.com/rynfar/meridian/pull/1301), delivery [#1354](https://github.com/rynfar/meridian/pull/1354); [#1201](https://github.com/rynfar/meridian/pull/1201) | Valid settled checkpoints can replay whole histories and increase cache writes. | OpenCode authored incorporation prepared: 202 focused tests pass; restoring the defect fails exactly five cases. V2/client scrub preflight corrected. Actual 2.0.21 before/after, all four E41 modes, all three pinned beta extended live gates and stable 2.0.16/2.0.21 live E42 now pass. Final local/CI integration remains. #1201 retains original Meowbert runtime/model evidence hold; 75 focused tests and typecheck pass on current main. |
-| 4 | [#1334](https://github.com/rynfar/meridian/pull/1334), [#1303](https://github.com/rynfar/meridian/issues/1303) | Process cleanup and broad store rewrites can hold up or destabilize concurrent work. | Prefer bounded corrections with original-process evidence and measured store behavior before a broad persistence redesign. |
+| 3 | [#1301](https://github.com/rynfar/meridian/pull/1301), delivery [#1354](https://github.com/rynfar/meridian/pull/1354); [#1201](https://github.com/rynfar/meridian/pull/1201) | Valid settled checkpoints can replay whole histories and increase cache writes. | OpenCode #1354 mergedfa90c9aaf after actual before/after, full E41/E42,5743 local tests/typecheck/build and final CI. Exact tree and Aleksey credit verified; source#1301 closed. #1201 retains original Meowbert runtime/model evidence hold; 75 focused tests and typecheck pass on current main. |
+| 4 | [#1334](https://github.com/rynfar/meridian/pull/1334), [#1303](https://github.com/rynfar/meridian/issues/1303) | Process cleanup and broad store rewrites can hold up or destabilize concurrent work. | #1334 now has current native before/after proof on Darwin/Linux and actual source/installed Pi/SDK/Opus acceptance. Final clean-checkout local run and CI remain. #1303 identical-locator no-op already landed in #1336; broader persistence redesign retains its existing hold. |
+
+Fresh-checkout blocker [#1355](https://github.com/rynfar/meridian/pull/1355) fixes npm-lock drift below the declared Claude Code floor. Clean npm install, typecheck and build pass; final CI pending. This bounded installation fix can integrate while environment-dependent routing/Windows gates remain open.
 
 MCP tool loss [#1283](https://github.com/rynfar/meridian/pull/1283) is now resolved
 by merged [#1349](https://github.com/rynfar/meridian/pull/1349), commit

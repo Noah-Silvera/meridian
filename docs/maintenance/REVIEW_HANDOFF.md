@@ -1,3 +1,39 @@
+## Current integration checkpoint — OpenCode landed
+
+#1354 merged fa90c9aaf1e99d5fbd69f6725ce8be0dcc3cfff3 after final-head CI.
+Exact merged tree equals4edfb46cb; Aleksey coauthor verified. Source#1301
+unchanged05e2381f was rechecked and closed. No new release.
+
+#1334 original full local91165 exited1 with three error-reporting tests reading
+transient conflict markers during the ancestry merge. This was an orchestration
+error; retain its failed result. The exact stderr identifies sdkProcessGate.ts
+with `Unexpected <<`. No actual-client proof was invalidated: both live arms
+finished before the merge and used the unchanged built package. Current main
+fa90c9aaf is now integrated; only this chronological handoff conflicted. Freeze
+the completed checkout throughout the replacement full local run. Both native
+platforms and actual source/installed Pi SDK proofs remain available below.
+
+#1355 npm-lock fix remains ready with clean install/typecheck/build; CI watched.
+Post-merge paginated rediscovery finds six managed repositories,33 open PRs and
+21 issues including source/delivery/release pairs. Ranked report updated.
+
+## SDK #1334 current acceptance continuation — 2026-10-12
+
+Fresh branch codex/sdk-close-acceptance-1334-20261012 from main506a811d3
+preserves original source commits and prepared TERM cap separately. Both native
+before/after platforms and actual source/installed Pi/SDK/Opus5.5 gates pass;
+all original handles joined and grants removed. See
+[evidence/sdk1334-current-acceptance-20261012.md](evidence/sdk1334-current-acceptance-20261012.md).
+Remote original10f4132a is an ancestor of tree-identical merge8e778b99, allowing
+same-PR fast-forward delivery. Full local original91165 is running. Do not
+restart it on timeout. No actual #1326 Linux-x64/OpenCode/Opus hang resolution.
+Older preparation worktree95cc52ea3 remains preserved and unchanged.
+
+OpenCode #1354 head4edfb46cb passed actual required live matrix and full local
+5743pass/35skip/0fail,typecheck/build; ready, awaiting CI. Separate #1355
+dece601a fixes npm-lock drift below the existing Claude Code floor; clean npm
+install/typecheck/build pass, CI pending. Both linked and watched. No new release.
+
 ## Current #1354 checkpoint — all live gates complete
 
 All three pinned beta extended live gates pass against independently installed
