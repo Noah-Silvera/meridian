@@ -9757,8 +9757,8 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
 
   // --- Model Discovery ---
   // Returns available Claude models in OpenAI-compatible format.
-  // Context window reflects the subscription tier: Max/Team/Enterprise get 1M
-  // on the Opus/Fable tiers, everything else 200k. The tier check is shared
+  // Only legacy Opus 4.6 uses subscription-tier eligibility for its 1M window.
+  // Opus 4.7+ and Fable have native 1M windows. The legacy tier check is shared
   // with models.ts (subscriptionIncludesExtendedContext) — an "=== max"
   // comparison here used to advertise 200k to Team accounts that Meridian was
   // already routing to opus[1m] (#826).
@@ -9770,7 +9770,8 @@ function createProxyServerWithAuthOwner(config: Partial<ProxyConfig>, authOwner:
       profileEnvOverrides,
     )
     const extendedContext = subscriptionIncludesExtendedContext(authStatus?.subscriptionType)
-    return c.json({ object: "list", data: buildModelList(extendedContext) })
+    const disable1mContext = (profile.env.CLAUDE_CODE_DISABLE_1M_CONTEXT ?? process.env.CLAUDE_CODE_DISABLE_1M_CONTEXT) === "1"
+    return c.json({ object: "list", data: buildModelList(extendedContext, undefined, disable1mContext) })
   })
 
   // --- Subscription Quota ---

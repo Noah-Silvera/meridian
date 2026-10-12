@@ -1,3 +1,14 @@
+## Native Opus/Fable catalog preparation — #1315
+
+New branch codex/native-opus-catalog-1315-20261012 from mainb68710f05 corrects
+model-specific native1M advertisement while retaining legacy Opus4.6 gating.
+Six before failures become134 passing unit/HTTP checks; typecheck passes.
+[Evidence and outstanding actual Pro/Codex gate](evidence/1315-native-opus-catalog-20261012/README.md).
+No real credentials or model calls. Sonnet #1213 remains separately prepared;
+its catalog/SDK-disable changes overlap and must be reconciled if either lands.
+Nix #1357 is ready atdd38f42e3 with all local/native gates complete; final CI and
+macOS artifact review are watched. No release.
+
 ## Current #1356 acceptance — full local and actual source/package pass
 
 Delivery [#1356](https://github.com/rynfar/meridian/pull/1356) incorporates

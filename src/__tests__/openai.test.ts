@@ -1449,6 +1449,14 @@ describe("createSseTranslator", () => {
 // ---------------------------------------------------------------------------
 
 describe("buildModelList", () => {
+  it("honors the SDK 1M disable switch for both included and native windows", () => {
+    for (const extended of [false, true]) {
+      const models = buildModelList(extended, 123, true)
+      expect(models.every(model => model.context_window === 200_000)).toBe(true)
+      expect(models.every(model => model.created === 123)).toBe(true)
+    }
+  })
+
   it("advertises Haiku 5.5 native 1M context and adaptive-only thinking on every plan", () => {
     for (const extended of [false, true]) {
       const models = buildModelList(extended)
@@ -1462,11 +1470,11 @@ describe("buildModelList", () => {
       expect(models.filter(m => m.id === "claude-haiku-5-5")).toHaveLength(1)
     }
   })
-  it("advertises Opus 5.5 adaptive thinking and plan-appropriate context", () => {
+  it("advertises Opus 5.5 adaptive thinking and native 1M context", () => {
     for (const extended of [false, true]) {
       const model = buildModelList(extended).find(m => m.id === "claude-opus-5-5")!
       expect(model.display_name).toBe("Claude Opus 5.5")
-      expect(model.context_window).toBe(extended ? 1_000_000 : 200_000)
+      expect(model.context_window).toBe(1_000_000)
       expect(model.capabilities!.thinking.types.adaptive.supported).toBe(true)
       expect(model.capabilities!.thinking.types.enabled.supported).toBe(false)
     }
@@ -1498,12 +1506,12 @@ describe("buildModelList", () => {
     expect(ids).toContain("claude-opus-4-8")
   })
 
-  it("Max subscription gets 1M context for every Fable version, 200k otherwise", () => {
+  it("every subscription gets the native 1M window for both Fable versions", () => {
     for (const id of ["claude-fable-5-1", "claude-fable-5"]) {
       const fableMax = buildModelList(true).find(m => m.id === id)!
       const fableFree = buildModelList(false).find(m => m.id === id)!
       expect(fableMax.context_window).toBe(1_000_000)
-      expect(fableFree.context_window).toBe(200_000)
+      expect(fableFree.context_window).toBe(1_000_000)
     }
   })
 
@@ -1521,7 +1529,7 @@ describe("buildModelList", () => {
     expect(opus48.context_window).toBe(1_000_000)
   })
 
-  it("non-Max gets 200k context for sonnet and all opus variants", () => {
+  it("non-Max keeps legacy Opus 4.6 at 200k and gives newer Opus its native 1M window", () => {
     const models = buildModelList(false)
     const sonnet = models.find(m => m.id === "claude-sonnet-4-6")!
     const opus5 = models.find(m => m.id === "claude-opus-5")!
@@ -1529,10 +1537,10 @@ describe("buildModelList", () => {
     const opus47 = models.find(m => m.id === "claude-opus-4-7")!
     const opus48 = models.find(m => m.id === "claude-opus-4-8")!
     expect(sonnet.context_window).toBe(200_000)
-    expect(opus5.context_window).toBe(200_000)
+    expect(opus5.context_window).toBe(1_000_000)
     expect(opus46.context_window).toBe(200_000)
-    expect(opus47.context_window).toBe(200_000)
-    expect(opus48.context_window).toBe(200_000)
+    expect(opus47.context_window).toBe(1_000_000)
+    expect(opus48.context_window).toBe(1_000_000)
   })
 
   // #498: Home Assistant 2026.5's Anthropic integration reads
