@@ -1,0 +1,249 @@
+bun test v1.3.14 (0d9b296a)
+
+src/__tests__/replay-budget.test.ts:
+(pass) replay budget > returns the same array when it fits [0.16ms]
+(pass) replay budget > keeps a small head, drops oldest groups, and reports exact omissions without mutation [0.11ms]
+(pass) replay budget > drops a head over ten percent and never skips a non-fitting group [0.03ms]
+(pass) replay budget > keeps the whole live tail even when it alone exceeds budget [0.02ms]
+(pass) replay budget > omits a non-user prefix in the middle [0.02ms]
+(pass) replay budget > drops even a small head when the live tail leaves no room for it [0.01ms]
+(pass) replay budget > does not separate historical tool results from their originating request [0.06ms]
+(pass) replay budget > keeps the originating request with a live result-only turn [0.03ms]
+(pass) replay budget > estimates Cyrillic higher than equal-length ASCII [0.01ms]
+(pass) replay budget > counts media, tool payloads and text but not replay-dropped thinking [0.02ms]
+(pass) replay budget > uses the resolved model's context variant [0.08ms]
+(pass) replay budget > budgets native Haiku 5.5 without an SDK haiku[1m] alias [0.01ms]
+(pass) replay budget > does not widen explicit or configured legacy Haiku pins [0.02ms]
+(pass) replay budget > budgets plain sonnet at 1M when it resolves to supported Sonnet 5/5.5 (#1212) [0.02ms]
+(pass) replay budget > respects the CLI's explicit 1M disable flag even for native Sonnet [0.02ms]
+(pass) replay budget > keeps the reserve proportionate to the window [0.02ms]
+(pass) replay budget > honours the budget override and ignores unusable values [0.03ms]
+
+src/__tests__/models.test.ts:
+(pass) mapModelToClaudeModel > maps opus 4.6 models to opus[1m] [0.19ms]
+(pass) mapModelToClaudeModel > maps opus 4.8 models to opus[1m]
+(pass) mapModelToClaudeModel > maps opus 4.5 models to opus (no 1M)
+(pass) mapModelToClaudeModel > maps haiku models to haiku
+(pass) mapModelToClaudeModel > maps sonnet 4.6 models to sonnet (200k) for max subscriptions by default
+(pass) mapModelToClaudeModel > maps sonnet 4.5 models to sonnet (no 1M regardless of subscription)
+(pass) mapModelToClaudeModel > maps sonnet models to plain sonnet for non-max subscriptions
+(pass) mapModelToClaudeModel > defaults unknown models to plain sonnet for non-max subscriptions
+(pass) mapModelToClaudeModel > respects explicit sonnet[1m] override when opted in
+(pass) mapModelToClaudeModel > sonnet[1m] override still skips [1m] for subagents
+(pass) mapModelToClaudeModel > sonnet[1m] override still skips [1m] during cooldown [0.06ms]
+(pass) mapModelToClaudeModel > MERIDIAN_1M_CONTEXT_SUPPORT opt-out > downgrades opus[1m] to opus when disabled [0.02ms]
+(pass) mapModelToClaudeModel > MERIDIAN_1M_CONTEXT_SUPPORT opt-out > downgrades sonnet[1m] override to sonnet when disabled
+(pass) mapModelToClaudeModel > MERIDIAN_1M_CONTEXT_SUPPORT opt-out > accepts false/no spellings and the CLAUDE_PROXY_ alias [0.01ms]
+(pass) mapModelToClaudeModel > MERIDIAN_1M_CONTEXT_SUPPORT opt-out > leaves 1M selection intact for other values [0.01ms]
+(pass) mapModelToClaudeModel > fable 5 > maps fable to fable[1m] for primary agents (mirrors opus) [0.02ms]
+(pass) mapModelToClaudeModel > fable 5 > gives subagents base fable regardless of subscription [0.01ms]
+(pass) mapModelToClaudeModel > fable 5 > routes claude-fable-5-1 through the same tier as claude-fable-5 [0.02ms]
+(pass) mapModelToClaudeModel > fable 5 > downgrades fable[1m] to fable during the Extra Usage cooldown
+(pass) mapModelToClaudeModel > fable 5 > downgrades fable[1m] to fable when MERIDIAN_1M_CONTEXT_SUPPORT=0
+(pass) mapModelToClaudeModel > fable 5 > stripExtendedContext and hasExtendedContext handle fable[1m] [0.01ms]
+(pass) mapModelToClaudeModel > mythos 5 (rides the fable tier) > maps mythos to fable[1m] for primary agents instead of falling through to sonnet [0.02ms]
+(pass) mapModelToClaudeModel > mythos 5 (rides the fable tier) > gives subagents base fable
+(pass) mapModelToClaudeModel > mythos 5 (rides the fable tier) > downgrades to base fable during the Extra Usage cooldown
+(pass) mapModelToClaudeModel > mythos 5 (rides the fable tier) > downgrades to base fable when MERIDIAN_1M_CONTEXT_SUPPORT=0
+(pass) mapModelToClaudeModel > mythos 5 (rides the fable tier) > routes claude-mythos-5-1 through the fable tier too
+(pass) mapModelToClaudeModel > subagent mode > gives subagents base sonnet regardless of subscription
+(pass) mapModelToClaudeModel > subagent mode > gives subagents base opus regardless of subscription
+(pass) mapModelToClaudeModel > subagent mode > haiku is unaffected by agent mode
+(pass) mapModelToClaudeModel > subagent mode > primary agents get opus[1m] but sonnet (200k) for max subscription
+(pass) mapModelToClaudeModel > subagent mode > null or missing agentMode behaves as primary
+(pass) mapModelToClaudeModel > subagent mode > env var override to sonnet[1m] is still blocked for subagents
+(pass) per-tier 1M overrides > with no override set, defaults are unchanged [0.04ms]
+(pass) per-tier 1M overrides > MERIDIAN_FABLE_MODEL=fable forces the base variant
+(pass) per-tier 1M overrides > MERIDIAN_OPUS_MODEL=opus forces the base variant
+(pass) per-tier 1M overrides > the fable override does not affect opus [0.01ms]
+(pass) per-tier 1M overrides > the opus override does not affect fable [0.01ms]
+(pass) per-tier 1M overrides > neither override affects sonnet or haiku [0.01ms]
+(pass) per-tier 1M overrides > explicit [1m] values are accepted as a documented no-op
+[PROXY] Unrecognized MERIDIAN_FABLE_MODEL value "nonsense"; expected "fable" or "fable[1m]" — ignoring, fable[1m] remains the default
+(pass) per-tier 1M overrides > an unrecognized value is ignored, not treated as an opt-out [0.04ms]
+(pass) per-tier 1M overrides > surrounding whitespace is normalized [0.01ms]
+(pass) per-tier 1M overrides > case is normalized
+(pass) per-tier 1M overrides > case is normalized for opus
+(pass) per-tier 1M overrides > the [1m] no-op tolerates whitespace/case and warns nothing [0.03ms]
+(pass) per-tier 1M overrides > warns at most once per process per variable for an unrecognized value [0.04ms]
+(pass) per-tier 1M overrides > the CLAUDE_PROXY_ aliases work identically [0.01ms]
+(pass) per-tier 1M overrides > MERIDIAN_ takes precedence over CLAUDE_PROXY_
+(pass) per-tier 1M overrides > the fable override covers mythos, which rides the fable tier
+(pass) per-tier 1M overrides > subagents still get the base variant regardless of override [0.01ms]
+(pass) per-tier 1M overrides > the Extra Usage cooldown still forces the base variant [0.01ms]
+(pass) stripExtendedContext > strips [1m] from opus
+(pass) stripExtendedContext > strips [1m] from sonnet
+(pass) stripExtendedContext > returns haiku unchanged
+(pass) stripExtendedContext > returns base models unchanged
+(pass) hasExtendedContext > returns true for [1m] models
+(pass) hasExtendedContext > returns false for base models
+(pass) sonnetHasNative1mContext (#1212) > is true for supported Sonnet 5 and 5.5 ids, including the canonical pin [0.01ms]
+(pass) sonnetHasNative1mContext (#1212) > is false for Sonnet 4.x, other tiers, aliases and unknown ids [0.03ms]
+(pass) subscriptionIncludesExtendedContext > includes max and its usage variants [0.04ms]
+(pass) subscriptionIncludesExtendedContext > includes team and enterprise
+(pass) subscriptionIncludesExtendedContext > excludes pro, free, and unknown tiers
+(pass) subscriptionIncludesExtendedContext > is case and whitespace insensitive
+(pass) subscriptionIncludesExtendedContext > excludes missing or empty tiers
+(pass) Extra Usage cooldown > isExtendedContextKnownUnavailable is false by default [0.01ms]
+(pass) Extra Usage cooldown > isExtendedContextKnownUnavailable is true immediately after recording
+(pass) Extra Usage cooldown > mapModelToClaudeModel returns sonnet (not [1m]) during cooldown
+(pass) Extra Usage cooldown > sonnet stays sonnet even when cooldown is cleared (default is 200k)
+(pass) Extra Usage cooldown > sonnet[1m] override works when cooldown is cleared
+(pass) Extra Usage cooldown > isExtendedContextKnownUnavailable is false after cooldown expires
+(pass) Extra Usage cooldown > opus[1m] also skips [1m] during cooldown
+(pass) Extra Usage cooldown > cooldown does not affect subagent mode (already uses base model)
+(pass) Extra Usage cooldown > cooldown does not affect MERIDIAN_SONNET_MODEL override
+(pass) isClosedControllerError > returns true for Controller is already closed error [0.02ms]
+(pass) isClosedControllerError > returns true when message contains the phrase
+(pass) isClosedControllerError > returns false for other errors
+(pass) isClosedControllerError > returns false for non-Error values
+(pass) resolveSdkModelDefaults > returns canonical pins when no overrides set [0.02ms]
+(pass) resolveSdkModelDefaults > MERIDIAN_DEFAULT_OPUS_MODEL override wins over the canonical default
+(pass) resolveSdkModelDefaults > MERIDIAN_DEFAULT_SONNET_MODEL override wins over the canonical default
+(pass) resolveSdkModelDefaults > MERIDIAN_DEFAULT_HAIKU_MODEL override wins over the canonical default
+(pass) resolveSdkModelDefaults > MERIDIAN_DEFAULT_FABLE_MODEL override wins over the canonical default
+(pass) resolveSdkModelDefaults > returns only the four ANTHROPIC_DEFAULT_* keys — nothing else [0.02ms]
+(pass) resolveSdkModelDefaults > defaults to process.env when no arg given (production codepath)
+(pass) extended-context bench is per profile (#862) > keeps one account's Extra Usage failure from benching [1m] on another [0.01ms]
+(pass) extended-context bench is per profile (#862) > benches [1m] until the supplied rate-limit reset [0.01ms]
+(pass) extended-context bench is per profile (#862) > does not bench when the supplied reset has already passed
+(pass) extended-context bench is per profile (#862) > lets a later bench extend an earlier one, but never lets an earlier shorten it
+(pass) extended-context bench is per profile (#862) > reports the bench through isExtendedContextKnownUnavailable per profile
+(pass) rate-limit bench is scoped to the session that earned it (#901) > leaves a concurrent sibling on [1m] when one session is rate-limited [0.02ms]
+(pass) rate-limit bench is scoped to the session that earned it (#901) > does not leak a session bench to the same session id on another profile
+(pass) rate-limit bench is scoped to the session that earned it (#901) > keeps a session bench invisible to the profile-wide check
+(pass) rate-limit bench is scoped to the session that earned it (#901) > stays profile-wide for a client with no session identity
+(pass) rate-limit bench is scoped to the session that earned it (#901) > keeps Extra Usage exhaustion profile-wide — that one really is account-scoped
+(pass) rate-limit bench is scoped to the session that earned it (#901) > does not bench a session when the supplied reset has already passed
+(pass) rate-limit bench is scoped to the session that earned it (#901) > lets a later session bench extend an earlier one, never shorten it [0.01ms]
+(pass) rate-limit bench is scoped to the session that earned it (#901) > clears session benches along with their profile on reset [0.03ms]
+(pass) rate-limit bench is scoped to the session that earned it (#901) > applies the same scoping to the fable and sonnet[1m] tiers [0.02ms]
+
+src/__tests__/openai.test.ts:
+(pass) extractOpenAiContent > returns string content as-is [0.03ms]
+(pass) extractOpenAiContent > extracts text from content array [0.03ms]
+(pass) extractOpenAiContent > summarizes image parts in text extraction [0.01ms]
+(pass) extractOpenAiContent > returns empty string for empty array
+(pass) translateOpenAiToAnthropic > returns null for missing messages [0.13ms]
+(pass) translateOpenAiToAnthropic > returns null for empty messages array
+(pass) translateOpenAiToAnthropic > translates a single user message [0.05ms]
+(pass) translateOpenAiToAnthropic > extracts system message into system field [0.01ms]
+(pass) translateOpenAiToAnthropic > concatenates multiple system messages
+(pass) translateOpenAiToAnthropic > packs multi-turn history into system context [0.06ms]
+(pass) translateOpenAiToAnthropic > preserves append-only history for keyed Jcode sessions [0.02ms]
+(pass) translateOpenAiToAnthropic > prepends system message before conversation history [0.04ms]
+(pass) translateOpenAiToAnthropic > defaults model to the canonical Sonnet
+(pass) translateOpenAiToAnthropic > passes through specified model
+(pass) translateOpenAiToAnthropic > defaults max_tokens to 8192
+(pass) translateOpenAiToAnthropic > uses max_completion_tokens as fallback
+(pass) translateOpenAiToAnthropic > max_tokens takes precedence over max_completion_tokens
+(pass) translateOpenAiToAnthropic > forwards temperature when present
+(pass) translateOpenAiToAnthropic > does not include temperature when absent
+(pass) translateOpenAiToAnthropic > forwards top_p when present
+(pass) translateOpenAiToAnthropic > maps assistant role correctly
+(pass) translateOpenAiToAnthropic > keeps multimodal history as placeholders in packed system context [0.08ms]
+(pass) translateOpenAiToAnthropic > handles structured text content in messages [0.01ms]
+(pass) translateOpenAiToAnthropic > preserves data-url image blocks in the last user message [0.02ms]
+(pass) translateOpenAiToAnthropic > adds an explicit placeholder for unsupported external image urls [0.02ms]
+(pass) translateOpenAiToAnthropic > omits data URLs whose media type the API does not accept [0.01ms]
+(pass) translateOpenAiToAnthropic > normalizes the image/jpg misspelling to image/jpeg [0.01ms]
+(pass) translateOpenAiToAnthropic > sets stream from body [0.01ms]
+(pass) translateOpenAiToAnthropic > defaults stream to false when omitted
+(pass) translateOpenAiToAnthropic > tool role message → user message with tool_result block [0.07ms]
+(pass) translateOpenAiToAnthropic > tool role message with tool_call_id maps to tool_use_id [0.04ms]
+(pass) translateOpenAiToAnthropic > tool role message without tool_call_id uses empty string for tool_use_id [0.02ms]
+(pass) translateOpenAiToAnthropic > coalesces consecutive tool results of one assistant turn into a single user message [0.03ms]
+(pass) translateOpenAiToAnthropic > does not merge a tool result into a preceding plain user message [0.01ms]
+(pass) translateOpenAiToAnthropic > assistant message with tool_calls → tool_use blocks appended to content [0.02ms]
+(pass) translateOpenAiToAnthropic > assistant message with text + tool_call → both preserved [0.01ms]
+(pass) translateOpenAiToAnthropic > assistant message with multiple tool_calls → multiple tool_use blocks [0.02ms]
+(pass) translateOpenAiToAnthropic > assistant content starting with <think>...</think> is split into thinking + text blocks [0.02ms]
+(pass) translateOpenAiToAnthropic > assistant content with only <think> and no trailing text produces just a thinking block [0.01ms]
+(pass) translateOpenAiToAnthropic > function tool definition → AnthropicTool in result [0.02ms]
+(pass) translateOpenAiToAnthropic > multiple function tool definitions are all translated [0.03ms]
+(pass) translateOpenAiToAnthropic > function tool with strict flag preserves it
+(pass) translateOpenAiToAnthropic > custom tool type → returns null (unsupported)
+(pass) translateOpenAiToAnthropic > no tools provided → tools array is empty
+(pass) translateOpenAiToAnthropic > packs assistant tool_use into <tool_call name=...> markers [0.02ms]
+(pass) translateOpenAiToAnthropic > packs tool role string content into <tool_result> markers [0.02ms]
+(pass) translateOpenAiToAnthropic > packs <think> assistant content into <think>...</think> markers [0.02ms]
+(pass) translateOpenAiToAnthropic > tool role with array content: text parts wrapped in <tool_result> markers [0.09ms]
+(pass) translateOpenAiToAnthropic > assistant single text block flattens to string in turns
+(pass) translateOpenAiToAnthropic > assistant content with tool_calls keeps array form (not flattened) [0.02ms]
+(pass) translateOpenAiToAnthropic > <think> without trailing newline preserves first character of answer [0.02ms]
+(pass) translateOpenAiToAnthropic > <think> with trailing newline strips exactly one newline
+(pass) translateOpenAiToAnthropic > <think> with two trailing newlines keeps the second one
+(pass) translateOpenAiToAnthropic > <think> without closing tag is treated as plain text (no thinking block) [0.01ms]
+(pass) translateOpenAiToAnthropic > malformed tool_call arguments do not crash; raw string preserved under __raw [0.06ms]
+(pass) translateOpenAiToAnthropic > non-object JSON tool_call arguments fall back to __raw [0.02ms]
+(pass) translateOpenAiToAnthropic > valid JSON object tool_call arguments parse normally [0.02ms]
+(pass) translateOpenAiToAnthropic > function tool definition without description defaults to empty string [0.01ms]
+(pass) translateOpenAiToAnthropic > maps response_format json_schema to output_config.format [0.01ms]
+(pass) translateOpenAiToAnthropic > keeps response_format alongside output_config.effort [0.02ms]
+(pass) translateOpenAiToAnthropic > passes through an Anthropic-shaped output_config.format unchanged [0.01ms]
+(pass) translateOpenAiToAnthropic > forwards json_object intact so the boundary can reject it
+(pass) translateOpenAiToAnthropic > treats response_format text as no constraint
+(pass) translateOpenAiToAnthropic > treats an explicit null response_format as omission [0.01ms]
+(pass) translateOpenAiToAnthropic > keeps output_config.effort when response_format is null [0.01ms]
+(pass) translateOpenAiToAnthropic > forwards a non-object response_format for rejection downstream
+(pass) translateAnthropicToOpenAi > returns correct OpenAI completion shape [0.08ms]
+(pass) translateAnthropicToOpenAi > includes cache reads and writes in prompt usage [0.01ms]
+(pass) translateAnthropicToOpenAi > maps max_tokens stop_reason to length finish_reason
+(pass) translateAnthropicToOpenAi > filters out thinking blocks [0.01ms]
+(pass) translateAnthropicToOpenAi > handles empty content
+(pass) translateAnthropicToOpenAi > handles missing usage
+(pass) translateAnthropicToOpenAi > tool_use block → tool_calls on message [0.02ms]
+(pass) translateAnthropicToOpenAi > multiple tool_use blocks → multiple tool_calls [0.02ms]
+(pass) translateAnthropicToOpenAi > no tool_use blocks → tool_calls is undefined on message
+(pass) translateAnthropicToOpenAi > thinking block → reasoning_content on message
+(pass) translateAnthropicToOpenAi > multiple thinking blocks → concatenated reasoning_content [0.01ms]
+(pass) translateAnthropicToOpenAi > no thinking blocks → reasoning_content is undefined
+(pass) translateAnthropicToOpenAi > tool_use stop_reason → tool_calls finish_reason
+(pass) translateAnthropicSseEvent > message_start → role announcement chunk [0.05ms]
+(pass) translateAnthropicSseEvent > content_block_delta text_delta → content chunk
+(pass) translateAnthropicSseEvent > content_block_delta thinking_delta → null (skipped)
+(pass) translateAnthropicSseEvent > message_delta end_turn → finish chunk with stop
+(pass) translateAnthropicSseEvent > message_delta max_tokens → finish chunk with length
+(pass) translateAnthropicSseEvent > ping → null
+(pass) translateAnthropicSseEvent > content_block_start (non-tool) → null
+(pass) translateAnthropicSseEvent > content_block_stop → null
+(pass) translateAnthropicSseEvent > message_stop → null
+(pass) translateAnthropicSseEvent > chunk carries correct id, model, created, object
+(pass) translateAnthropicSseEvent > content_block_start with tool_use → tool call start chunk at index 0 (first tool) [0.02ms]
+(pass) translateAnthropicSseEvent > content_block_start with tool_use → second tool uses index 1
+(pass) translateAnthropicSseEvent > content_block_delta input_json_delta → tool call arguments chunk [0.01ms]
+(pass) translateAnthropicSseEvent > content_block_delta thinking_delta → reasoning_content chunk
+(pass) translateAnthropicSseEvent > message_delta tool_use stop_reason → tool_calls finish_reason
+(pass) createSseTranslator > first tool_use start emits index 0 [0.04ms]
+(pass) createSseTranslator > sequential tool_use starts emit ascending indexes 0, 1, 2 [0.02ms]
+(pass) createSseTranslator > input_json_delta after tool start carries the same index as the start chunk [0.01ms]
+(pass) createSseTranslator > text content_block_start does not advance the counter
+(pass) createSseTranslator > malformed tool_use start (missing name) does not advance the counter [0.01ms]
+(pass) createSseTranslator > two translator instances have independent state [0.01ms]
+(pass) createSseTranslator > non-tool events round-trip through the translator unchanged [0.02ms]
+(pass) createSseTranslator > uses ctx fields for completionId, model, created on every chunk
+(pass) createSseTranslator > realistic stream: thinking → text → tool with args → finish, in correct order [0.06ms]
+(pass) createSseTranslator > buildUsageChunk returns null when includeUsage was not requested [0.04ms]
+(pass) createSseTranslator > buildUsageChunk returns null when no message_delta.usage was observed
+(pass) createSseTranslator > buildUsageChunk returns a populated trailing chunk with empty choices when requested [0.01ms]
+(pass) createSseTranslator > buildUsageChunk uses message_start usage when message_delta omits usage [0.03ms]
+(pass) createSseTranslator > buildUsageChunk preserves start fields and applies cumulative delta overrides [0.03ms]
+(pass) buildModelList > advertises Haiku 5.5 native 1M context and adaptive-only thinking on every plan [0.09ms]
+(pass) buildModelList > advertises Opus 5.5 adaptive thinking and plan-appropriate context [0.02ms]
+(pass) buildModelList > advertises Sonnet 5.5 with its native 1M context on every plan (#1212) [0.03ms]
+(pass) buildModelList > returns 12 models
+(pass) buildModelList > includes current and legacy Fable plus the supported Sonnet and Opus models for UI pickers [0.02ms]
+(pass) buildModelList > Max subscription gets 1M context for every Fable version, 200k otherwise [0.02ms]
+(pass) buildModelList > advertises 200k for every model when the SDK's 1M window is explicitly disabled [0.02ms]
+(pass) buildModelList > Max subscription gets 1M context for all opus variants, 200k for sonnet [0.03ms]
+(pass) buildModelList > non-Max gets 200k context for sonnet and all opus variants [0.02ms]
+(pass) buildModelList > populates capabilities on every model (image_input.supported) [0.02ms]
+(pass) buildModelList > matches the Anthropic Models API capabilities shape [0.02ms]
+(pass) buildModelList > legacy Haiku 4.5 is always 200k regardless of subscription [0.02ms]
+(pass) buildModelList > all models have correct object type [0.07ms]
+(pass) buildModelList > uses provided timestamp [0.01ms]
+
+ 236 pass
+ 0 fail
+ 637 expect() calls
+Ran 236 tests across 3 files. [45.00ms]

@@ -1,0 +1,46 @@
+bun test v1.3.14 (0d9b296a)
+
+src/__tests__/proxy-plugin-message-consumption.test.ts:
+(pass) documented plugin message transforms at SDK ingress > in-place message edits cannot mutate raw ancestry (stream=false) [87.33ms]
+(pass) documented plugin message transforms at SDK ingress > rejects sparse plugin output before SDK ingress (stream=false) [4.41ms]
+(pass) documented plugin message transforms at SDK ingress > consumes transformed fresh history and retains completed tools (stream=false, structured=false) [13.80ms]
+(pass) documented plugin message transforms at SDK ingress > consumes transformed fresh history and retains completed tools (stream=false, structured=true) [11.97ms]
+(pass) documented plugin message transforms at SDK ingress > equivalent cloned history retains ordinary resume (stream=false) [28.00ms]
+(pass) documented plugin message transforms at SDK ingress > changed execution history cannot slice using raw resume offsets (stream=false) [21.94ms]
+(pass) documented plugin message transforms at SDK ingress > a transformed transcript cannot prove a later raw SDK resume (stream=false) [30.42ms]
+(pass) documented plugin message transforms at SDK ingress > transformed growing history remains a raw continuation (stream=false) [36.29ms]
+(pass) documented plugin message transforms at SDK ingress > checkpoint proof and tool pairing (stream=false, modified=false) [19.42ms]
+(pass) documented plugin message transforms at SDK ingress > checkpoint proof and tool pairing (stream=false, modified=true) [15.11ms]
+(pass) documented plugin message transforms at SDK ingress > tool inheritance retains transcript namespace eligibility (stream=false, namespaceChanged=false) [23.89ms]
+(pass) documented plugin message transforms at SDK ingress > tool inheritance retains transcript namespace eligibility (stream=false, namespaceChanged=true) [22.43ms]
+[PROXY] Undo detected (key=fixture-…): prefix overlap 2/3, rollback UUID: fixture-old-uuid.
+(pass) documented plugin message transforms at SDK ingress > transformed undo cannot inherit a raw rollback UUID (stream=false) [12.57ms]
+(pass) documented plugin message transforms at SDK ingress > overflow retries retain the transformed replay source (stream=false, tier=legacy-200k) [34.09ms]
+(pass) documented plugin message transforms at SDK ingress > overflow retries retain the transformed replay source (stream=false, tier=native-1m) [48.83ms]
+(pass) documented plugin message transforms at SDK ingress > native-1m overflow does not retry unchanged transformed history (stream=false) [18.29ms]
+(pass) documented plugin message transforms at SDK ingress > model fallback retains the transformed replay source (stream=false) [16.88ms]
+(pass) documented plugin message transforms at SDK ingress > a simulated resume refusal cannot reintroduce omitted history (stream=false) [11.34ms]
+(pass) documented plugin message transforms at SDK ingress > in-place message edits cannot mutate raw ancestry (stream=true) [17.95ms]
+(pass) documented plugin message transforms at SDK ingress > rejects sparse plugin output before SDK ingress (stream=true) [3.44ms]
+(pass) documented plugin message transforms at SDK ingress > consumes transformed fresh history and retains completed tools (stream=true, structured=false) [11.09ms]
+(pass) documented plugin message transforms at SDK ingress > consumes transformed fresh history and retains completed tools (stream=true, structured=true) [12.64ms]
+(pass) documented plugin message transforms at SDK ingress > equivalent cloned history retains ordinary resume (stream=true) [25.51ms]
+(pass) documented plugin message transforms at SDK ingress > changed execution history cannot slice using raw resume offsets (stream=true) [20.79ms]
+(pass) documented plugin message transforms at SDK ingress > a transformed transcript cannot prove a later raw SDK resume (stream=true) [33.78ms]
+(pass) documented plugin message transforms at SDK ingress > transformed growing history remains a raw continuation (stream=true) [20.21ms]
+(pass) documented plugin message transforms at SDK ingress > checkpoint proof and tool pairing (stream=true, modified=false) [15.29ms]
+(pass) documented plugin message transforms at SDK ingress > checkpoint proof and tool pairing (stream=true, modified=true) [12.18ms]
+(pass) documented plugin message transforms at SDK ingress > tool inheritance retains transcript namespace eligibility (stream=true, namespaceChanged=false) [19.59ms]
+(pass) documented plugin message transforms at SDK ingress > tool inheritance retains transcript namespace eligibility (stream=true, namespaceChanged=true) [20.32ms]
+[PROXY] Undo detected (key=fixture-…): prefix overlap 2/3, rollback UUID: fixture-old-uuid.
+(pass) documented plugin message transforms at SDK ingress > transformed undo cannot inherit a raw rollback UUID (stream=true) [11.20ms]
+(pass) documented plugin message transforms at SDK ingress > overflow retries retain the transformed replay source (stream=true, tier=legacy-200k) [25.71ms]
+(pass) documented plugin message transforms at SDK ingress > overflow retries retain the transformed replay source (stream=true, tier=native-1m) [46.22ms]
+(pass) documented plugin message transforms at SDK ingress > native-1m overflow does not retry unchanged transformed history (stream=true) [15.36ms]
+(pass) documented plugin message transforms at SDK ingress > model fallback retains the transformed replay source (stream=true) [18.99ms]
+(pass) documented plugin message transforms at SDK ingress > a simulated resume refusal cannot reintroduce omitted history (stream=true) [10.38ms]
+
+ 36 pass
+ 0 fail
+ 327 expect() calls
+Ran 36 tests across 1 file. [1046.00ms]

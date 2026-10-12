@@ -1,0 +1,20 @@
+bun test v1.3.14 (0d9b296a)
+
+src/__tests__/proxy-health-build.test.ts:
+(pass) cold executable readiness > leaves liveness responsive while asynchronous executable resolution is pending [9.39ms]
+(pass) cold executable readiness > retains the unready response when cold executable resolution fails [1.13ms]
+(pass) /v1/models profile auth context > reflects the inherited SDK 1M disable flag in model discovery [1.11ms]
+(pass) /v1/models profile auth context > uses the legacy auth context when no profiles are configured [0.88ms]
+(pass) /v1/models profile auth context > advertises 1M Opus and Fable context from the configured Max profile [0.79ms]
+(pass) /v1/models profile auth context > keeps legacy non-Max tiers at 200k while advertising native Sonnet and Haiku windows [0.58ms]
+(pass) /health build provenance > refreshes local status behind the existing optional API-key gate [2.42ms]
+(pass) /health build provenance > reports source and version on a healthy response [40.69ms]
+(pass) /health build provenance > makes no update claim before the registry check has resolved [1.44ms]
+(pass) /health build provenance > keeps the loaded provenance immutable after launcher environment changes [1.50ms]
+(pass) /health build provenance > reports an available update once the check resolves [2.07ms]
+(pass) /health build provenance > attaches build to the not-logged-in response too [0.67ms]
+
+ 12 pass
+ 0 fail
+ 63 expect() calls
+Ran 12 tests across 1 file. [881.00ms]

@@ -1,3 +1,18 @@
+## Current Sonnet #1213 preparation — 2026-10-12
+
+Current-main authored reconciliation is isolated in
+/Users/rynfar/repos/meridian-sonnet-context-1213-20261012, branch
+codex/sonnet-context-1213-20261012. Existing preparation4ddc2cc43 is preserved.
+325 focused tests and typecheck pass after correcting Haiku5.5 SDK opt-out
+catalog parity; the initial failing regression is retained. Existing Linux/x64
+slim Node image passes a credentialless container runtime check without any
+image download/build. No actual model call, new/reopened PR or source closure.
+
+[Exact source mappings, regression receipts and remaining live gate](evidence/1213-current-main-20261012/README.md).
+The legacy live script now refuses execution because its credential copy and
+cleanup/diagnostic gaps are unqualified. Prepare a replacement before inference.
+#1356 Antigravity final-head CI is watched separately; do not modify its tree.
+
 ## Current integration checkpoint — OpenCode landed
 
 #1354 merged fa90c9aaf1e99d5fbd69f6725ce8be0dcc3cfff3 after final-head CI.

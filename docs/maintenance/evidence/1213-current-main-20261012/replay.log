@@ -1,0 +1,141 @@
+bun test v1.3.14 (0d9b296a)
+
+src/__tests__/proxy-replay-envelope.test.ts:
+[PROXY] 8763c06e-0590-42d6-ab2c-9d21fd980fb8 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 8763c06e-0590-42d6-ab2c-9d21fd980fb8 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > trims a long fresh history before the SDK call [82.47ms]
+[PROXY] 6aaf3ba7-24d8-42d5-b00a-6b8739ec6bcf adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 6aaf3ba7-24d8-42d5-b00a-6b8739ec6bcf usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > does not trim plain sonnet at 200k when it resolves to Sonnet 5+ (#1212) [31.91ms]
+[PROXY] 98e403ce-2fde-4f24-9768-cea70379cb1e adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 98e403ce-2fde-4f24-9768-cea70379cb1e usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"sonnet","inherited":"claude-sonnet-4-6","disabled":"0","trimmed":true,"resolved":"claude-sonnet-4-6"} (stream=false) [31.79ms]
+[PROXY] 2a9a26bf-872e-430f-89ec-562d9611091f adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 2a9a26bf-872e-430f-89ec-562d9611091f usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"claude-sonnet-5-5","inherited":"claude-sonnet-4-6","disabled":"0","trimmed":false,"resolved":"claude-sonnet-5-5"} (stream=false) [35.24ms]
+[PROXY] c762e0ef-9d3c-419f-8675-7ad636142eeb adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] c762e0ef-9d3c-419f-8675-7ad636142eeb usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"claude-sonnet-4-6","inherited":"claude-sonnet-5-5","disabled":"0","trimmed":true,"resolved":"claude-sonnet-4-6"} (stream=false) [31.25ms]
+[PROXY] bba98665-9927-44df-b6e0-b9f272601f70 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] bba98665-9927-44df-b6e0-b9f272601f70 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"sonnet","inherited":"claude-sonnet-6-0","disabled":"0","trimmed":true,"resolved":"claude-sonnet-6-0"} (stream=false) [32.50ms]
+[PROXY] d9483a69-fb95-4310-b7f7-fa70417644a7 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] d9483a69-fb95-4310-b7f7-fa70417644a7 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"sonnet","inherited":"claude-sonnet-5-5","disabled":"1","trimmed":true,"resolved":"claude-sonnet-5-5"} (stream=false) [30.21ms]
+[PROXY] 07f096d3-9cb8-4bf8-a085-53f8c0bbce34 adapter=opencode model=sonnet stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 07f096d3-9cb8-4bf8-a085-53f8c0bbce34 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"sonnet","inherited":"claude-sonnet-4-6","disabled":"0","trimmed":true,"resolved":"claude-sonnet-4-6"} (stream=true) [38.64ms]
+[PROXY] cb847aac-a1c9-4590-85e0-d9bb9fca92ea adapter=opencode model=sonnet stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] cb847aac-a1c9-4590-85e0-d9bb9fca92ea usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"claude-sonnet-5-5","inherited":"claude-sonnet-4-6","disabled":"0","trimmed":false,"resolved":"claude-sonnet-5-5"} (stream=true) [31.16ms]
+[PROXY] 7f5b7d46-bdbd-4837-a5e4-3a6549101e9d adapter=opencode model=sonnet stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 7f5b7d46-bdbd-4837-a5e4-3a6549101e9d usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"claude-sonnet-4-6","inherited":"claude-sonnet-5-5","disabled":"0","trimmed":true,"resolved":"claude-sonnet-4-6"} (stream=true) [28.62ms]
+[PROXY] dde93552-cc8c-497c-ae69-868c21f36b2c adapter=opencode model=sonnet stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] dde93552-cc8c-497c-ae69-868c21f36b2c usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"sonnet","inherited":"claude-sonnet-6-0","disabled":"0","trimmed":true,"resolved":"claude-sonnet-6-0"} (stream=true) [30.83ms]
+[PROXY] 5fb25089-e552-4070-b1e5-689414ab8e96 adapter=opencode model=sonnet stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 5fb25089-e552-4070-b1e5-689414ab8e96 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > matches the actual SDK pin and disable flag for {"request":"sonnet","inherited":"claude-sonnet-5-5","disabled":"1","trimmed":true,"resolved":"claude-sonnet-5-5"} (stream=true) [29.46ms]
+[PROXY] 4ac7d58f-86fb-4b13-ae08-b182db566a8b adapter=opencode model=opus[1m] stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 4ac7d58f-86fb-4b13-ae08-b182db566a8b rate-limited on [1m], retrying with opus
+[PROXY] 4ac7d58f-86fb-4b13-ae08-b182db566a8b usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > rebudgets fresh replay after rate limit exceeded (stream=false) [39.75ms]
+[PROXY] 13452283-7b32-46a5-8eef-dfa5d9084297 adapter=opencode model=opus[1m] stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 13452283-7b32-46a5-8eef-dfa5d9084297 extra usage required for [1m], falling back to opus (skipping [1m] for 1h)
+[PROXY] 13452283-7b32-46a5-8eef-dfa5d9084297 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > rebudgets fresh replay after extra usage required for 1m (stream=false) [37.89ms]
+[PROXY] 91e88169-d265-452c-a7ce-d22f1de752fc adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=15 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → user[string]
+(pass) bounded fresh replay > does not retry an overflowing indivisible live tail (stream=false) [47.02ms]
+[PROXY] d80927b9-39c2-490d-a520-acf08f9303fc adapter=opencode model=sonnet stream=false tools=0 lineage=continuation session=sdk-budg sdkActive=0/10 sdkQueued=0 sessionWait=1ms msgCount=16 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] d80927b9-39c2-490d-a520-acf08f9303fc session unusable (missing-message), evicting and replaying as fresh session
+[PROXY] d80927b9-39c2-490d-a520-acf08f9303fc usage: input=5 output=2 cache=0%
+[PROXY] d80927b9-39c2-490d-a520-acf08f9303fc TOKEN WARN: Cache hit rate 0% on resume — normal after proxy restart, cache will re-prime on next turn.
+(pass) bounded fresh replay > budgets the fresh fallback after a refused resume (stream=false) [47.32ms]
+[PROXY] Undo detected (key=sess-bud…): prefix overlap 13/16, rollback UUID: none (legacy session).
+[PROXY] d770a6f3-965e-4a90-a167-1421ec166989 adapter=opencode model=sonnet stream=false tools=0 lineage=undo session=new sdkActive=0/10 sdkQueued=0 sessionWait=1ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] d770a6f3-965e-4a90-a167-1421ec166989 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > budgets undo without a rollback point (stream=false) [35.93ms]
+[PROXY] 6f7f6a2c-79f7-4db1-9828-5a2399453287 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 6f7f6a2c-79f7-4db1-9828-5a2399453287 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > retries fresh overflow with a smaller prompt (stream=false) [34.25ms]
+[PROXY] 2c13713a-45bd-4199-9640-2db842406233 adapter=opencode model=sonnet stream=false tools=0 lineage=continuation session=sdk-over sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=3 msgs=user[string] → assistant[string] → user[string]
+(pass) bounded fresh replay > does not retry resumed overflow (stream=false) [27.83ms]
+[PROXY] f7b0df64-11d8-4b6b-8af1-f25c6f40f19b adapter=opencode model=opus[1m] stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] f7b0df64-11d8-4b6b-8af1-f25c6f40f19b rate-limited on [1m], retrying with opus
+[PROXY] f7b0df64-11d8-4b6b-8af1-f25c6f40f19b usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > rebudgets fresh replay after rate limit exceeded (stream=true) [37.06ms]
+[PROXY] ad6073bb-092e-42a6-8555-86c0a1a8cfd0 adapter=opencode model=opus[1m] stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] ad6073bb-092e-42a6-8555-86c0a1a8cfd0 extra usage required for [1m], falling back to opus (skipping [1m] for 1h)
+[PROXY] ad6073bb-092e-42a6-8555-86c0a1a8cfd0 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > rebudgets fresh replay after extra usage required for 1m (stream=true) [57.87ms]
+[PROXY] 9c3149fd-a8b4-4f05-a1ef-98b2f8a6afcb adapter=opencode model=sonnet stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=15 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → user[string]
+(pass) bounded fresh replay > does not retry an overflowing indivisible live tail (stream=true) [63.56ms]
+[PROXY] be0c9a9f-d14f-481b-969f-f6497d1493ad adapter=opencode model=sonnet stream=true tools=0 lineage=continuation session=sdk-budg sdkActive=0/10 sdkQueued=0 sessionWait=3ms msgCount=16 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] be0c9a9f-d14f-481b-969f-f6497d1493ad session unusable (missing-message), evicting and replaying as fresh session
+[PROXY] be0c9a9f-d14f-481b-969f-f6497d1493ad usage: input=5 output=2 cache=0%
+[PROXY] be0c9a9f-d14f-481b-969f-f6497d1493ad TOKEN WARN: Cache hit rate 0% on resume — normal after proxy restart, cache will re-prime on next turn.
+(pass) bounded fresh replay > budgets the fresh fallback after a refused resume (stream=true) [89.90ms]
+[PROXY] Undo detected (key=sess-bud…): prefix overlap 13/16, rollback UUID: none (legacy session).
+[PROXY] 269bec58-aee6-4284-9468-9ec06230f36f adapter=opencode model=sonnet stream=true tools=0 lineage=undo session=new sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 269bec58-aee6-4284-9468-9ec06230f36f usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > budgets undo without a rollback point (stream=true) [48.19ms]
+[PROXY] 8724a0ff-f45c-4256-9e4c-17128e744803 adapter=opencode model=sonnet stream=true tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 8724a0ff-f45c-4256-9e4c-17128e744803 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > retries fresh overflow with a smaller prompt (stream=true) [53.11ms]
+[PROXY] 4abb8bed-e652-4c72-a74f-d2faf9833334 adapter=opencode model=sonnet stream=true tools=0 lineage=continuation session=sdk-over sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=3 msgs=user[string] → assistant[string] → user[string]
+(pass) bounded fresh replay > does not retry resumed overflow (stream=true) [45.04ms]
+[PROXY] 097a643f-07e0-43ac-97e6-44a90fb0e34f adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[text,image]
+[PROXY] 097a643f-07e0-43ac-97e6-44a90fb0e34f usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > renders the string omission marker in structured replays and rebuilds them on overflow [51.36ms]
+[PROXY] 6e2be9d3-5917-47cd-9b0d-9922e56c6f05 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 6e2be9d3-5917-47cd-9b0d-9922e56c6f05 usage: input=5 output=2 cache=0%
+(pass) bounded fresh replay > uses token counts in an overflow error to reduce the retry budget [66.22ms]
+[PROXY] 4771eff7-fdfe-4dd2-8a3a-d0589a01665b adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=14 msgs=user[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → user[string]
+(pass) bounded fresh replay > returns the existing context error after at most two retries [66.04ms]
+[PROXY] 22560453-b718-4fbd-aec9-3a90f799c66a adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=4 msgs=user[string] → assistant[string] → user[tool_result] → user[string]
+[PROXY] 22560453-b718-4fbd-aec9-3a90f799c66a usage: input=5 output=2 cache=0%
+(pass) fresh-session replay envelope (#619) > frames a fresh multi-turn replay and separates the live user message [33.39ms]
+[PROXY] 4e8e5a85-8e43-4701-94e8-19e4de37b78e adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=1 msgs=user[string]
+[PROXY] 4e8e5a85-8e43-4701-94e8-19e4de37b78e usage: input=5 output=2 cache=0%
+(pass) fresh-session replay envelope (#619) > leaves single-message fresh conversations bare [27.76ms]
+[PROXY] bf7c934e-5129-4e49-a219-bf607b324702 adapter=opencode model=sonnet stream=false tools=0 lineage=continuation session=sdk-prio sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=3 msgs=user[string] → assistant[string] → user[string]
+[PROXY] bf7c934e-5129-4e49-a219-bf607b324702 usage: input=5 output=2 cache=0%
+[PROXY] bf7c934e-5129-4e49-a219-bf607b324702 TOKEN WARN: Cache hit rate 0% on resume — normal after proxy restart, cache will re-prime on next turn.
+(pass) fresh-session replay envelope (#619) > keeps resume deltas bare — no envelope on continuation [31.54ms]
+[PROXY] Stale session detected (key=sess-712…): prefix overlap 6/8, incoming 10 msgs. Starting fresh replay.
+  first mismatch at index 6: stored=9aef8576f888 incoming=eee90c558878, incoming now assistant[string] 22B, stored 1 blocks -> incoming 1 blocks (rewritten)
+[PROXY] 8294e629-2e92-4538-b61b-a8e5a0fc7748 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=modified-history sdkActive=0/10 sdkQueued=0 sessionWait=2ms msgCount=10 msgs=user[string] → assistant[string] → user[string] → assistant[string] → user[string] → assistant[string] → assistant[string] → user[string] → assistant[string] → user[string]
+[PROXY] 8294e629-2e92-4538-b61b-a8e5a0fc7748 SESSION RECOVERY: previous conversation available. Run: claude --resume sdk-712
+[PROXY] 8294e629-2e92-4538-b61b-a8e5a0fc7748 usage: input=5 output=2 cache=0%
+(pass) stateless client with a trailing injected block (#712) > delivers the user's message, not the injected prefill [29.03ms]
+[PROXY] e240fa70-3a6f-46d3-b907-63672ec5c68c adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=1 msgs=user[string]
+[PROXY] e240fa70-3a6f-46d3-b907-63672ec5c68c usage: input=5 output=2 cache=0%
+(pass) user-authored <thinking> survives (#720) > delivers a user's <thinking> block to the model [27.91ms]
+[PROXY] cd158b18-b822-458c-bc06-d2c96be3e14d adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=1 msgs=user[string]
+[PROXY] cd158b18-b822-458c-bc06-d2c96be3e14d usage: input=5 output=2 cache=0%
+(pass) user-authored <thinking> survives (#720) > still strips harness tags from the same message [25.79ms]
+[PROXY] 7a56a00a-9026-4d55-adc3-8ccea39d51f3 adapter=opencode model=sonnet stream=false tools=0 lineage=continuation session=sdk-720- sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=3 msgs=user[string] → assistant[string] → user[string]
+[PROXY] 7a56a00a-9026-4d55-adc3-8ccea39d51f3 usage: input=5 output=2 cache=0%
+[PROXY] 7a56a00a-9026-4d55-adc3-8ccea39d51f3 TOKEN WARN: Cache hit rate 0% on resume — normal after proxy restart, cache will re-prime on next turn.
+(pass) user-authored <thinking> survives (#720) > survives on the resume path, not just full replay [30.33ms]
+[PROXY] fcda16a5-e88d-4845-a82b-207c91299632 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=3 msgs=user[string] → assistant[string] → user[string]
+[PROXY] fcda16a5-e88d-4845-a82b-207c91299632 usage: input=5 output=2 cache=0%
+(pass) assistant content: Meridian's own markers stripped on replay (#724) > does not replay Meridian's 'Files changed:' summary back to the model [27.02ms]
+[PROXY] 9dedf353-4436-4144-8b6c-c98b273c8ba1 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=3 msgs=user[string] → assistant[string] → user[string]
+[PROXY] 9dedf353-4436-4144-8b6c-c98b273c8ba1 usage: input=5 output=2 cache=0%
+(pass) assistant content: Meridian's own markers stripped on replay (#724) > leaves XML tags in assistant output alone — that is the model's own answer [24.86ms]
+[PROXY] 08147c1b-730a-4465-9c40-72270291c153 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=1 msgs=user[string]
+[PROXY] 08147c1b-730a-4465-9c40-72270291c153 usage: input=5 output=2 cache=0%
+(pass) assistant content: Meridian's own markers stripped on replay (#724) > still strips the same markers from user-authored text [25.36ms]
+[PROXY] 7219d8bd-baa1-4314-a150-86df4c5878fd adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=1 msgs=user[string]
+[PROXY] 7219d8bd-baa1-4314-a150-86df4c5878fd usage: input=5 output=2 cache=0%
+(pass) MERIDIAN_STRIP_THINKING env escape hatch > leaves <thinking> intact when the env var is unset (default) [24.39ms]
+[PROXY] 04427a31-7914-4d0d-961d-783d5dc62d91 adapter=opencode model=sonnet stream=false tools=0 lineage=new session=new diverged=not-found sdkActive=0/10 sdkQueued=0 sessionWait=0ms msgCount=1 msgs=user[string]
+[PROXY] 04427a31-7914-4d0d-961d-783d5dc62d91 usage: input=5 output=2 cache=0%
+(pass) MERIDIAN_STRIP_THINKING env escape hatch > strips <thinking> through the real HTTP path when MERIDIAN_STRIP_THINKING=1 [25.48ms]
+
+ 41 pass
+ 0 fail
+ 177 expect() calls
+Ran 41 tests across 1 file. [1.86s]
