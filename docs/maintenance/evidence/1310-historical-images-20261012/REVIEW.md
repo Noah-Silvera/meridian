@@ -90,3 +90,33 @@ supported SDK assistant history. This is a harness correction, not a product fix
 The initial FAIL report is retained; it does not prove image duplication. All
 original actors/pipes joined, driver exited 1, and temporary grant was removed.
 No refresh, account switch or Extra Usage change occurred.
+
+## Actual Pi/SDK before and after, plus adjacent four-mode proof
+
+Same corrected harness b92cc66f: published 1.81.0 baseline yields historical SDK
+image counts 1,2 across two fresh actual Pi sessions with a real same-byte read in
+each. Clean installed candidate b6624d9f yields 1,1,1 across three sessions, then
+one historical and one genuine current red image in the fourth. Pi 1.1.0,
+SDK 0.2.141, native CLI 2.1.296, Node22.22.3, Darwin ARM64. Supported SDK history
+confirms Opus 5.5 in every observed assistant message. Baseline/candidate Pi scrub
+0.2.2 hooks run 4/7 times, zero errors. Real tool reads run exactly once per feedback
+cycle; current-image control uses none. Original processes/pipes join, drivers
+exit 0 (baseline PASS means defect reproduced), grants removed. Extra Usage disabled.
+No refresh, account switch or billing enablement occurred.
+
+All four E41 modes pass on frozen source b92cc66f in Linux amd64 Docker, with
+actual installed OpenCode V1 hook and server scrub 0.2.3. Exact Opus 5.5, sequential
+1+1+1 and parallel 3 calls, result identity, immutable source history, forks,
+follow-up and cache predicates pass. Every original actor/pipe joins; all grants
+removed. This is the protocol host, not the OpenCode executable. Receipts adjacent.
+The actual Pi history/current-media checks cover the implicated E65 behavior;
+no separate Oh My Pi executable run or release qualification is claimed.
+
+Final adversarial correction: Node accepts malformed base64 padding such as a
+missing required equals sign. The old key could therefore hide an invalid repeated
+image behind a valid copy. A new control fails before correction (5 pass/1 fail)
+and passes after requiring padded strings to match canonical encoding exactly.
+Correctly unpadded representations still deduplicate by bytes. All 20 pure replay
+controls and typecheck pass. This changes only malformed-padding handling; the
+valid-image Pi and no-image E41 flows above are unchanged. Final full local gates
+and a clean final package qualification remain before merge, as does final-head CI.

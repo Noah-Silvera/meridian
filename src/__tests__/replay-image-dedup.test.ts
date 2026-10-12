@@ -43,6 +43,12 @@ describe("historical image replay deduplication", () => {
     expect(imageBlocks(frameStructuredReplay(source))).toEqual([image,jpeg,url,url,invalid,invalid])
   })
 
+  it("does not hide malformed padding behind an otherwise matching valid image", () => {
+    const malformed = {...image,source:{...image.source,data:image.source.data.slice(0,-1)}}
+    const source=[entry([image,malformed,malformed]),entry("current")]
+    expect(imageBlocks(frameStructuredReplay(source))).toEqual([image,malformed,malformed])
+  })
+
   it("also deduplicates history when replay ends in an assistant context turn", () => {
     expect(imageBlocks(frameStructuredReplay([entry([image,image]),entry("[Assistant: prior answer]")],false))).toEqual([image])
   })

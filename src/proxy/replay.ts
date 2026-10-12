@@ -46,7 +46,9 @@ function historicalImageKey(block: unknown): string | undefined {
   const encoded = source.data.replace(/\s/g, "")
   if (!encoded || !/^[A-Za-z0-9+/]+={0,2}$/.test(encoded)) return
   const bytes = Buffer.from(encoded, "base64")
-  if (bytes.toString("base64").replace(/=+$/, "") !== encoded.replace(/=+$/, "")) return
+  const canonical = bytes.toString("base64")
+  if (encoded.includes("=") && encoded !== canonical) return
+  if (canonical.replace(/=+$/, "") !== encoded.replace(/=+$/, "")) return
   return createHash("sha256").update(source.media_type).update("\0").update(bytes).digest("hex")
 }
 

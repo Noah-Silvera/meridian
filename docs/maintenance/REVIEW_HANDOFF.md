@@ -1,3 +1,20 @@
+## Image actual Pi and E41 pass; malformed-padding correction — 2026-10-12
+
+#1351 has actual independently installed Pi before/after evidence: published
+1.81.0 grows historical SDK image copies 1,2; clean b6624d9f keeps 1,1,1 and retains
+a genuine current-image control. Pi1.1.0 /SDK0.2.141 /CLI2.1.296 /Opus5.5 /Darwin
+ARM64, scrub0.2.2 active; all actors/pipes joined and grants removed. Four E41
+modes also pass on b92cc66f with both OpenCode plugins in Linux Docker; original
+matrix session 27386 is terminal exit 0. No model process or grant remains.
+See [durable review](evidence/1310-historical-images-20261012/REVIEW.md).
+
+Final review found malformed padded base64 could be hidden by deduplication.
+A discriminating negative control now passes after strict padded-canonical checking.
+Valid-image live behavior is unchanged; 20 pure tests/typecheck pass. Final full
+local gate and clean final artifact qualification follow this correction; do not
+merge on the older tree alone. Original Pi metadata assertion failure is retained
+and explained (resolvedModel is Haiku-only, actual Opus is checked through SDK).
+
 ## Combined image local gate passed; live harness prepared — 2026-10-12
 
 #1351 original session 32853 is terminal exit 0: 5681 pass /35 skip /zero failures,
