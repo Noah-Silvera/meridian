@@ -65,6 +65,21 @@ describe.skipIf(process.platform === "win32")("SDK process gate close witnesses"
     } finally { await owned.cleanup() }
   }, 30000)
 
+  it("caps default POSIX TERM patience at two seconds rather than consuming the KILL reserve", async () => {
+    const owned = await fixture("resistant")
+    try {
+      await within(owned.ready, 5000, "owned resistant child not ready")
+      const started = performance.now()
+      expect(await owned.gate.closeAndJoin()).toBe(true)
+      // Old reserve-only scheduling takes about five seconds. The requested
+      // min(2000, remaining/2) TERM phase takes about 2250 ms before close.
+      expect(performance.now() - started).toBeLessThan(4000)
+      expect(owned.ignoredTerm()).toBe(true)
+      expect(owned.isClosed()).toBe(true)
+      expect(owned.child.signalCode).toBe("SIGKILL")
+    } finally { await owned.cleanup() }
+  }, 30000)
+
   it("reserves close-observation time after killing a TERM-resistant child", async () => {
     const owned = await fixture("resistant")
     try {

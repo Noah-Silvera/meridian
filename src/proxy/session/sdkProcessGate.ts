@@ -291,9 +291,12 @@ export async function createSdkProcessGate(
         // and close observation inside it, including for short caller budgets.
         if (!joined) joined = await waitForExit(exited, Math.min(250, remaining() / 4))
         if (!joined) {
-          const escalationReserve = process.platform === "win32" ? 0 : Math.min(2_000, remaining() / 2)
           killOwned("SIGTERM")
-          joined = await waitForExit(exited, Math.max(0, remaining() - escalationReserve))
+          // POSIX reserves the rest of the same deadline for KILL + close.
+          // Windows retains its existing wrapper-owned cancellation wait.
+          joined = await waitForExit(exited, process.platform === "win32"
+            ? remaining()
+            : Math.min(2_000, remaining() / 2))
         }
         if (!joined && process.platform !== "win32") {
           killOwned("SIGKILL")
