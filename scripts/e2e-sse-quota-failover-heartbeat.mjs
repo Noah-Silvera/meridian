@@ -3,19 +3,18 @@
 //
 // Assert headers/keepalive before a delayed local refusal, suppression of that
 // refusal, exactly one answering account in HTTP telemetry, and non-stream parity.
-// The fallback uses Claude Max by default; E2E_SSE_WORKING_FIXTURE=1 replaces it
-// with a local fixture and does not establish live subscription behavior.
+// Requires E2E_SSE_WORKING_FIXTURE=1. Live execution is refused before setup
+// until both mandatory plugin preflights are implemented. Fixtures do not
+// establish live subscription or actual-client behavior.
 //
-// Run against the INSTALLED package (needs real Max credentials
-// for the fallback leg):
+// Run against the INSTALLED package with credentialless local fixtures:
 //
-//   E2E_MERIDIAN_PKG=/path/to/installed/node_modules/@rynfar/meridian \
+//   E2E_SSE_WORKING_FIXTURE=1 E2E_MERIDIAN_PKG=/path/to/installed/node_modules/@rynfar/meridian \
 //     node scripts/e2e-sse-quota-failover-heartbeat.mjs
 //
 // Knobs (harness only, never server config):
 //   E2E_MERIDIAN_PKG                 package root containing dist/server.js (default .)
 //   E2E_SSE_MODEL                    model for both legs (default haiku; Fable/Opus as needed)
-//   E2E_SSE_WORKING_CLAUDE_CONFIG_DIR  credential dir for the working claude-max profile
 //   E2E_SSE_REFUSAL_DELAY_MS         fixture refusal delay (default 16000; must exceed the 15s heartbeat)
 //   E2E_SSE_WORKING_FIXTURE=1        use a local Anthropic answer fixture
 import assert from 'node:assert/strict'
@@ -59,6 +58,11 @@ const REFUSAL_DELAY_MS = Number(process.env.E2E_SSE_REFUSAL_DELAY_MS ?? 16_000)
 assert(Number.isFinite(REFUSAL_DELAY_MS) && REFUSAL_DELAY_MS > 15_000, 'the fixture refusal must be delayed past the 15s heartbeat for this gate to mean anything')
 const MODEL = process.env.E2E_SSE_MODEL ?? 'claude-haiku-4-5-20251001'
 const WORKING_FIXTURE = process.env.E2E_SSE_WORKING_FIXTURE === '1'
+// The contributor's live branch has neither matching client-plugin nor server
+// scrub qualification. Fail before creating profiles, servers or SDK queries.
+// Retain the local transport gate; real-client acceptance is a separate gate.
+assert(WORKING_FIXTURE, 'This harness is fixture-only until matching client-plugin and server-scrub live preflights are implemented; set E2E_SSE_WORKING_FIXTURE=1 for credentialless transport verification')
+
 
 const root = realpathSync(mkdtempSync(join(tmpdir(), 'meridian-sse-quota-failover-')))
 for (const key of Object.keys(process.env)) {
@@ -113,12 +117,7 @@ const workingFixture = await serveFixture(async request => {
 
 const { startProxyServer } = await import(pathToFileURL(serverModule).href)
 
-const workingProfile = WORKING_FIXTURE
-  ? { id: 'working', type: 'api', apiKey: 'local-fixture-key', baseUrl: `http://127.0.0.1:${workingFixture.port}` }
-  : { id: 'working', type: 'claude-max' }
-if (!WORKING_FIXTURE && process.env.E2E_SSE_WORKING_CLAUDE_CONFIG_DIR) {
-  workingProfile.claudeConfigDir = process.env.E2E_SSE_WORKING_CLAUDE_CONFIG_DIR
-}
+const workingProfile = { id: 'working', type: 'api', apiKey: 'local-fixture-key', baseUrl: `http://127.0.0.1:${workingFixture.port}` }
 
 const start = async () => {
   const instance = await startProxyServer({
