@@ -21,6 +21,7 @@ let
     concatStrings
     concatStringsSep
     stringToCharacters
+    toJSON
     toUpper
     upperChars
     ;
@@ -202,7 +203,7 @@ in
                 ) attrs
               );
           in
-          flatten [ ] cfg.settings ++ mapAttrsToList (mkKeyValueDefault { } "=") cfg.environment;
+          map toJSON (flatten [ ] cfg.settings ++ mapAttrsToList (mkKeyValueDefault { } "=") cfg.environment);
       };
 
       Install.WantedBy = [ "default.target" ];
