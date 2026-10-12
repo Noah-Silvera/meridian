@@ -102,7 +102,12 @@ try{
     assert(last&&!['error','aborted'].includes(last.stopReason),'Pi request did not complete')
     if(!current)assert.equal(reads,1,'Require exactly one actual client read')
     const rows=(await(await fetch(`${baseUrl}/telemetry/requests?limit=100&hops=1`)).json()).filter(r=>!seen.has(r.requestId)).sort((a,b)=>a.timestamp-b.timestamp)
-    assert(rows.length&&rows.every(r=>r.status===200&&r.adapter==='pi'&&r.resolvedModel===modelId),'Wrong route/model or failed request')
+    report.requestWitnesses??=[]
+    report.requestWitnesses.push(rows.map(r=>({status:r.status,adapter:r.adapter,requestModel:r.requestModel,model:r.model,lineageType:r.lineageType})))
+    // resolvedModel is the Haiku-tier pin, not a general served-model field.
+    // Requested Opus identity is checked here; actual identity is established
+    // below from supported SDK assistant history before the next cycle.
+    assert(rows.length&&rows.every(r=>r.status===200&&r.adapter==='pi'&&r.requestModel===modelId),'Wrong route/model or failed request')
     assert.equal(rows[0].lineageType,'new','Each cycle must use fresh replay')
     const sdkHistory=await sdk.getSessionMessages(rows[0].sdkSessionId,{dir:project})
     const blocks=sdkHistory.find(r=>r.type==='user')?.message?.content

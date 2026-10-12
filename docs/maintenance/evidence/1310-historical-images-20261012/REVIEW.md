@@ -77,3 +77,16 @@ not match the scrub, so it was replaced with the actual builder, not treated as 
 provider refusal. Wrong-client package and missing-inventory controls reject.
 Actual Pi constructor/history/read-tool setup passes with fetch disabled, zero
 network attempts and no credentials. Receipts are adjacent.
+
+## First actual Pi attempt: harness metadata failure
+
+Published 1.81.0 / actual Pi 1.1.0 / SDK 0.2.141 / native 2.1.296 on Darwin
+ARM64 completed the owned read, then the harness failed its route/model assertion.
+The source of that assertion is now identified: RequestMetric.resolvedModel is
+explicitly the Haiku-tier pin, not an Opus served-model field. The copied Haiku
+assertion was therefore invalid for this Opus gate. Corrected to requestModel for
+request identity while retaining the stronger exact actual-model assertion through
+supported SDK assistant history. This is a harness correction, not a product fix.
+The initial FAIL report is retained; it does not prove image duplication. All
+original actors/pipes joined, driver exited 1, and temporary grant was removed.
+No refresh, account switch or Extra Usage change occurred.
