@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+throw new Error("Historical Sonnet live harness is not qualified: full-credential copying and cleanup/diagnostic gaps remain. Use the current review handoff before any live execution.")
 // Linux / released OpenCode 2.0.16 / installed V2 plugin / native Sonnet 5.5.
 // Imports synthetic history through the supported client API: no SDK files
 // are read and no preparatory model turns are needed. Main fails the same

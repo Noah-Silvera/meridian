@@ -85,6 +85,8 @@ describe("replay budget", () => {
     expect(contextWindowFor("claude-haiku-5-5")).toBe(1_000_000)
     expect(replayBudgetFor("haiku", "claude-haiku-5-5")).toBe(836_000)
     expect(replayReserveFor("haiku", "claude-haiku-5-5")).toBe(64_000)
+    expect(contextWindowFor("haiku", "claude-haiku-5-5", true)).toBe(200_000)
+    expect(replayBudgetFor("haiku", "claude-haiku-5-5", true)).toBe(160_000)
   })
 
   it("does not widen explicit or configured legacy Haiku pins", () => {

@@ -7950,8 +7950,10 @@ marker and fail the no-trim assertion, while the fixed native Sonnet budget
 retains all history. Keep Sonnet 4.6, unknown future ids and
 `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` as 200k negative controls.
 
-On Linux with real OpenCode 2.0.16, SDK 0.2.141 and a Sonnet-5.5-capable
-native CLI, run `scripts/e2e-sonnet-context-v2-live.mjs` with explicit
+The historical `scripts/e2e-sonnet-context-v2-live.mjs` is disabled pending
+credential, original-process cleanup and diagnostic qualification. Do not run
+it unchanged. Its intended Linux/OpenCode 2.0.16 / SDK 0.2.141 / Sonnet 5.5
+acceptance requires explicit
 `E2E_OPENCODE_BIN`, `E2E_MERIDIAN_ROOT`, `E2E_PROFILE_CLAUDE_DIR` and
 `E2E_PROOF_DIR`. Its installed V2 plugin must discover the proxy catalog;
 the client config does not supply a context window. Supported transcript

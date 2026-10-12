@@ -1180,7 +1180,7 @@ export function buildModelList(extendedContextIncluded: boolean, now = Math.floo
       created: now,
       owned_by: "anthropic",
       display_name: "Claude Haiku 5.5",
-      context_window: 1_000_000,
+      context_window: disable1mContext ? 200_000 : 1_000_000,
       capabilities: {
         ...FULL_CAPABILITIES,
         thinking: { supported: true, types: { adaptive: { supported: true }, enabled: { supported: false } } },
