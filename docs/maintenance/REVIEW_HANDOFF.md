@@ -1,3 +1,19 @@
+## SSE installed transport comparison complete — 2026-10-12
+
+Same revised harness `932c8f92` on unchanged installed baseline and candidate:
+baseline headers 15,083 ms FAIL versus 1000 ms bound; candidate 104 ms PASS.
+Nonstream parity, first heartbeat before local refusal, one account fallback,
+suppressed error and joined processes/pipes all pass on candidate. Network disabled;
+no grants or real model requests. Original sessions 94533 /7573 are terminal exit
+1/0. Preserve earlier absolute-100ms failure; see [durable review](evidence/1214-sse-failover-20261012/REVIEW.md).
+
+#1350 merged streaming main into `0730fab1`; final combined local gate remains
+active session 8226, log `/tmp/meridian-1350-combined-gates.log`. Both installed
+transport and live client/model evidence must qualify the final tree.
+#1351 merged streaming main as `2127507c`; isolated dependency installation makes
+the same four build-observer controls pass. Full combined gate session 32853 is
+active at `/tmp/meridian-1351-combined-gates.log`. Do not restart active handles.
+
 ## SSE current-main integration — 2026-10-12
 
 Streaming main `8edccd790` is now incorporated into #1350. Product files merged

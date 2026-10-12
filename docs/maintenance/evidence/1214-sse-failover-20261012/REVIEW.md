@@ -77,3 +77,26 @@ remote model requests were involved. Report and console are retained adjacent.
 This is an installed-fixture FAIL, not a passed SSE acceptance gate. Do not rerun
 unchanged and call it fixed; review the timing predicate against the retained
 15-second delayed-header baseline and preserve a discriminating before/after check.
+
+## Discriminating installed timing control
+
+The original 100 ms failure remains preserved. The revised harness `932c8f92`
+uses a 1000 ms header deadline, still 15 times shorter than the service heartbeat.
+The assertion now targets the reported withheld-header regression with sufficient
+room for startup/scheduling overhead; it is not a claim that the earlier 335 ms
+measurement vanished or that its precise host cause was diagnosed.
+
+The exact same mounted harness ran against two independent installed packages
+with Docker network disabled. Unchanged baseline source `6ef677ce` fails at
+15,083.2 ms. Candidate `a9fece93` passes at 104.1 ms, with the first keepalive
+before the first local refusal, one refused/one served account in telemetry,
+no leaked refusal and exactly one message_start. Nonstream parity passes on both.
+Native CLI makes four local refusal HTTP calls per case; the account-level
+attempt count is one. Original actors/pipes join in both runs; driver exits 1/0.
+SDK 0.2.141/native 2.1.296, Node22.23.3, Linux amd64 emulation on Darwin ARM64.
+Receipts, installed build identities and tarball/harness hashes are adjacent.
+
+This is credentialless installed transport evidence, not a live model/account or
+OpenCode-executable run. Combined source `0730fab1` now also includes streaming
+main `8edccd790`; its full local gate is active in session 8226. Old-package
+success alone does not validate that combined tree. No credentials were staged.
