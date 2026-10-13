@@ -1,3 +1,23 @@
+## Actual Windows package gate added
+
+The Windows CI job now runs the escrowed lifecycle harness against source Bun
+and a separately npm-installed candidate tarball using Node. It asserts concurrent
+creation/reuse, launcher survival, two endpoints, targeted and repeated stop,
+and shutdown logs. Receipts plus package hash/runtime identity upload with
+`actions/upload-artifact`, including available failure receipts. Native results
+are pending; this addition is not a pass claim.
+
+Windows execution is restricted to a GitHub-hosted runner, with an allowlisted
+environment, isolated config and dummy API profile pointing at loopback port1.
+Unlike Darwin Seatbelt and the network-disabled Linux container, this Windows
+job has no OS network fence. It sends no inference request and has no account
+credentials. Actual active-model drain remains a separate plugin-qualified gate.
+Application source is unchanged from7b0e2f46; only the manual harness/workflow
+and this evidence description changed. Workflow actionlint and Node syntax
+validation pass locally. The updated harness also passes the actual independently
+installed Darwin candidate ([receipt](darwin-windows-harness-regression.json));
+that result does not substitute for the pending Windows run.
+
 ## Detached CLI #1359 — corrected native Windows checks pass
 
 Head `7b0e2f467f5139374e55645f6cb58904b047e33b` passes the

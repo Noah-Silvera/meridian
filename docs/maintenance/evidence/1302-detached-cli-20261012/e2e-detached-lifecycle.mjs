@@ -9,15 +9,19 @@ import {homedir} from 'node:os';
 import {resolve,join} from 'node:path';
 import {createHash} from 'node:crypto';
 const [runtime,entry,scratch]=process.argv.slice(2);
-if(!runtime||!entry||!scratch||!['darwin','linux'].includes(process.platform))throw new Error('Supply runtime, CLI entry and fresh scratch root on Darwin or an isolated Linux container');
+if(!runtime||!entry||!scratch||!['darwin','linux','win32'].includes(process.platform))throw new Error('Supply runtime, CLI entry and fresh scratch root on Darwin, an isolated Linux container, or a clean hosted Windows CI runner');
 const cli=resolve(entry), root=resolve(scratch), run=promisify(execFile);
-const linux=process.platform==='linux';
+const linux=process.platform==='linux', windows=process.platform==='win32';
+if(windows){
+ assert.equal(process.env.GITHUB_ACTIONS,'true','Windows proof is restricted to clean hosted CI');
+ assert.equal(process.env.RUNNER_ENVIRONMENT,'github-hosted','Do not use an account-bearing self-hosted runner');
+}
 if(linux){
  const route=await readFile('/proc/net/route','utf8');
  assert.equal(route.trim().split('\n').length,1,'Linux proof requires a network-disabled container');
  assert.equal(process.env.MERIDIAN_DETACHED_ISOLATED_CONTAINER,'1','Run only in a fresh container without credential mounts');
 }
-const launch=()=>linux?[runtime,[cli]]:['/usr/bin/sandbox-exec',['-f',join(root,'fence.sb'),runtime,cli]];
+const launch=()=>linux||windows?[runtime,[cli]]:['/usr/bin/sandbox-exec',['-f',join(root,'fence.sb'),runtime,cli]];
 await mkdir(root,{mode:0o700});
 await mkdir(join(root,'claude'),{mode:0o700});
 const quote=value=>JSON.stringify(value);
@@ -36,7 +40,7 @@ const policy=`(version 1)
 (allow process-exec (literal "/bin/ps") (with no-sandbox))
 `;
 await writeFile(join(root,'fence.sb'),policy);
-const base=Object.fromEntries(['PATH','HOME','TMPDIR','USER','LOGNAME'].filter(k=>process.env[k]).map(k=>[k,process.env[k]]));
+const base=Object.fromEntries(['PATH','HOME','TMPDIR','USER','LOGNAME',...(windows?['SystemRoot','WINDIR','TEMP','TMP','USERPROFILE','LOCALAPPDATA','APPDATA','COMSPEC','PATHEXT']:[])].filter(k=>process.env[k]).map(k=>[k,process.env[k]]));
 Object.assign(base,{MERIDIAN_CONFIG_DIR:join(root,'config'),CLAUDE_CONFIG_DIR:join(root,'claude'),MERIDIAN_CREDENTIALS_READONLY:'1',MERIDIAN_HOST:'127.0.0.1',MERIDIAN_PROFILES:JSON.stringify([{id:'offline-fixture',type:'api',apiKey:'offline-fixture-not-a-key',baseUrl:'http://127.0.0.1:1'}])});
 async function reserve(){const server=createServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));return{server,port:server.address().port};}
 const reservations=await Promise.all([reserve(),reserve()]);
@@ -61,6 +65,6 @@ try{
 }catch(error){failure=String(error);}
 finally{
  for(const port of ports)await command(port,['stop','--json']).catch(error=>{failure??=String(error)});
- await writeFile(join(root,'receipt.json'),JSON.stringify({pass:!failure,failure,cli,runtime,entrySha256:createHash('sha256').update(await readFile(cli)).digest('hex'),platform:process.platform,arch:process.arch,ports,commands,scope:'Actual CLI startup/readiness/targeted graceful stop only. No SDK inference; dummy API profile. Darwin: Seatbelt loopback/Unix sockets with ps-only read-only identity exception. Linux: network-disabled isolated container, no credential mounts.'},null,2));
+ await writeFile(join(root,'receipt.json'),JSON.stringify({pass:!failure,failure,cli,runtime,entrySha256:createHash('sha256').update(await readFile(cli)).digest('hex'),platform:process.platform,arch:process.arch,ports,commands,scope:'Actual CLI startup/readiness/targeted graceful stop only. No SDK inference; dummy API profile. Darwin: Seatbelt loopback/Unix sockets with ps-only read-only identity exception. Linux: network-disabled isolated container, no credential mounts. Windows: clean GitHub-hosted CI, allowlisted environment, dummy loopback API profile; no OS network fence.'},null,2));
 }
 console.log(JSON.stringify({pass:!failure,failure,receipt:join(root,'receipt.json')}));if(failure)process.exitCode=1;

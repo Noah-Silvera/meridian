@@ -1,3 +1,12 @@
+## Detached CLI #1359 — actual Windows package gate
+
+CI now packs and independently npm-installs the candidate, then runs actual
+source Bun and installed Node lifecycle checks on the clean hosted Windows
+runner. Sanitized receipts/package identity upload even when available after
+failure. Native outcome is pending. No application code changes or model calls;
+active-turn drain still needs qualified plugins and credentials. See the
+[evidence record](evidence/1302-detached-cli-20261012/README.md).
+
 ## Detached CLI #1359 — corrected native Windows checks pass
 
 Head `7b0e2f467f5139374e55645f6cb58904b047e33b` passes the
