@@ -1,3 +1,17 @@
+## Detached CLI #1359 — actual recovery matrix passes
+
+Actual source Bun and independently installed Node now pass original-supervisor
+SIGKILL, original supervisor close, listener release verified by rebinding,
+confirmed-dead-owner replacement after ~30s quarantine, distinct replacement
+identity, normal readiness/stop, and invalid-backend startup followed by a valid
+start. [Harness and receipts](evidence/1302-detached-cli-20261012/README.md).
+Application code remains90ec6828 with5777 full tests/typecheck/build passing;
+new additions are manual evidence and documentation. Next concrete platform gate:
+Windows currently skips Unix uid/mode guards, so equivalent ACL protection plus
+native named-pipe/lifecycle acceptance must be established. Active-turn drain
+still requires matching plugins and actual authorized model credentials. No model
+calls/auth refresh/Docker mutations. #1359 remains draft and #1302 stays open.
+
 ## Detached CLI #1359 — source and installed lifecycle verified
 
 Frozen 90ec6828 full original process 61680 exited0: 5777 pass/35 skips/0 fail

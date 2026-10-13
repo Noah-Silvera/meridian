@@ -19,8 +19,10 @@ launcher exit, private graceful stop, foreign-listener protection and abandoned
 startup cleanup. Actual source CLI passes a two-managed-port startup/reuse/stop
 matrix under a credential-isolated, loopback-only test fence (with a read-only
 /bin/ps exception needed for native process identity). The independently installed Node22.22.3 package passes the same matrix.
-Full frozen local gates pass (5777 tests, typecheck/build). Crash/stale-owner
-cases and live active-turn/platform acceptance remain open. This is useful independent progress
+Full frozen local gates pass (5777 tests, typecheck/build). Actual source and
+installed crash/stale-owner/startup-error recovery now pass, including port rebind
+and distinct replacement identity. Live active-turn/platform acceptance remains
+open; Windows equivalent private-state ACL protection is a concrete review gate. This is useful independent progress
 while the higher-priority exact-environment fixes wait; it is not ready to merge.
 [Detailed evidence](evidence/1302-detached-cli-20261012/README.md).
 

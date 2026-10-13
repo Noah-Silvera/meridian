@@ -1,3 +1,34 @@
+# Actual crash, stale-owner and startup-error recovery
+
+The [recovery harness](e2e-detached-recovery.mjs) now passes against actual source
+Bun and the same independently installed Node package documented below:
+[source receipt](source-recovery.json), [installed receipt](installed-recovery.json).
+Application code remains `90ec6828`; these changes add evidence only.
+
+The harness starts a supervisor with its original IPC channel, commits readiness,
+then kills that exact spawned handle with SIGKILL. It joins the supervisor's
+original close event and verifies listener shutdown by successfully rebinding the
+same endpoint. It does not use a recorded PID for signaling, and a failed HTTP
+request alone is not accepted as proof that the listener closed. The next actual
+CLI start waits about 30 seconds for the existing stale-lock quarantine, admits
+only the confirmed-dead owner, and returns a distinct new instance identity.
+Readiness and ordinary stop then pass. No claim of joining a grandchild directly
+is made; this proves supervisor close, listener release and successful replacement.
+
+A separate endpoint starts with deliberately invalid MERIDIAN_BACKEND. It returns
+exit1/structured failure; a later valid invocation creates a ready instance and
+stops normally without harness deletion of ownership records. Both runtimes use
+the documented credential-isolated, loopback/Unix-socket fence and ps-only identity
+exception. No inference or auth refresh occurs. Reproduce with the same arguments
+as the lifecycle harness, substituting `e2e-detached-recovery.mjs` and a fresh root.
+
+Adversarial review confirmed that the Windows path currently skips Unix uid/mode
+checks in the state store and log guard. Windows equivalent ACL protection is not
+established by the Darwin tests and must be addressed/verified along with native
+named-pipe and process-lifecycle acceptance. Do not claim Windows-private-state
+parity from these receipts. Remaining gates also include actual plugin-qualified
+active-turn drain and final-head CI/review. #1359 remains draft; #1302 stays open.
+
 # Actual source and independently installed lifecycle evidence
 
 Implementation head: `90ec6828fba4e5d05f3f9a5f6b5d39892f286306`.
