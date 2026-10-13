@@ -2,6 +2,7 @@ import { constants } from "node:fs"
 import { lstat, open, rename, unlink } from "node:fs/promises"
 import type { FileHandle } from "node:fs/promises"
 import { Writable } from "node:stream"
+import { checkDetachedWindowsAcl } from "./detachedWindowsAcl"
 
 export const DETACHED_LOG_BYTES = 10 * 1024 * 1024
 
@@ -16,6 +17,7 @@ async function inspect(path: string): Promise<{ dev: number; ino: number; size: 
     if (process.platform !== "win32" && ((stat.mode & 0o077) !== 0 || stat.uid !== process.getuid?.())) {
       throw new Error("Detached log must be private to the current user")
     }
+    if (process.platform === "win32") await checkDetachedWindowsAcl(path, "inspect-file")
     return { dev: stat.dev, ino: stat.ino, size: stat.size }
   } catch (error) {
     if (missing(error)) return undefined
@@ -61,6 +63,7 @@ export class DetachedLog extends Writable {
         || (process.platform !== "win32" && ((stat.mode & 0o077) !== 0 || stat.uid !== process.getuid?.()))) {
         throw new Error("Detached log changed while opening")
       }
+      if (process.platform === "win32") await checkDetachedWindowsAcl(this.path, "inspect-file")
       this.file = file
       this.size = stat.size
     } catch (error) {

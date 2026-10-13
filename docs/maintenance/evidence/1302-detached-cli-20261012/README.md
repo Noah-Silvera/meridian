@@ -1,3 +1,25 @@
+# Windows ACL correction — native verification pending
+
+The current implementation adds `detachedWindowsAcl.ts` and native Windows CI
+cases. A fixed PowerShell script receives paths through environment variables;
+paths are never interpolated into script source. New directories use the Windows
+Framework [CreateDirectory security overload](https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.createdirectory?view=netframework-4.8.1)
+with a current-user, inheritable DACL and [inheritance protection](https://learn.microsoft.com/en-us/dotnet/api/system.security.accesscontrol.objectsecurity.setaccessruleprotection?view=netframework-4.8.1).
+Existing paths are inspected rather than repaired. Reparse points, untrusted
+owners/allow entries, inherited root ACLs and missing current-user full access
+are rejected; Windows SYSTEM and Administrators are trusted privileged principals.
+Ownership records, active logs and rotated logs are checked before use. Newly
+opened log files are checked before any content is written.
+
+Native tests broaden directory/record/log ACLs and require refusal without
+rewriting contents or permissions; a path with PowerShell metacharacters must
+remain literal. The Windows CI job also runs the actual Node process fixture
+against named pipes. Local Darwin checks:25 pass/3 Windows-only skips,121
+assertions, standalone typecheck pass. Skips are not Windows proof. Full new-head
+gates, native Windows results and actual plugin-qualified active-turn evidence
+remain pending. The historical full gates and application receipts below apply
+to their recorded pre-ACL application revision, not this new code.
+
 # Actual crash, stale-owner and startup-error recovery
 
 The [recovery harness](e2e-detached-recovery.mjs) now passes against actual source

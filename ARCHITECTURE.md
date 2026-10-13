@@ -649,7 +649,10 @@ shared live probe slots; the completed version cache holds at most 128 files.
 `session/crossProcessTurnCoordinator.ts` and `session/processIncarnation.ts`
 without changing their recovery rules. Dependencies flow from CLI management into
 existing coordination primitives; no session module imports CLI management.
-These components are not yet wired to CLI commands. Supervisor integration must
-join its original child before releasing the lifetime lease and must use private
-child IPC for graceful stop, not a recorded PID. See the
+`detachedCommand.ts`, `detachedSupervisor.ts` and `detachedChild.ts` wire the CLI
+launcher, original child IPC and lifetime cleanup. The supervisor joins its child
+before releasing its lease. `detachedWindowsAcl.ts` creates protected Windows
+state directories and checks existing directory/record/log ACLs; POSIX retains
+uid/mode checks. Windows ACL and native named-pipe behavior have dedicated CI
+coverage and remain acceptance gates until that native run passes. See the
 [implementation proposal](docs/maintenance/proposals/1302-detached-cli.md).

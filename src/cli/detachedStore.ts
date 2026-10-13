@@ -6,6 +6,7 @@ import { parseProcessIncarnation, processIncarnationIsDead } from "../proxy/sess
 import type { ProcessIncarnation } from "../proxy/session/processIncarnation"
 import { parseDetachedRequest } from "./detachedProtocol"
 import type { DetachedIdentity } from "./detachedProtocol"
+import { checkDetachedWindowsAcl } from "./detachedWindowsAcl"
 
 const RECORD_BYTES = 4096
 export interface DetachedRecord extends DetachedIdentity {
@@ -44,7 +45,8 @@ export function parseDetachedRecord(value: unknown): DetachedRecord | undefined 
 
 /** Never chmod/adopt an existing foreign or broadly accessible control directory. */
 async function privateDirectory(path: string, create: boolean): Promise<boolean> {
-  if (create) await mkdir(path, { mode: 0o700 }).catch(error => {
+  if (create && process.platform === "win32") await checkDetachedWindowsAcl(path, "create-directory")
+  else if (create) await mkdir(path, { mode: 0o700 }).catch(error => {
     if (!(error instanceof Error && "code" in error && error.code === "EEXIST")) throw error
   })
   let stat
@@ -54,6 +56,7 @@ async function privateDirectory(path: string, create: boolean): Promise<boolean>
     || (process.platform !== "win32" && (stat.uid !== process.getuid?.() || (stat.mode & 0o077) !== 0))) {
     throw new Error("Detached state directory is not private to the current user")
   }
+  if (process.platform === "win32" && !create) await checkDetachedWindowsAcl(path, "inspect-directory")
   return true
 }
 
@@ -77,6 +80,7 @@ async function snapshot(paths: DetachedPaths): Promise<Snapshot | undefined> {
   try { expected = await lstat(paths.record) }
   catch (error) { if (missing(error)) return undefined; throw error }
   if (!expected.isFile() || expected.isSymbolicLink() || expected.nlink !== 1) throw new Error("Invalid detached ownership file")
+  if (process.platform === "win32") await checkDetachedWindowsAcl(paths.record, "inspect-file")
   let file
   try { file = await open(paths.record, constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0)) }
   catch (error) { if (missing(error)) return undefined; throw error }

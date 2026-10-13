@@ -1,3 +1,15 @@
+## Detached CLI #1359 — Windows ACL implementation awaiting native CI
+
+Added protected directory creation plus existing-directory, record and log ACL
+validation using fixed PowerShell source and literal environment path transport.
+Existing broad ACLs are refused, never repaired. Windows SYSTEM/Administrators
+are trusted privileged principals; other allow entries and unsafe inheritance
+are refused. Dedicated real Windows tests now cover these refusals, literal paths
+and the Node supervisor/named-pipe flow. Local25 pass/3 Windows-only skips and
+standalone typecheck pass. Full current-head/native Windows gates remain pending;
+the5777-test full gate below belongs to90ec6828 before this correction. Source and
+installed active-model drain/platform acceptance still remain open. No model calls.
+
 ## Detached CLI #1359 — actual recovery matrix passes
 
 Actual source Bun and independently installed Node now pass original-supervisor
