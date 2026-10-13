@@ -74,9 +74,19 @@ finally{
   const moduleUrl=pathToFileURL(resolve(dirname(cli),'../src/cli/detachedStore.ts')).href;
   const script=`import {detachedPaths} from ${JSON.stringify(moduleUrl)};
 try { await detachedPaths(process.env.MERIDIAN_CONFIG_DIR,'127.0.0.1',${ports[0]},true); console.log(JSON.stringify({pass:true})); }
-catch(error){ const causes=[]; for(let e=error;e&&causes.length<5;e=e.cause)causes.push({name:e.name,message:String(e.message).slice(0,1200),code:e.code,stderr:typeof e.stderr==='string'?e.stderr.slice(0,2500):undefined});console.log(JSON.stringify({pass:false,causes})); }`;
-  try{const result=await run(runtime,['-e',script],{env:base,cwd:root,timeout:30000,maxBuffer:16384});configurationDiagnostic=JSON.parse(result.stdout);}
-  catch(error){configurationDiagnostic={probeFailed:true,message:String(error).slice(0,1200)};}
+catch(error){ const causes=[]; for(let e=error;e&&causes.length<5;e=e.cause)causes.push({name:e.name,message:String(e.message).slice(0,150),code:e.code,signal:e.signal,killed:e.killed,stdout:typeof e.stdout==='string'?e.stdout.slice(0,500):undefined,stderr:typeof e.stderr==='string'?e.stderr.slice(0,2500):undefined});console.log(JSON.stringify({pass:false,causes})); }`;
+  configurationDiagnostic=[];
+  for(const [label,env] of [
+   ['allowlisted',base],
+   ['module-path',{...base,...(process.env.PSModulePath?{PSModulePath:process.env.PSModulePath}:{})}],
+   // This diagnostic imports only detachedStore, not CLI/SDK. Hosted CI has
+   // no user account; never print environment values or run inference here.
+   ['hosted-runner-environment',{...process.env,...base}],
+  ]){
+   const began=Date.now();
+   try{const result=await run(runtime,['-e',script],{env,cwd:root,timeout:30000,maxBuffer:16384});configurationDiagnostic.push({label,elapsedMs:Date.now()-began,...JSON.parse(result.stdout)});}
+   catch(error){configurationDiagnostic.push({label,probeFailed:true,elapsedMs:Date.now()-began,message:String(error).slice(0,150)});}
+  }
  }
  for(const port of ports)await command(port,['stop','--json']).catch(error=>{failure??=String(error)});
  await writeFile(join(root,'receipt.json'),JSON.stringify({pass:!failure,failure,configurationDiagnostic,cli,runtime,entrySha256:createHash('sha256').update(await readFile(cli)).digest('hex'),platform:process.platform,arch:process.arch,ports,commands,scope:'Actual CLI startup/readiness/targeted graceful stop only. No SDK inference; dummy API profile. Darwin: Seatbelt loopback/Unix sockets with ps-only read-only identity exception. Linux: network-disabled isolated container, no credential mounts. Windows: clean GitHub-hosted CI, allowlisted environment, dummy loopback API profile; no OS network fence.'},null,2));

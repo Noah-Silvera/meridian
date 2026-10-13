@@ -1,3 +1,17 @@
+## Windows source and package share ACL subprocess failure
+
+Head36ab7c50 actual source and independently installed Node both fail before log
+allocation. [Source](windows-source-failure-36ab.json), [installed](windows-installed-failure-36ab.json),
+and [package identity](windows-package-36ab.json) preserve the native result.
+The source diagnostic reaches checkDetachedWindowsAcl and its execFile rejects
+without numeric exit or stderr. No permission-rule correction is justified yet.
+
+Next diagnostic records signal/killed/elapsed data and compares the existing
+allowlist, adding only PSModulePath, and the hosted-runner environment. The last
+control imports only detachedStore on credentialless hosted CI; no CLI/SDK/model
+or environment dump is involved. All controls retain the same ACL rules. Product
+and package acceptance remain open.
+
 ## Actual Windows source startup failed on0bb7df27
 
 [Native job](https://github.com/rynfar/meridian/actions/runs/38328390229/job/115072298927)
