@@ -1,7 +1,9 @@
 # Detached CLI lifecycle — implementation proposal for #1302
 
-Status: implementation foundations are in draft #1359; commands are not wired,
-shipped, or live-verified. See the [implementation evidence](../evidence/1302-detached-cli-20261012/README.md). This proposal adds CLI lifecycle behavior and a private local
+Status: commands and lifecycle implementation are wired in draft #1359. Actual
+credentialless source/installed lifecycle evidence and native Windows fixture
+checks exist; final package/platform and active-model drain acceptance remain
+open. The feature has not shipped. See the [implementation evidence](../evidence/1302-detached-cli-20261012/README.md). This proposal adds CLI lifecycle behavior and a private local
 control protocol. It does not modify public plugin interfaces or introduce a
 public HTTP shutdown route. Implementation must preserve that boundary; a change
 to an existing public interface needs the approval described in AGENTS.md.
@@ -69,8 +71,11 @@ shell supervisor's 50-restart behavior or the desktop manager's recovery policy.
 Persist a versioned instance record under the effective Meridian configuration
 root. Its key derives from the canonical configuration root and bind endpoint;
 include host and port without conflating wildcard and explicit bind addresses.
-Record a random instance ID/control nonce, supervisor process incarnation, child
-identity when available, endpoint, current phase, launch provenance, and log path.
+The persisted record contains schema version, random instance ID/control nonce,
+supervisor process incarnation, host, port and startup time. Phase is read from
+the authenticated live control channel; log paths derive from the endpoint key.
+The supervisor retains the original child handle rather than persisting a PID
+for later process control.
 Nonce/state files must be private, bounded, atomically replaced, and protected
 against symlink and replacement races. Do not persist inherited environment.
 

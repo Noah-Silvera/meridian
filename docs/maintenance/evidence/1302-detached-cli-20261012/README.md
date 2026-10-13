@@ -1,3 +1,26 @@
+## Detached CLI #1359 — corrected native Windows checks pass
+
+Head `7b0e2f467f5139374e55645f6cb58904b047e33b` passes the
+[native Windows job](https://github.com/rynfar/meridian/actions/runs/38327263497/job/115068721032):
+6 detached tests, 40 assertions, zero failures. This includes the unchanged real
+Node launcher/targeted-stop fixture and all private-state ACL cases. The job
+uses PR merge checkout `72ec7d12d84055e4960355c9abff9c0fe9a2a1a7`.
+The earlier failed job did not log its exception; passing the correction does
+not conclusively identify that original cause. Source Darwin lifecycle/recovery
+also pass on this head. Original full local process60564 exited0: 5,778 tests passed, 39 skipped,
+zero failures across23 groups, plus standalone typecheck/build. Required CI
+passes on this application head. The independently installed candidate now passes lifecycle and crash/recovery
+on both Darwin ARM64 / Node22.22.3 and Linux ARM64 / Node24.20.0. Actual Windows
+application/package and plugin-qualified active-model drain remain open. No model
+calls or credential changes. Receipts: [local gates](local-gates-7b0e.json), [Windows](windows-7b0e.json),
+[source lifecycle](source-lifecycle-7b0e.json), [source recovery](source-recovery-7b0e.json),
+[Darwin installed lifecycle](installed-lifecycle-7b0e.json), [Darwin installed recovery](installed-recovery-7b0e.json),
+[Linux installed lifecycle](linux-lifecycle-7b0e.json), [Linux installed recovery](linux-recovery-7b0e.json),
+and [package identity](package-7b0e.json). All qualify application head7b0e2f46.
+The Linux package update used offline npm with existing dependencies, then the
+same network-disabled, read-only-rootfs proof container and test-specific identity.
+No image pull/build or published release. Older checkpoints below retain their historical scope.
+
 # Windows result and retirement-race correction
 
 Frozen558e575d original local process63882 exited0:5777 pass/38 skips/0 failures,

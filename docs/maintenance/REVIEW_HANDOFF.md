@@ -1,3 +1,19 @@
+## Detached CLI #1359 — corrected native Windows checks pass
+
+Head `7b0e2f467f5139374e55645f6cb58904b047e33b` passes the
+[native Windows job](https://github.com/rynfar/meridian/actions/runs/38327263497/job/115068721032):
+6 detached tests, 40 assertions, zero failures. This includes the unchanged real
+Node launcher/targeted-stop fixture and all private-state ACL cases. The job
+uses PR merge checkout `72ec7d12d84055e4960355c9abff9c0fe9a2a1a7`.
+The earlier failed job did not log its exception; passing the correction does
+not conclusively identify that original cause. Source Darwin lifecycle/recovery
+also pass on this head. Original full local process60564 exited0: 5,778 tests passed, 39 skipped,
+zero failures across23 groups, plus standalone typecheck/build. Required CI
+passes on this application head. The same independently installed candidate passes lifecycle/crash recovery on
+Darwin and Linux ARM64. Actual Windows application/package and plugin-qualified
+active-model drain remain open. See the linked evidence directory below. No model
+calls or credential changes. Older checkpoints below retain their historical scope.
+
 ## Detached CLI #1359 — Windows stop failure retained; candidate race fix
 
 558e575d local original63882 exited0 (5777 pass/38 skip, typecheck/build). Windows

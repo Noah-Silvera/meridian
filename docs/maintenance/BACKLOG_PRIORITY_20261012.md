@@ -13,17 +13,16 @@ account/client/platform gates are still missing. No auth refresh, account switch
 paid usage or model call has been used to bypass those gates.
 
 Current independent feature work is #1302 through draft [#1359](https://github.com/rynfar/meridian/pull/1359).
-At 90ec6828, detached start/stop is wired and 25 focused tests / 121 assertions
-plus typecheck pass. Real Node process tests cover concurrent start, surviving
-launcher exit, private graceful stop, foreign-listener protection and abandoned
-startup cleanup. Actual source CLI passes a two-managed-port startup/reuse/stop
-matrix under a credential-isolated, loopback-only test fence (with a read-only
-/bin/ps exception needed for native process identity). The independently installed Node22.22.3 package passes the same matrix.
-Full frozen local gates pass (5777 tests, typecheck/build). Actual source and
-installed crash/stale-owner/startup-error recovery now pass, including port rebind
-and distinct replacement identity. Live active-turn/platform acceptance remains
-open; Windows equivalent private-state ACL protection is a concrete review gate. This is useful independent progress
-while the higher-priority exact-environment fixes wait; it is not ready to merge.
+Current head `7b0e2f46` passes native Windows detached checks (6 tests,
+40 assertions), including the real Node supervisor/stop fixture and private ACL
+refusal/retirement cases. The earlier Windows stop failure remains recorded;
+its original exception was not logged, so causality is qualified. Actual Darwin
+source lifecycle and crash/recovery pass on this head. Independently installed
+Darwin/Linux ARM64 lifecycle and crash-recovery checks now also pass on `7b0e2f46`.
+The original full local run passed 5,778 tests with 39 skips and zero failures,
+plus standalone typecheck/build. Required CI also passed on this application
+head. Actual Windows application/package and plugin-qualified active-turn drain
+remain acceptance gates. The PR stays draft.
 [Detailed evidence](evidence/1302-detached-cli-20261012/README.md).
 
 Nix delivery #1357 is merged as e0f9feab; the exact tested tree and contributor
