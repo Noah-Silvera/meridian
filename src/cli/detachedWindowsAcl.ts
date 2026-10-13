@@ -8,6 +8,8 @@ const execute = promisify(execFile)
 // Windows PowerShell 5.1 supplies the Framework CreateDirectory overload that
 // installs the protected DACL at creation, without a broadly inherited interval.
 // Existing paths are inspected, never repaired or adopted by changing their ACL.
+// Use Framework APIs directly: Get-Acl module autoload fails in the clean
+// Windows CLI environment. ACL checks must not depend on profile/module setup.
 const SCRIPT = String.raw`
 $ErrorActionPreference = 'Stop'
 $path = $env:MERIDIAN_DETACHED_ACL_PATH
@@ -17,18 +19,20 @@ $sidType = [System.Security.Principal.SecurityIdentifier]
 $full = [System.Security.AccessControl.FileSystemRights]::FullControl
 $inherit = [System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit
 if ($action -eq 'create-directory') {
-  $security = New-Object System.Security.AccessControl.DirectorySecurity
+  $security = [System.Security.AccessControl.DirectorySecurity]::new()
   $security.SetOwner($sid)
   $security.SetAccessRuleProtection($true, $false)
-  $rule = New-Object System.Security.AccessControl.FileSystemAccessRule($sid, $full, $inherit, [System.Security.AccessControl.PropagationFlags]::None, [System.Security.AccessControl.AccessControlType]::Allow)
+  $rule = [System.Security.AccessControl.FileSystemAccessRule]::new($sid, $full, $inherit, [System.Security.AccessControl.PropagationFlags]::None, [System.Security.AccessControl.AccessControlType]::Allow)
   $security.AddAccessRule($rule)
   [void][System.IO.Directory]::CreateDirectory($path, $security)
 }
-$item = Get-Item -LiteralPath $path -Force
-if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) { throw 'Detached ACL path is a reparse point' }
+$attributes = [System.IO.File]::GetAttributes($path)
+if (($attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) { throw 'Detached ACL path is a reparse point' }
 $directory = $action -ne 'inspect-file'
-if ([bool]$item.PSIsContainer -ne $directory) { throw 'Detached ACL path has the wrong kind' }
-$acl = Get-Acl -LiteralPath $path
+if ((($attributes -band [System.IO.FileAttributes]::Directory) -ne 0) -ne $directory) { throw 'Detached ACL path has the wrong kind' }
+$sections = [System.Security.AccessControl.AccessControlSections]::Access -bor [System.Security.AccessControl.AccessControlSections]::Owner
+if ($directory) { $acl = [System.IO.Directory]::GetAccessControl($path, $sections) }
+else { $acl = [System.IO.File]::GetAccessControl($path, $sections) }
 $trusted = @($sid.Value, 'S-1-5-18', 'S-1-5-32-544')
 if ($acl.GetOwner($sidType).Value -notin $trusted) { throw 'Detached ACL owner is not trusted' }
 if ($directory -and -not $acl.AreAccessRulesProtected) { throw 'Detached directory ACL inherits outside access' }

@@ -114,3 +114,30 @@ test.skipIf(process.platform !== "win32")("native Windows missing-file ACL failu
     expect(await readFile(paths.record, "utf8")).toBe("replacement")
   } finally { await rm(root, { recursive: true, force: true }) }
 }, 60000)
+
+
+test.skipIf(process.platform !== "win32")("native Windows ACL checks work without PowerShell module discovery", async () => {
+  const root = await mkdtemp(join(tmpdir(), "meridian-acl-module-free-"))
+  const moduleUrl = new URL("../cli/detachedWindowsAcl.ts", import.meta.url).href
+  const directory = join(root, "private ' [literal] $value")
+  const environment = Object.fromEntries(
+    ["PATH", "HOME", "SystemRoot", "WINDIR", "TEMP", "TMP", "USERPROFILE", "LOCALAPPDATA", "APPDATA", "COMSPEC", "PATHEXT"]
+      .filter(key => process.env[key] !== undefined).map(key => [key, process.env[key]!]),
+  )
+  try {
+    const { stdout } = await execute(process.execPath, ["-e", `
+      import {checkDetachedWindowsAcl} from ${JSON.stringify(moduleUrl)};
+      const path = ${JSON.stringify(directory)};
+      await checkDetachedWindowsAcl(path, "create-directory");
+      await checkDetachedWindowsAcl(path, "inspect-directory");
+      await Bun.write(path + "/record", "owned");
+      await checkDetachedWindowsAcl(path + "/record", "inspect-file");
+      let rejected = false;
+      try { await checkDetachedWindowsAcl(path + "/record", "inspect-directory"); }
+      catch { rejected = true; }
+      if (!rejected) throw new Error("Wrong-kind path was accepted");
+      console.log("private-and-kind-checked");
+    `], { env: { ...environment, PSModulePath: join(root, "no-modules") }, timeout: 60000, maxBuffer: 16384 })
+    expect(stdout.trim()).toBe("private-and-kind-checked")
+  } finally { await rm(root, { recursive: true, force: true }) }
+}, 65000)
