@@ -1,3 +1,20 @@
+## Plugin-preflight correction — 2026-10-12
+
+The October 12 harness installed the Meridian OpenCode V1 client plugin but
+never configured `pluginConfigPath`/`pluginDir` or loaded the required OpenCode
+server scrub plugin. Its isolated HOME ruled out the owner's installed scrub.
+The provider refusal and client receipt below remain real observations, but
+neither qualifies a correctly configured affected-client flow nor proves
+subscription exhaustion. The prior account-quota interpretation is withdrawn.
+
+The corrected harness requires `E2E_PLUGIN_PATH` and optionally pins
+`E2E_SCRUB_VERSION`. It retains package identity/hash, checks the exact active
+loaded path and onRequest hook before inference, and requires successful hook
+invocation with zero errors afterward. Client plugin setup/config/header checks
+remain required independently. No new live model call has been made by this
+correction. Source #1327 is already incorporated; this record corrects evidence,
+not the historical merge state. Correctly configured live acceptance is pending.
+
 ## Resumed on current main — 2026-10-12
 
 Current base `a48a84982453d3b4748ddbdf566455597e13c836`. The actual author commit
