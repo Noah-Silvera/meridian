@@ -41,7 +41,10 @@ const policy=`(version 1)
 (allow process-exec (literal "/bin/ps") (with no-sandbox))
 `;
 await writeFile(join(root,'fence.sb'),policy);
-const base=Object.fromEntries(['PATH','HOME','TMPDIR','USER','LOGNAME',...(windows?['SystemRoot','WINDIR','TEMP','TMP','USERPROFILE','LOCALAPPDATA','APPDATA','COMSPEC','PATHEXT']:[])].filter(k=>process.env[k]).map(k=>[k,process.env[k]]));
+// Windows process-incarnation probes need the OS PowerShell modules. The
+// before/after launch-lease control isolates PSModulePath as the missing input;
+// retain it without importing arbitrary account/provider environment variables.
+const base=Object.fromEntries(['PATH','HOME','TMPDIR','USER','LOGNAME',...(windows?['SystemRoot','WINDIR','TEMP','TMP','USERPROFILE','LOCALAPPDATA','APPDATA','COMSPEC','PATHEXT','PSModulePath']:[])].filter(k=>process.env[k]).map(k=>[k,process.env[k]]));
 Object.assign(base,{MERIDIAN_CONFIG_DIR:join(root,'config'),CLAUDE_CONFIG_DIR:join(root,'claude'),MERIDIAN_CREDENTIALS_READONLY:'1',MERIDIAN_HOST:'127.0.0.1',MERIDIAN_PROFILES:JSON.stringify([{id:'offline-fixture',type:'api',apiKey:'offline-fixture-not-a-key',baseUrl:'http://127.0.0.1:1'}])});
 async function reserve(){const server=createServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));return{server,port:server.address().port};}
 const reservations=await Promise.all([reserve(),reserve()]);
@@ -85,6 +88,7 @@ try { const paths=await detachedPaths(process.env.MERIDIAN_CONFIG_DIR,'127.0.0.1
 catch(error){ const causes=[]; for(let e=error;e&&causes.length<5;e=e.cause)causes.push({name:e.name,message:String(e.message).slice(0,150),code:e.code,signal:e.signal,killed:e.killed,stdout:typeof e.stdout==='string'?e.stdout.slice(0,500):undefined,stderr:typeof e.stderr==='string'?e.stderr.slice(0,2500):undefined});console.log(JSON.stringify({pass:false,stage,causes})); }`;
   configurationDiagnostic=[];
   for(const [label,env] of [
+   ['without-module-path',Object.fromEntries(Object.entries(base).filter(([key])=>key!=='PSModulePath'))],
    ['allowlisted',base],
    ['module-path',{...base,...(process.env.PSModulePath?{PSModulePath:process.env.PSModulePath}:{})}],
    ['windows-module-environment',{...base,...Object.fromEntries(['PSModulePath','ProgramFiles','ProgramFiles(x86)','ProgramW6432'].filter(k=>process.env[k]).map(k=>[k,process.env[k]]))}],
