@@ -6,7 +6,7 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {mkdir,writeFile,readFile} from 'node:fs/promises';
 import {homedir} from 'node:os';
-import {resolve,join,dirname} from 'node:path';
+import {resolve,join,dirname,relative,isAbsolute} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 const [runtime,entry,scratch]=process.argv.slice(2);
@@ -47,7 +47,7 @@ async function reserve(){const server=createServer();await new Promise(r=>server
 const reservations=await Promise.all([reserve(),reserve()]);
 const ports=reservations.map(item=>item.port);
 for(const {server} of reservations)await new Promise(r=>server.close(r));
-const commands=[];let failure;let configurationDiagnostic;
+const commands=[];let failure;let configurationDiagnostic;const startupLogs=[];
 async function command(port,args){
  try{const [executable,prefix]=launch();const result=await run(executable,[...prefix,...args],{env:{...base,MERIDIAN_PORT:String(port)},cwd:root,timeout:70000,maxBuffer:65536});const value=JSON.parse(result.stdout);commands.push({port,args,exit:0,value,stderr:result.stderr});return value;}
  catch(error){commands.push({port,args,exit:error.code,stdout:error.stdout,stderr:error.stderr});throw error;}
@@ -89,6 +89,24 @@ catch(error){ const causes=[]; for(let e=error;e&&causes.length<5;e=e.cause)caus
   }
  }
  for(const port of ports)await command(port,['stop','--json']).catch(error=>{failure??=String(error)});
- await writeFile(join(root,'receipt.json'),JSON.stringify({pass:!failure,failure,configurationDiagnostic,cli,runtime,entrySha256:createHash('sha256').update(await readFile(cli)).digest('hex'),platform:process.platform,arch:process.arch,ports,commands,scope:'Actual CLI startup/readiness/targeted graceful stop only. No SDK inference; dummy API profile. Darwin: Seatbelt loopback/Unix sockets with ps-only read-only identity exception. Linux: network-disabled isolated container, no credential mounts. Windows: clean GitHub-hosted CI, allowlisted environment, dummy loopback API profile; no OS network fence.'},null,2));
+ // Read only logs reported by these dummy-profile commands, below this fresh
+ // test root. Never read an arbitrary CLI-supplied path or account-bearing log.
+ // Windows is restricted above to clean hosted CI; no model calls occur here.
+ if(failure){
+  const ownLogs=new Set();
+  for(const item of commands){
+   let value=item.value;
+   if(!value&&item.stdout){try{value=JSON.parse(item.stdout);}catch(error){continue;}}
+   if(typeof value?.logPath!=='string')continue;
+   const path=resolve(value.logPath),inside=relative(join(root,'config','detached'),path);
+   if(!inside||inside.startsWith('..')||isAbsolute(inside)||!inside.endsWith('.log'))continue;
+   ownLogs.add(path);
+  }
+  for(const path of ownLogs){
+   try{startupLogs.push({path,text:(await readFile(path,'utf8')).slice(-8192)});}
+   catch(error){startupLogs.push({path,readFailure:String(error).slice(0,500)});}
+  }
+ }
+ await writeFile(join(root,'receipt.json'),JSON.stringify({pass:!failure,failure,configurationDiagnostic,startupLogs,cli,runtime,entrySha256:createHash('sha256').update(await readFile(cli)).digest('hex'),platform:process.platform,arch:process.arch,ports,commands,scope:'Actual CLI startup/readiness/targeted graceful stop only. No SDK inference; dummy API profile. Darwin: Seatbelt loopback/Unix sockets with ps-only read-only identity exception. Linux: network-disabled isolated container, no credential mounts. Windows: clean GitHub-hosted CI, allowlisted environment, dummy loopback API profile; no OS network fence.'},null,2));
 }
 console.log(JSON.stringify({pass:!failure,failure,receipt:join(root,'receipt.json')}));if(failure)process.exitCode=1;
