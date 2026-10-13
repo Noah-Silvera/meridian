@@ -72,14 +72,23 @@ finally{
  // its bounded error chain. Both launch attempts have settled before cleanup.
  if(failure&&windows&&cli.endsWith('.ts')){
   const moduleUrl=pathToFileURL(resolve(dirname(cli),'../src/cli/detachedStore.ts')).href;
+  const coordinatorUrl=pathToFileURL(resolve(dirname(cli),'../src/proxy/session/crossProcessTurnCoordinator.ts')).href;
   const script=`import {detachedPaths} from ${JSON.stringify(moduleUrl)};
-try { await detachedPaths(process.env.MERIDIAN_CONFIG_DIR,'127.0.0.1',${ports[0]},true); console.log(JSON.stringify({pass:true})); }
-catch(error){ const causes=[]; for(let e=error;e&&causes.length<5;e=e.cause)causes.push({name:e.name,message:String(e.message).slice(0,150),code:e.code,signal:e.signal,killed:e.killed,stdout:typeof e.stdout==='string'?e.stdout.slice(0,500):undefined,stderr:typeof e.stderr==='string'?e.stderr.slice(0,2500):undefined});console.log(JSON.stringify({pass:false,causes})); }`;
+import {CrossProcessTurnCoordinator} from ${JSON.stringify(coordinatorUrl)};
+let stage='paths';
+try { const paths=await detachedPaths(process.env.MERIDIAN_CONFIG_DIR,'127.0.0.1',${ports[0]},true);
+ stage='launch-coordination';
+ const keepAlive=setTimeout(()=>{},20000);
+ try { const lease=await new CrossProcessTurnCoordinator(paths.locks,{acquireTimeoutMs:15000}).acquire('launch:'+paths.key,AbortSignal.timeout(15000)); await lease.release(); }
+ finally {clearTimeout(keepAlive);}
+ console.log(JSON.stringify({pass:true,stage})); }
+catch(error){ const causes=[]; for(let e=error;e&&causes.length<5;e=e.cause)causes.push({name:e.name,message:String(e.message).slice(0,150),code:e.code,signal:e.signal,killed:e.killed,stdout:typeof e.stdout==='string'?e.stdout.slice(0,500):undefined,stderr:typeof e.stderr==='string'?e.stderr.slice(0,2500):undefined});console.log(JSON.stringify({pass:false,stage,causes})); }`;
   configurationDiagnostic=[];
   for(const [label,env] of [
    ['allowlisted',base],
    ['module-path',{...base,...(process.env.PSModulePath?{PSModulePath:process.env.PSModulePath}:{})}],
-   // This diagnostic imports only detachedStore, not CLI/SDK. Hosted CI has
+   ['windows-module-environment',{...base,...Object.fromEntries(['PSModulePath','ProgramFiles','ProgramFiles(x86)','ProgramW6432'].filter(k=>process.env[k]).map(k=>[k,process.env[k]]))}],
+   // This diagnostic imports only detachedStore/coordinator, not CLI/SDK. Hosted CI has
    // no user account; never print environment values or run inference here.
    ['hosted-runner-environment',{...process.env,...base}],
   ]){
