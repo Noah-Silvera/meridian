@@ -1,3 +1,39 @@
+# Windows result and retirement-race correction
+
+Frozen558e575d original local process63882 exited0:5777 pass/38 skips/0 failures,
+typecheck/build pass ([record](acl-local-gates-558e.json)). Native Windows CI
+passed all three ACL cases, including refusal without repair. The process case
+passed concurrent startup, reuse, readiness and foreign-listener protection,
+but failed `stop` with exit1 ([failed-job record](windows-acl-558e.json)). It did
+not print the underlying exception, so the root cause is not conclusively known.
+
+Review found an unhandled race: the owner can retire its record while the
+asynchronous PowerShell ACL check runs. Snapshot already tolerated disappearance
+at lstat/open, but not at this new intermediate operation. The candidate now
+rechecks existence after an ACL failure and treats only confirmed ENOENT as
+retirement; a remaining or replacement file, permissions error or unknown state
+preserves the rejection. A deterministic filesystem test covers disappearance
+versus retained replacement/denial, and a native Windows case exercises the real
+missing-file PowerShell failure. The unchanged native stop assertion remains the
+acceptance gate, now with structured-result diagnostics. Stop failures identify
+the configuration/record/control/observation stage without exposing paths, ACLs
+or nonce values. Local focused suite:26 pass/4 native-Windows skips,125 assertions;
+standalone typecheck passes. The diagnostic change also passed its focused
+process/retirement checks and another standalone typecheck. Do not call the Windows
+stop failure fixed until that result is known.
+
+Linux ARM64 / Node24.20.0 independently installed pre-ACL90ec6828 also passes
+[lifecycle](linux-lifecycle-90ec.json) and [crash/recovery](linux-recovery-90ec.json).
+[Image/package identity](linux-package-90ec.json) records an existing image (no
+pull/build), network disabled, read-only rootfs and no credential mounts. Initial
+[lifecycle](linux-lifecycle-missing-identity.json)/[recovery](linux-recovery-missing-identity.json)
+failures preserve the missing /etc/machine-id prerequisite. A test-specific
+read-only machine-id mount follows the project's Dockerfile provisioning; process
+ownership checks are unchanged. Harnesses now support either the documented
+Darwin Seatbelt fence or an explicitly isolated Linux container with no IP routes.
+These Linux receipts still qualify90ec6828 only; new-head package verification is
+pending. No model calls, auth refresh or private transcript access.
+
 # Windows ACL correction — native verification pending
 
 The current implementation adds `detachedWindowsAcl.ts` and native Windows CI

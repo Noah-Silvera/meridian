@@ -58,16 +58,20 @@ export async function runDetachedCommand(action: "start" | "stop", cliEntry: str
   const timer = setTimeout(() => deadline.abort(), action === "start" ? DETACHED_START_TIMEOUT_MS : DETACHED_STOP_TIMEOUT_MS)
   const signal = deadline.signal
   let logPath: string | undefined
+  let stopStage = "stop-configuration"
   try {
     const paths = await detachedPaths(configDir(), host, port, action === "start")
     if (!paths) return result(await isPortAvailable(host, port) ? "already-stopped" : "unmanaged", false)
     logPath = paths.log
     const extra = { logPath }
     if (action === "stop") {
+      stopStage = "stop-record"
       const record = await readDetachedRecord(paths)
       if (!record) return result(await isPortAvailable(host, port) ? "already-stopped" : "unmanaged", false)
       if (processIncarnationIsDead(record.owner)) return result("owner-unavailable", true, { ...extra, instanceId: record.instanceId })
+      stopStage = "stop-control"
       await requestDetachedControl(await detachedControlPath(paths, record.instanceId), { version: 1, action: "stop", instanceId: record.instanceId, nonce: record.nonce })
+      stopStage = "stop-observe"
       for (;;) {
         const current = await readDetachedRecord(paths)
         if (!current && processIncarnationIsDead(record.owner)) return result("stopped", true, { ...extra, instanceId: record.instanceId })
@@ -130,7 +134,7 @@ export async function runDetachedCommand(action: "start" | "stop", cliEntry: str
       return result("ready-created", true, { ...extra, instanceId: created })
     } finally { await launch.release() }
   } catch {
-    return result(action === "stop" && signal.aborted ? "draining" : "failed", false, { ...(logPath ? { logPath } : {}), diagnostic: signal.aborted ? "deadline" : "ownership-or-startup-failure" })
+    return result(action === "stop" && signal.aborted ? "draining" : "failed", false, { ...(logPath ? { logPath } : {}), diagnostic: signal.aborted ? "deadline" : action === "stop" ? stopStage : "ownership-or-startup-failure" })
   } finally {
     clearTimeout(timer)
   }

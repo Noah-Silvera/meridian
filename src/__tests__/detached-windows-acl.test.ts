@@ -5,11 +5,29 @@ import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { finished } from "node:stream/promises"
 import { promisify } from "node:util"
-import { checkDetachedWindowsAcl } from "../cli/detachedWindowsAcl"
+import { checkDetachedWindowsAcl, checkDetachedFileAclIfPresent } from "../cli/detachedWindowsAcl"
 import { detachedPaths, publishDetachedRecord, readDetachedRecord } from "../cli/detachedStore"
 import { DetachedLog } from "../cli/detachedLog"
 
 const execute = promisify(execFile)
+
+test("record retirement during ACL inspection is absence, while replacement or denial stays a failure", async () => {
+  const root = await mkdtemp(join(tmpdir(), "meridian-acl-retirement-"))
+  const path = join(root, "record")
+  const denial = new Error("ACL inspection failed")
+  try {
+    await writeFile(path, "owned")
+    expect(await checkDetachedFileAclIfPresent(path, async target => {
+      await rm(target)
+      throw denial
+    })).toBe(false)
+    await writeFile(path, "replacement")
+    await expect(checkDetachedFileAclIfPresent(path, async () => { throw denial })).rejects.toBe(denial)
+    expect(await readFile(path, "utf8")).toBe("replacement")
+    expect(await checkDetachedFileAclIfPresent(path, async () => undefined)).toBe(true)
+  } finally { await rm(root, { recursive: true, force: true }) }
+})
+
 async function acl(path: string, broaden = false): Promise<string> {
   const { stdout } = await execute("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", String.raw`
 $ErrorActionPreference = 'Stop'
@@ -77,5 +95,22 @@ test.skipIf(process.platform !== "win32")("native Windows leaves inherited exist
     await expect(detachedPaths(root, "127.0.0.1", 3456, true)).rejects.toThrow("private Windows ACL")
     expect(await acl(directory)).toBe(before)
     expect(await readFile(join(directory, "retain"), "utf8")).toBe("existing")
+  } finally { await rm(root, { recursive: true, force: true }) }
+}, 60000)
+
+test.skipIf(process.platform !== "win32")("native Windows missing-file ACL failure is retirement only when the record is still absent", async () => {
+  const root = await mkdtemp(join(tmpdir(), "meridian-acl-native-retirement-"))
+  try {
+    const paths = (await detachedPaths(root, "127.0.0.1", 3456, true))!
+    await writeFile(paths.record, "owned")
+    expect(await checkDetachedFileAclIfPresent(paths.record, async target => {
+      await rm(target)
+      // Reproduce the native failure when owner cleanup wins before Get-Acl.
+      await checkDetachedWindowsAcl(target, "inspect-file")
+    })).toBe(false)
+    await writeFile(paths.record, "replacement")
+    await acl(paths.record, true)
+    await expect(checkDetachedFileAclIfPresent(paths.record)).rejects.toThrow("private Windows ACL")
+    expect(await readFile(paths.record, "utf8")).toBe("replacement")
   } finally { await rm(root, { recursive: true, force: true }) }
 }, 60000)

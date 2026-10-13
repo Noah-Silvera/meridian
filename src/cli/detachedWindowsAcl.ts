@@ -1,6 +1,7 @@
 import { execFile } from "node:child_process"
 import { join } from "node:path"
 import { promisify } from "node:util"
+import { lstat } from "node:fs/promises"
 
 const execute = promisify(execFile)
 
@@ -55,5 +56,22 @@ export async function checkDetachedWindowsAcl(path: string, action: "create-dire
     if (stdout.trim() !== "private") throw new Error("Unexpected Windows ACL result")
   } catch (cause) {
     throw new Error("Detached path must have a private Windows ACL", { cause })
+  }
+}
+
+/** A retiring owner can remove its record while the asynchronous ACL probe runs. */
+export async function checkDetachedFileAclIfPresent(
+  path: string,
+  inspect: (path: string) => Promise<void> = path => checkDetachedWindowsAcl(path, "inspect-file"),
+): Promise<boolean> {
+  try { await inspect(path); return true }
+  catch (failure) {
+    // Only confirmed absence is ordinary retirement. Permission errors, a
+    // replacement file, and unknown filesystem failures retain the rejection.
+    try { await lstat(path) }
+    catch (error) {
+      if (error instanceof Error && "code" in error && error.code === "ENOENT") return false
+    }
+    throw failure
   }
 }

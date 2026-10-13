@@ -1,3 +1,17 @@
+## Detached CLI #1359 — Windows stop failure retained; candidate race fix
+
+558e575d local original63882 exited0 (5777 pass/38 skip, typecheck/build). Windows
+native ACL cases all pass; the actual Node process case fails on stop exit1 after
+startup/reuse/foreign-listener checks pass. Underlying exception was not printed.
+Candidate correction handles confirmed record disappearance during asynchronous
+ACL inspection, preserves all other rejections, and adds filesystem/native
+regressions. Windows stop is not yet considered fixed. [Evidence](evidence/1302-detached-cli-20261012/README.md).
+Linux ARM64 installed90ec6828 lifecycle/recovery receipts and initial missing
+machine-id failures are now escrowed; they do not qualify the newer candidate.
+#1340 refreshed at unchangedab836ac7; its existing stale-read regression deferral
+stands. Active-model acceptance still needs matching plugins and real authorized
+credentials. No auth refresh or model calls.
+
 ## Detached CLI #1359 — Windows ACL implementation awaiting native CI
 
 Added protected directory creation plus existing-directory, record and log ACL

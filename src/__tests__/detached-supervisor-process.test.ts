@@ -45,7 +45,7 @@ test("Node launchers exit while one owned child persists and fresh commands drai
     expect((await command("stop", foreignPort)).value.outcome).toBe("unmanaged")
     expect(await (await fetch(`http://127.0.0.1:${foreignPort}`)).text()).toBe("unrelated service")
     const stopped = await command("stop")
-    expect(stopped.code).toBe(0)
+    expect(stopped.code, JSON.stringify(stopped.value)).toBe(0)
     expect(stopped.value.outcome).toBe("stopped")
     expect(stopped.value.instanceId).toBe(starts[0]!.value.instanceId)
     const log = await readFile(starts[0]!.value.logPath!, "utf8")

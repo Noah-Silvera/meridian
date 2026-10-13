@@ -6,7 +6,7 @@ import { parseProcessIncarnation, processIncarnationIsDead } from "../proxy/sess
 import type { ProcessIncarnation } from "../proxy/session/processIncarnation"
 import { parseDetachedRequest } from "./detachedProtocol"
 import type { DetachedIdentity } from "./detachedProtocol"
-import { checkDetachedWindowsAcl } from "./detachedWindowsAcl"
+import { checkDetachedWindowsAcl, checkDetachedFileAclIfPresent } from "./detachedWindowsAcl"
 
 const RECORD_BYTES = 4096
 export interface DetachedRecord extends DetachedIdentity {
@@ -80,7 +80,7 @@ async function snapshot(paths: DetachedPaths): Promise<Snapshot | undefined> {
   try { expected = await lstat(paths.record) }
   catch (error) { if (missing(error)) return undefined; throw error }
   if (!expected.isFile() || expected.isSymbolicLink() || expected.nlink !== 1) throw new Error("Invalid detached ownership file")
-  if (process.platform === "win32") await checkDetachedWindowsAcl(paths.record, "inspect-file")
+  if (process.platform === "win32" && !await checkDetachedFileAclIfPresent(paths.record)) return undefined
   let file
   try { file = await open(paths.record, constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0)) }
   catch (error) { if (missing(error)) return undefined; throw error }
