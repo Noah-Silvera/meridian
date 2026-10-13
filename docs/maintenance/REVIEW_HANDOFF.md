@@ -1,3 +1,18 @@
+## Detached CLI #1359 — source and installed lifecycle verified
+
+Frozen 90ec6828 full original process 61680 exited0: 5777 pass/35 skips/0 fail
+across23 isolated groups, standalone typecheck/build pass. Actual source Bun and
+independently installed Node22.22.3 candidate both pass concurrent launch,
+launcher independence, two managed ports, targeted graceful stop, repeated stop
+and persistent log assertions. [Harness, receipts, failures and package identity](evidence/1302-detached-cli-20261012/README.md)
+are durable. This is credentialless readiness/lifecycle proof with an explicit
+dummy profile and a network/credential fence; ps-only read-only process identity
+exception is documented. No actual model-turn drain claim.
+Crash/stale-owner/startup-error application cases, platform acceptance and live
+plugin-qualified drain remain pending. Draft #1359 stays open. Fresh paginated
+queue:31 PRs/21 issues in the same six administered repos; [priority report](BACKLOG_PRIORITY_20261012.md)
+separates the consequential account/platform holds from this feature progress.
+
 ## Detached CLI #1359 — supervisor and CLI checkpoint
 
 CLI dispatch, original-child IPC, launcher commitment and supervisor cleanup are

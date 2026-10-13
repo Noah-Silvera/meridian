@@ -1,18 +1,37 @@
-Current independent delivery: [#1342](https://github.com/rynfar/meridian/pull/1342)
-through [#1357](https://github.com/rynfar/meridian/pull/1357) reduces Nix package
-160→51MiB while preserving application bundle bytes (only Node shebang changes).
-Linux native/reproducibility/runtime and full local gates pass; final CI pending.
-It proceeds while the higher-priority account/platform-specific gates remain open.
-Sonnet live testing is specifically held by the default store returning no access
-token; no auth refresh, account switch or model call was attempted.
+# Current queue and next work — 2026-10-12
 
-Latest integration: Antigravity [#1356](https://github.com/rynfar/meridian/pull/1356)
-merged as `b68710f057a3bbdb4e01d650c0bd94b62247eea7`; exact tested tree and Cd1s
-credit verified, unchanged source #1341 closed. Final CI and actual Pi/agy source
-and installed-package proofs pass. No new release. Refreshed six-repository queue now has30 open PRs and21 issues:
-Meridian24/20, OpenCode scrub5/1, Pi scrub1/0, others0/0.
-[Current snapshot](evidence/post-1356-queue-20261012.json).
-The earlier counts below are historical.
+Fresh paginated repository discovery still finds six administered, non-archived
+Meridian/scrub repositories. The current queue is **31 open PRs and 21 issues**:
+Meridian 25/20, OpenCode scrub 5/1, Pi scrub 1/0, HUD/Hermes/OpenClaw 0/0.
+[Current snapshot](evidence/post-1359-queue-20261012.json). Counts include held
+release PRs and source/delivery pairs; they are not 31 independently accepted fixes.
+
+The highest-priority remaining fixes are unchanged: paid-overage routing
+#1338/#1347, reported Windows working-directory preservation (OpenCode scrub #24),
+checkpoint continuity #1201, and native context handling #1213/#1358. Their exact
+account/client/platform gates are still missing. No auth refresh, account switch,
+paid usage or model call has been used to bypass those gates.
+
+Current independent feature work is #1302 through draft [#1359](https://github.com/rynfar/meridian/pull/1359).
+At 90ec6828, detached start/stop is wired and 25 focused tests / 121 assertions
+plus typecheck pass. Real Node process tests cover concurrent start, surviving
+launcher exit, private graceful stop, foreign-listener protection and abandoned
+startup cleanup. Actual source CLI passes a two-managed-port startup/reuse/stop
+matrix under a credential-isolated, loopback-only test fence (with a read-only
+/bin/ps exception needed for native process identity). The independently installed Node22.22.3 package passes the same matrix.
+Full frozen local gates pass (5777 tests, typecheck/build). Crash/stale-owner
+cases and live active-turn/platform acceptance remain open. This is useful independent progress
+while the higher-priority exact-environment fixes wait; it is not ready to merge.
+[Detailed evidence](evidence/1302-detached-cli-20261012/README.md).
+
+Nix delivery #1357 is merged as e0f9feab; the exact tested tree and contributor
+credit were verified, and unchanged source #1342 was closed. Package size fell
+from 160 to 51 MiB; native NixOS and installed-runtime checks passed. Antigravity
+idle retention #1356 is also merged with actual Pi/agy source and installed proof.
+Neither merge authorizes or constitutes a new release.
+
+The dated counts and checkpoints below are historical; the table preserves the
+priority reasons and specific unresolved acceptance gates.
 
 # Backlog priorities — 2026-10-12
 
@@ -50,8 +69,8 @@ After consequential fixes, the strongest remaining feature candidates for review
 are [#1302](https://github.com/rynfar/meridian/issues/1302) (detached start/stop)
 and [#1311](https://github.com/rynfar/meridian/issues/1311) (client-neutral agent
 identity). Public lifecycle/header interface changes still need their issue-backed
-owner contract and appropriate client tests. These are candidates, not accepted
-implementations. Antigravity idle retention #1341 is complete through merged
+owner contract and appropriate client tests. The detached CLI is now being implemented in draft #1359; the neutral-header
+proposal remains a candidate awaiting its contract decision. Antigravity idle retention #1341 is complete through merged
 #1356, with5752 local tests/typecheck/build, actual source/installed Pi/agy proof
 and final CI. Its broader Linux/DeepSeek and Windows reports remain unproven.
 

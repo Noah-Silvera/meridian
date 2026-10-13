@@ -1,3 +1,59 @@
+# Actual source and independently installed lifecycle evidence
+
+Implementation head: `90ec6828fba4e5d05f3f9a5f6b5d39892f286306`.
+Original full process 61680 exited 0: **5,777 pass, 35 skips, zero failures**
+across 23 isolated groups, followed by standalone typecheck and build.
+[Machine-readable gate record](supervisor-local-gates.json). The working tree
+remained frozen for that entire run; subsequent additions are documentation and
+this manually invoked evidence harness.
+
+The committed [headless harness](e2e-detached-lifecycle.mjs) runs the actual CLI
+with isolated configuration, an explicit dummy API profile and no inference.
+It starts two concurrent launchers for one endpoint and requires exactly one
+`ready-created` and one `ready-existing` result with matching identity. A second
+endpoint gets a distinct instance; both remain ready after their launchers exit.
+Stopping the first leaves the second ready; repeated stop is idempotent. Both
+persist startup/shutdown output in their endpoint logs.
+
+- [Source receipt](source-lifecycle.json): actual Bun 1.3.14 running `bin/cli.ts`.
+- [Installed receipt](installed-lifecycle.json): actual Node 22.22.3 running an
+  independently npm-installed tarball, no symlinks to source dependencies.
+- [Package identity](installed-identity.json): tarball integrity and installed
+  Meridian/SDK/Claude versions (1.81.0 candidate / 0.2.141 / 2.1.296). This is a
+  candidate built from the branch, not a newly published 1.81.0 release.
+
+Both runs are Darwin ARM64. The harness generates a Seatbelt policy denying
+external IP networking and reads of the real Claude/Codex/config/keychain stores;
+it permits loopback and local Unix sockets. `/bin/ps` alone runs outside that
+sandbox because macOS rejects the setuid executable at spawn otherwise. It is
+used only by existing read-only process identity checks; the CLI, server and
+SDK descendants retain the fence. Credentialless local readiness does not
+establish model entitlement or successful inference, and no scrub-qualified
+live model acceptance is claimed here.
+
+Reproduce with a fresh scratch directory outside the home directory:
+
+```sh
+node docs/maintenance/evidence/1302-detached-cli-20261012/e2e-detached-lifecycle.mjs \
+  /absolute/path/to/runtime /absolute/path/to/cli-entry /tmp/fresh-detached-proof
+```
+
+Preserved initial failures: [sandbox attempt](source-initial-sandbox-failure.json)
+failed before child creation because `/bin/ps` was denied with EPERM and process
+incarnation could not be captured. Allowing Unix sockets alone did not resolve
+it. With the narrowly scoped ps exception, startup/reuse/cleanup worked, but the
+[initial readiness assertion](source-readiness-assertion-failure.json) expected
+`ok` instead of the route's `ok\n`. Correcting that assertion produced the
+source and installed passing matrix above. Neither failure was hidden by a
+rerun or worked around by weakening production ownership checks.
+
+Remaining before acceptance: crash/stale-owner and startup-error application
+matrix, claimed-platform qualification, plugin-qualified actual active-turn
+drain, final-head CI and adversarial final review. #1359 remains draft and #1302
+remains open. No auth refresh, account switch, model calls or Docker changes.
+
+The following checkpoints are historical; their narrower scope remains explicit.
+
 # Supervisor and CLI implementation — current checkpoint
 
 The CLI now dispatches `start --detach [--json]` and `stop [--json]` through
