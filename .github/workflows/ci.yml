@@ -138,9 +138,9 @@ jobs:
           $source = Join-Path $env:GITHUB_WORKSPACE "bin/cli.ts"
           $entry = Join-Path $install "node_modules/@rynfar/meridian/dist/cli.js"
           node $harness (Get-Command bun).Source $source (Join-Path $proof "source")
-          if ($LASTEXITCODE -ne 0) { throw "Source detached lifecycle failed" }
+          $sourceExit = $LASTEXITCODE
           node $harness (Get-Command node).Source $entry (Join-Path $proof "installed")
-          if ($LASTEXITCODE -ne 0) { throw "Installed detached lifecycle failed" }
+          $installedExit = $LASTEXITCODE
           @{
             head = "${{ github.event.pull_request.head.sha }}"
             checkout = "${{ github.sha }}"
@@ -150,6 +150,7 @@ jobs:
             bun = (bun --version)
             scope = "Credentialless source and installed lifecycle; no model-turn acceptance"
           } | ConvertTo-Json | Set-Content (Join-Path $proof "identity.json")
+          if ($sourceExit -ne 0 -or $installedExit -ne 0) { throw "Detached lifecycle failed: source=$sourceExit installed=$installedExit" }
 
       - name: preserve detached package receipts
         if: always()

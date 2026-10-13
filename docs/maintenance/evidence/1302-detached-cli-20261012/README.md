@@ -1,3 +1,20 @@
+## Actual Windows source startup failed on0bb7df27
+
+[Native job](https://github.com/rynfar/meridian/actions/runs/38328390229/job/115072298927)
+passes the fixture/ACL tests but fails actual source Bun startup. Both concurrent
+launches return exit1 before a log path is available; cleanup reports already
+stopped. The [failed receipt](windows-source-failure-0bb7.json) is retained.
+The installed run was skipped by the workflow's early throw, so it has no result.
+This is an unresolved configuration/private-directory boundary failure, not a
+proven SDK or supervisor failure.
+
+The next workflow observes both source and installed outcomes before failing.
+A source-only diagnostic re-executes the same private-directory operation in the
+same isolated dummy environment and saves a bounded exception/cause chain. It
+does not relax ACLs or repair existing state. Concurrent launches now both settle
+before cleanup even when one fails. Native diagnosis remains pending; no product
+fix is claimed. Application source remains7b0e2f46.
+
 ## Actual Windows package gate added
 
 The Windows CI job now runs the escrowed lifecycle harness against source Bun

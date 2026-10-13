@@ -1,3 +1,11 @@
+## Detached CLI #1359 — actual Windows source failure under diagnosis
+
+0bb7df27 Windows job115072298927 fails source Bun startup before log allocation;
+fixture/ACL tests pass. Both concurrent source attempts failed and cleanup found
+no running managed instance. Installed test was not reached. Original receipt is
+escrowed. Next CI will retain both outcomes and a bounded same-environment
+configuration/ACL error chain; no production fix or acceptance is claimed.
+
 ## Detached CLI #1359 — actual Windows package gate
 
 CI now packs and independently npm-installs the candidate, then runs actual
