@@ -8008,3 +8008,16 @@ checkpoint with the client's real `tool_result` and without the denial. Run it
 before any release touching `maxTurns`, the PreToolUse deny hook, or the
 early-stop checkpoint. It does not exercise ToolSearch discovery itself, and it
 proves the CLI's turn accounting, not a live model's behaviour.
+
+### Live digest-turn gate (#1370)
+
+`bun scripts/e2e-deferred-digest-turn-live.mjs` is the same hand-off against
+the real subscription and a real model (`E2E_MODEL`, default
+`claude-opus-5-5`). It counts model requests from the distinct message ids the
+SDK reports. Per transport it runs a control with one ordinary tool, which must
+cost one model request on any build, and a hand-off with a `defer_loading`
+tool, which must also cost one. The deferred hand-off is then answered with a
+tool result holding a fresh nonce: the follow-up must resume the same SDK
+session at its checkpoint and return the nonce. `--expect-digest` inverts the
+deferred count for a build without the fix. Unchanged `main` before #1370 made
+three model requests per deferred hand-off. Costs a few cents of real tokens.
