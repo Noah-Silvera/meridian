@@ -6561,6 +6561,37 @@ drop; `"summarized"` answered. Branch: PASS, 4 of 4: both answered, thinking
 was not forced off, and the drop was logged once. Live, the owner's interactive Claude Code 2.1.287 session failed
 10 of 10 turns through the proxy with this error before the fix.
 
+## E74: Restart drain under overlapping traffic
+
+**What it proves:** `POST /drain` gives a supervisor an idle window while real
+requests overlap, without losing the request that arrives during it (#1224,
+contract #1282).
+
+```bash
+bun scripts/e2e-drain-live.mjs                     # build with the route
+bun scripts/e2e-drain-live.mjs --expect-baseline   # build without it
+```
+
+The script starts the proxy in-process with an API key and isolated config and
+session directories, starts one real streaming request, opens a drain, then
+sends a second real request (`E2E_MODEL`, default `claude-opus-5-5`). Costs a
+few cents of real tokens.
+
+**Pass criteria** (asserted, non-zero exit on any):
+
+- A keyless `POST /drain` is 401; the keyed one starts the drain.
+- The second request is held: `/inflight` shows `drain.held: 1`, it is not in
+  `total`, and no SDK query starts for it.
+- The first stream finishes untouched and `total` reaches 0 while the second is
+  still held.
+- Only the keyed `DELETE /drain` ends the drain; the held request then runs and
+  completes, and nothing is left held or in flight.
+
+With `--expect-baseline`, `POST /drain` must be 404 and the two requests must
+overlap (`total: 2`). The run proves the hold in-process under Bun with a real
+model; it does not drive a real supervisor or restart.
+[Evidence](docs/maintenance/evidence/1224-drain-live-20261013/README.md).
+
 ## Concurrent transcript publication
 
 Run `bun scripts/e2e-publication-lifetime.mjs` and again with `--stream` after lifecycle or publication changes. This gate uses real Claude Max queries and two concurrent HTTP conversations, each with a fresh and resumed turn. A timing hook pauses each request after its real SDK writer lease is released, promotes its request pin as the owning proxy would, and runs a separate collector process before publication. The collector uses zero grace periods and the supported SDK deleter, exercising the destructive race in an isolated session store and disposable project.
