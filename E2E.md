@@ -1078,6 +1078,21 @@ dispatch with a fixture upstream, not a claim that the real Claude model chose
 a bare name. Keep the affected-model Pi live gate alongside them when accepting
 passthrough changes.
 
+`--undeclared=<name>` makes the fixture emit a name the client never declared
+(#1364), on an OpenCode-keyed request. The CLI rejects it the same way; the
+client must receive that exact name as a `tool_use` handoff, and its error
+result must reach a fresh SDK session on the follow-up:
+
+```bash
+bun scripts/e2e-capped-turns.mjs --case=client-refusal --stream --undeclared=bash_placeholder
+bun scripts/e2e-capped-turns.mjs --case=client-refusal --stream --undeclared=mcp:oc__bash
+bun scripts/e2e-capped-turns.mjs --case=client-refusal --stream --undeclared=bash_placeholder --deferred
+```
+
+On unchanged `431ec201` all three end in an SSE `Reached maximum number of
+turns` error. A built-in name such as `Bash` still does: Claude Code 2.1.296
+appends an explanation to that refusal, which is not recognized as a rejection.
+
 For the affected model and Pi adapter on Linux, also run the live
 multi-turn control (real Claude Team account, not the fixture upstream):
 
